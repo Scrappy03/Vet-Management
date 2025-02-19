@@ -1,4 +1,15 @@
 {
   "name": "Assignment",
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.6.0",
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "grunt": "^1.6.1",
+    "grunt-concurrent": "^3.0.0",
+    "grunt-contrib-uglify": "^5.2.2",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-sass": "^4.0.0"
+  },
+  "devDependencies": {
+    "sass": "^1.85.0"
+  }
 }

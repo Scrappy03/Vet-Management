@@ -1,0 +1,5 @@
+var home = {
+    init: function () {
+        console.log("I'm the homepage");
+    }
+};
