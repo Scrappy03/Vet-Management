@@ -174,7 +174,6 @@ body {
 
 // Quick Access Cards
 .quick-access-card {
-  border: none;
   border-radius: $border-radius-large;
   @include card-shadow;
   @include transition;

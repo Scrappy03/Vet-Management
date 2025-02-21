@@ -6,7 +6,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks("grunt-concurrent");
     grunt.loadNpmTasks("grunt-contrib-uglify");
-    grunt.registerTask('default', ['sass', 'watch']);
+    grunt.registerTask('default', ['concurrent:watchall']);
     grunt.registerTask("vendors", ["uglify:vendor"]);
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
