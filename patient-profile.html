@@ -53,7 +53,7 @@
                 <button class="btn btn-outline-primary">
                     <i class="bi bi-calendar-plus"></i> Schedule Appointment
                 </button>
-                <button class="btn btn-outline-primary">
+                <button class="btn btn-outline-primary" id="editProfileBtn">
                     <i class="bi bi-pencil"></i> Edit Profile
                 </button>
                 <div class="dropdown">
@@ -84,16 +84,18 @@
                     <div class="col-md-2 text-center">
                         <div class="patient-profile-avatar mx-auto mb-3 mb-md-0">
                             <div class="avatar-placeholder avatar-placeholder-large">
-                                <span>M</span>
+                                <span id="avatarInitial">M</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h3 class="mb-1">Max <span class="badge bg-success fs-6 align-middle">Active</span></h3>
-                        <p class="text-muted mb-2">Golden Retriever • Male • 5 years old</p>
-                        <p class="mb-1"><strong>Owner:</strong> John Smith</p>
-                        <p class="mb-1"><strong>Phone:</strong> (+44) 123456789</p>
-                        <p class="mb-0"><strong>Email:</strong> john.smith@example.com</p>
+                        <h3 class="mb-1" id="profileName">Max <span
+                                class="badge bg-success fs-6 align-middle">Active</span></h3>
+                        <p class="text-muted mb-2" id="profileDetails">Golden Retriever • Male • 5 years old</p>
+                        <p class="mb-1"><strong>Owner:</strong> <span id="profileOwner">John Smith</span></p>
+                        <p class="mb-1"><strong>Phone:</strong> <span id="profilePhone">(+44) 123456789</span></p>
+                        <p class="mb-0"><strong>Email:</strong> <span id="profileEmail">john.smith@example.com</span>
+                        </p>
                     </div>
                     <div class="col-md-4">
                         <div class="d-flex flex-column h-100 justify-content-center">
@@ -109,7 +111,8 @@
                                 <div class="d-flex align-items-center">
                                     <i class="bi bi-exclamation-triangle me-2"></i>
                                     <div>
-                                        <strong>Allergies:</strong> Adverse reactions N/A
+                                        <strong>Allergies:</strong> <span id="profileAllergies">Adverse reactions
+                                            N/A</span>
                                     </div>
                                 </div>
                             </div>
@@ -125,29 +128,28 @@
                 <div class="card mb-4">
                     <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Basic Information</h5>
-                        <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <p class="mb-1 text-muted small">Species</p>
-                                <p class="mb-3">Dog</p>
+                                <p class="mb-3" id="infoSpecies">Dog</p>
 
                                 <p class="mb-1 text-muted small">Breed</p>
-                                <p class="mb-3">Golden Retriever</p>
+                                <p class="mb-3" id="infoBreed">Golden Retriever</p>
 
                                 <p class="mb-1 text-muted small">Date of Birth</p>
-                                <p class="mb-0">April 12, 2020 (5 years)</p>
+                                <p class="mb-0" id="infoDob">April 12, 2020 (5 years)</p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <p class="mb-1 text-muted small">Gender</p>
-                                <p class="mb-3">Male (Neutered)</p>
+                                <p class="mb-3" id="infoGender">Male (Neutered)</p>
 
                                 <p class="mb-1 text-muted small">Weight</p>
-                                <p class="mb-3">34kg (18 May 2024)</p>
+                                <p class="mb-3" id="infoWeight">34kg (18 May 2024)</p>
 
                                 <p class="mb-1 text-muted small">Microchip ID</p>
-                                <p class="mb-0">915683528564</p>
+                                <p class="mb-0" id="infoMicrochip">915683528564</p>
                             </div>
                         </div>
                     </div>
@@ -449,8 +451,121 @@
         </div>
     </div>
 
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Patient Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPatientForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="petName" class="form-label">Pet Name</label>
+                                <input type="text" class="form-control" id="petName" value="Max">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="petStatus" class="form-label">Status</label>
+                                <select class="form-select" id="petStatus">
+                                    <option value="active" selected>Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="petSpecies" class="form-label">Species</label>
+                                <input type="text" class="form-control" id="petSpecies" value="Dog">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="petBreed" class="form-label">Breed</label>
+                                <input type="text" class="form-control" id="petBreed" value="Golden Retriever">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="petGender" class="form-label">Gender</label>
+                                <select class="form-select" id="petGender">
+                                    <option value="male" selected>Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="petNeutered" class="form-label">Neutered/Spayed</label>
+                                <select class="form-select" id="petNeutered">
+                                    <option value="yes" selected>Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="petDob" class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" id="petDob" value="2020-04-12">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="petWeight" class="form-label">Weight (kg)</label>
+                                <input type="number" class="form-control" id="petWeight" value="34">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="petMicrochip" class="form-label">Microchip ID</label>
+                                <input type="text" class="form-control" id="petMicrochip" value="915683528564">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="petAllergies" class="form-label">Allergies</label>
+                                <input type="text" class="form-control" id="petAllergies" value="N/A">
+                            </div>
+                        </div>
+
+                        <h5 class="mt-4 mb-3">Owner Information</h5>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="ownerName" class="form-label">Owner Name</label>
+                                <input type="text" class="form-control" id="ownerName" value="John Smith">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ownerPhone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="ownerPhone" value="(+44) 123456789">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ownerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="ownerEmail" value="john.smith@example.com">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveProfileChangesBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="saveSuccessToast" class="toast align-items-center text-white bg-success border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="bi bi-check-circle me-2"></i> Patient profile successfully updated!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     <script src="./js/scripts-vendor.min.js"></script>
     <script src="./js/scripts.min.js"></script>
+    <script src="./js/patient-profile.js"></script>
 </body>
 
 </html>
