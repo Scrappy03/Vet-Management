@@ -1,3 +1,4 @@
+# Yarn
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -5,24 +6,24 @@
 !.yarn/sdks
 !.yarn/versions
 
-# Swap the comments on the following lines if you wish to use zero-installs
-# In that case, don't forget to run `yarn config set enableGlobalCache false`!
-# Documentation here: https://yarnpkg.com/features/caching#zero-installs
-
-#!.yarn/cache
-# Dependencies
+# Dependency directories
 node_modules/
+vendor/
 package-lock.json
+
+# Build and compiled files
+dist/
+build/
+out/
+css/styles.min.css
+css/styles.css.map
+js/scripts.min.js
+js/scripts-vendor.min.js
 
 # Environment variables
 .env
 .env.local
 .env.*.local
-
-# Build output
-dist/
-build/
-out/
 
 # IDE specific files
 .vscode/
@@ -34,11 +35,15 @@ out/
 .DS_Store
 .AppleDouble
 .LSOverride
+Icon
+._*
 
-# Logs
+# Logs and debugging
 logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Coverage directory
 coverage/
@@ -47,3 +52,13 @@ coverage/
 *.swp
 *.swo
 *~
+.tmp/
+.temp/
+.cache/
+
+# Grunt intermediate storage
+.grunt
+
+# Composer
+composer.phar
+/vendor/

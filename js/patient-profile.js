@@ -1,31 +1,36 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // This event runs after the DOM is loaded, ensuring elements are accessible
     // Initialize the edit profile modal
-    const editProfileBtn = document.getElementById('editProfileBtn');
-    const editProfileModal = new bootstrap.Modal(document.getElementById('editProfileModal'));
-    const saveChangesBtn = document.getElementById('saveProfileChangesBtn');
+    const editProfileBtn = document.getElementById('editProfileBtn'); // Button to open edit profile modal
+    const editProfileModal = new bootstrap.Modal(document.getElementById('editProfileModal')); // Bootstrap modal instance
+    const saveChangesBtn = document.getElementById('saveProfileChangesBtn'); // Button to save updates
 
+    // Show the edit profile modal when the edit button is clicked
     // Show the modal when edit button is clicked
     editProfileBtn.addEventListener('click', function () {
+        // Display the edit profile modal
         editProfileModal.show();
     });
 
+    // Handle saving form changes and updating the page
     // Handle saving the changes
     saveChangesBtn.addEventListener('click', function () {
-        // Get form values
+        // Gather form input values
         const petName = document.getElementById('petName').value;
         const petStatus = document.getElementById('petStatus').value;
         const petSpecies = document.getElementById('petSpecies').value;
         const petBreed = document.getElementById('petBreed').value;
         const petGender = document.getElementById('petGender').value;
-        const petNeutered = document.getElementById('petNeutered').value;
+        const petNeutered = document.getElementById('petNeutered').value; // Tracks neutered status
         const petDob = document.getElementById('petDob').value;
-        const petWeight = document.getElementById('petWeight').value;
+        const petWeight = document.getElementById('petWeight').value; // Pet's weight in kilograms
         const petMicrochip = document.getElementById('petMicrochip').value;
         const petAllergies = document.getElementById('petAllergies').value;
         const ownerName = document.getElementById('ownerName').value;
         const ownerPhone = document.getElementById('ownerPhone').value;
         const ownerEmail = document.getElementById('ownerEmail').value;
 
+        // Create a Date object from the pet's DOB and format it
         // Format the date of birth
         const dobDate = new Date(petDob);
         const formattedDob = dobDate.toLocaleDateString('en-US', {
@@ -42,6 +47,8 @@ document.addEventListener('DOMContentLoaded', function () {
             age--;
         }
 
+        // Update the UI elements with the new/updated data
+        // Update displayed information for both pet and owner
         // Update page with new information
         // Update pet name and status badge
         const profileName = document.getElementById('profileName');
@@ -78,9 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const avatarInitial = document.getElementById('avatarInitial');
         avatarInitial.textContent = petName.charAt(0);
 
+        // Hide the modal and show a success toast after saving
         // Close the modal
         editProfileModal.hide();
-
         // Show a success message
         const successToast = new bootstrap.Toast(document.getElementById('saveSuccessToast'));
         successToast.show();

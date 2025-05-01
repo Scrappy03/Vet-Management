@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Initialize reminder elements
     const remindersList = document.querySelector('.reminders-list');
     const reminderForm = document.querySelector('#addReminderModal form');
     const addReminderBtn = document.querySelector('#addReminderModal .btn-primary');
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Handle checkbox state changes
+    // Toggle reminder completed state
     remindersList.addEventListener('change', function (e) {
         if (e.target.matches('.form-check-input')) {
             const label = e.target.nextElementSibling;
