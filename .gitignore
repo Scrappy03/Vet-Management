@@ -61,4 +61,7 @@ coverage/
 
 # Composer
 composer.phar
-/vendor/
+/vendor
+
+#private
+credentials.md

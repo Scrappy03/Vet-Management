@@ -6,7 +6,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 // Include the Composer autoloader
 require_once(__DIR__ . '/includes/boot.include.php');
 
-if($_GET['p']) {
+if(isset($_GET['p']) && $_GET['p']) {
     $Smarty->assign('view_name', $_GET['p']);
     require_once('controllers/'.$_GET['p'].'.php');
     $Smarty->display('pages/'.$_GET['p'].'.tpl');
