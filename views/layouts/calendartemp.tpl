@@ -13,9 +13,11 @@
     <!-- FullCalendar CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
 </head>
-{block name="body"}{/block}
-<script src="./js/scripts-vendor.min.js"></script>
-<script src="./js/scripts.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-<script src="./js/calendar.js"></script>
+
+<body id="page-{$view_name}">
+    {block name="body"}{/block}
+    <script src="./js/scripts-vendor.min.js"></script>
+    <script src="./js/scripts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="./js/calendar.js"></script>
 <script src="./js/page-transitions.js"></script>

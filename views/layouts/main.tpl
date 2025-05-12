@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/transitions.css">
 </head>
 
-<body>
+<body id="page-{$view_name}">
     <!-- Header section with logo and branding. -->
     <header class="bg-custom-primary text-white py-4">
         <div class="container">

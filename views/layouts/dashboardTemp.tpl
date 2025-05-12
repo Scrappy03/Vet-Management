@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/transitions.css">
 </head>
-{block name="body"}{/block}
-<script src="./js/scripts-vendor.min.js"></script>
-<script src="./js/scripts.min.js"></script>
-<script src="./js/dashboard.js"></script>
+
+<body id="page-{$view_name}">
+    {block name="body"}{/block}
+    <script src="./js/scripts-vendor.min.js"></script>
+    <script src="./js/scripts.min.js"></script>
+    <script src="./js/dashboard.js"></script>
 <script src="./js/page-transitions.js"></script>
