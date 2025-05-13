@@ -65,3 +65,4 @@ composer.phar
 
 #private
 credentials.md
+config.include.php

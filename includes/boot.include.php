@@ -1,5 +1,6 @@
 <?php
-// Include Smarty
+require_once(__DIR__.'/config.include.php');
+require_once(__DIR__.'/db.include.php');
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 $Smarty = new \Smarty\Smarty();
