@@ -9,3 +9,5 @@ $Smarty->setTemplateDir(__DIR__.'/../views')
 ->setCompileDir(__DIR__.'/../smarty/templates_c')
 ->setCacheDir(__DIR__.'/../smarty/cache')
 ->setConfigDir(__DIR__.'/../smarty/configs');
+
+require_once(__DIR__.'/autoloader.include.php');

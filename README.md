@@ -32,7 +32,7 @@ A comprehensive web-based system for managing veterinary clinics, including pati
 1. Clone the repository:
 
    ```
-   git clone [repository-url]
+   git clone https://github.com/Scrappy03/Vet-Management
    ```
 
 2. Install PHP dependencies:

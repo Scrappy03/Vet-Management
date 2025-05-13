@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/styles.min.css">
     <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="css/transitions.css">
     <link rel="stylesheet" href="css/settings.css">
 </head>
 
@@ -16,5 +15,4 @@
     {block name="body"}{/block}
     <script src="./js/scripts-vendor.min.js"></script>
     <script src="./js/scripts.min.js"></script>
-    <script src="./js/dashboard.js"></script>
-<script src="./js/page-transitions.js"></script>
+<script src="./js/dashboard.js"></script>
