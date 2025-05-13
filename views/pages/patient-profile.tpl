@@ -8,23 +8,23 @@
         </div>
 
         <nav class="mb-4">
-            <a href="dashboard.html" class="dashboard-nav-link">
+            <a href="index.php?p=dashboard" class="dashboard-nav-link">
                 <i class="bi bi-house-door"></i>
                 Dashboard
             </a>
-            <a href="calendar.html" class="dashboard-nav-link">
+            <a href="index.php?p=calendar" class="dashboard-nav-link">
                 <i class="bi bi-calendar"></i>
                 Appointments
             </a>
-            <a href="patients.html" class="dashboard-nav-link active">
+            <a href="index.php?p=patients" class="dashboard-nav-link active">
                 <i class="bi bi-clipboard2-pulse"></i>
                 Patients
             </a>
-            <a href="#" class="dashboard-nav-link">
+            <a href="index.php?p=staff" class="dashboard-nav-link">
                 <i class="bi bi-person"></i>
                 Staff
             </a>
-            <a href="#" class="dashboard-nav-link">
+            <a href="index.php?p=settings" class="dashboard-nav-link">
                 <i class="bi bi-gear"></i>
                 Settings
             </a>
@@ -35,7 +35,7 @@
         <!-- Back button and action buttons -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <a href="patients.html" class="btn btn-outline-primary">
+                <a href="index.php?p=patients" class="btn btn-outline-primary">
                     <i class="bi bi-arrow-left"></i> Back to Patients
                 </a>
             </div>

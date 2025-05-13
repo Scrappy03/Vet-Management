@@ -7,23 +7,23 @@
         </div>
 
         <nav class="mb-4">
-            <a href="dashboard.html" class="dashboard-nav-link">
+            <a href="index.php?p=dashboard" class="dashboard-nav-link">
                 <i class="bi bi-house-door"></i>
                 Dashboard
             </a>
-            <a href="calendar.html" class="dashboard-nav-link">
+            <a href="index.php?p=calendar" class="dashboard-nav-link">
                 <i class="bi bi-calendar"></i>
                 Appointments
             </a>
-            <a href="patients.html" class="dashboard-nav-link active">
+            <a href="index.php?p=patients" class="dashboard-nav-link active">
                 <i class="bi bi-clipboard2-pulse"></i>
                 Patients
             </a>
-            <a href="#" class="dashboard-nav-link">
+            <a href="index.php?p=staff" class="dashboard-nav-link">
                 <i class="bi bi-person"></i>
                 Staff
             </a>
-            <a href="#" class="dashboard-nav-link">
+            <a href="index.php?p=settings" class="dashboard-nav-link">
                 <i class="bi bi-gear"></i>
                 Settings
             </a>
@@ -166,7 +166,7 @@
                                 <td>Mar 15, 2023</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile.html" class="btn btn-outline-primary"><i
+                                        <a href="index.php?p=patient-profile" class="btn btn-outline-primary"><i
                                                 class="bi bi-eye"></i></a>
                                         <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
                                         <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
@@ -184,7 +184,7 @@
                                 <td>Apr 2, 2023</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile.html" class="btn btn-outline-primary"><i
+                                        <a href="index.php?p=patient-profile" class="btn btn-outline-primary"><i
                                                 class="bi bi-eye"></i></a>
                                         <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
                                         <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
@@ -202,7 +202,7 @@
                                 <td>Apr 18, 2023</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile.html" class="btn btn-outline-primary"><i
+                                        <a href="index.php?p=patient-profile" class="btn btn-outline-primary"><i
                                                 class="bi bi-eye"></i></a>
                                         <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
                                         <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
@@ -220,7 +220,7 @@
                                 <td>May 5, 2023</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile.html" class="btn btn-outline-primary"><i
+                                        <a href="index.php?p=patient-profile" class="btn btn-outline-primary"><i
                                                 class="bi bi-eye"></i></a>
                                         <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
                                         <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
@@ -238,7 +238,7 @@
                                 <td>May 12, 2023</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile.html" class="btn btn-outline-primary"><i
+                                        <a href="index.php?p=patient-profile" class="btn btn-outline-primary"><i
                                                 class="bi bi-eye"></i></a>
                                         <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
                                         <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
@@ -256,7 +256,7 @@
                                 <td>Jun 8, 2023</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile.html" class="btn btn-outline-primary"><i
+                                        <a href="index.php?p=patient-profile" class="btn btn-outline-primary"><i
                                                 class="bi bi-eye"></i></a>
                                         <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
                                         <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
@@ -311,7 +311,7 @@
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
-                                <a href="patient-profile.html" class="btn btn-sm btn-outline-primary"><i
+                                <a href="index.php?p=patient-profile" class="btn btn-sm btn-outline-primary"><i
                                         class="bi bi-eye"></i> View Details</a>
                                 <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
                                     Schedule</button>
@@ -344,7 +344,7 @@
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
-                                <a href="patient-profile.html" class="btn btn-sm btn-outline-primary"><i
+                                <a href="index.php?p=patient-profile" class="btn btn-sm btn-outline-primary"><i
                                         class="bi bi-eye"></i> View Details</a>
                                 <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
                                     Schedule</button>
@@ -377,7 +377,7 @@
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
-                                <a href="patient-profile.html" class="btn btn-sm btn-outline-primary"><i
+                                <a href="index.php?p=patient-profile" class="btn btn-sm btn-outline-primary"><i
                                         class="bi bi-eye"></i> View Details</a>
                                 <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
                                     Schedule</button>
@@ -410,7 +410,7 @@
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
-                                <a href="patient-profile.html" class="btn btn-sm btn-outline-primary"><i
+                                <a href="index.php?p=patient-profile" class="btn btn-sm btn-outline-primary"><i
                                         class="bi bi-eye"></i> View Details</a>
                                 <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
                                     Schedule</button>
@@ -443,7 +443,7 @@
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
-                                <a href="patient-profile.html" class="btn btn-sm btn-outline-primary"><i
+                                <a href="index.php?p=patient-profile" class="btn btn-sm btn-outline-primary"><i
                                         class="bi bi-eye"></i> View Details</a>
                                 <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
                                     Schedule</button>
@@ -476,7 +476,7 @@
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
-                                <a href="patient-profile.html" class="btn btn-sm btn-outline-primary"><i
+                                <a href="index.php?p=patient-profile" class="btn btn-sm btn-outline-primary"><i
                                         class="bi bi-eye"></i> View Details</a>
                                 <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
                                     Schedule</button>

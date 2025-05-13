@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/styles.min.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/transitions.css">
+    <link rel="stylesheet" href="css/settings.css">
 </head>
 
 <body id="page-{$view_name}">
