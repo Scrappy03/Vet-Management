@@ -13,7 +13,7 @@ $success = "";
 $email = "";
 
 // Check if the form was submitted
-if($_POST) {
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Registration form processing
     if(isset($_POST['register'])) {
         // Get form data

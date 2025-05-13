@@ -14,7 +14,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="email" name="email" value="{$email|escape}"
+                                    <input type="email" class="form-control" id="email" name="email" value="{$email}"
                                         required>
                                 </div>
                                 <div class="mb-4">
@@ -53,7 +53,7 @@
                             <div class="mb-3">
                                 <label for="reg_email" class="form-label">Email address</label>
                                 <input type="email" class="form-control" id="reg_email" name="email"
-                                    value="{if isset($smarty.post.register)}{$email|escape}{/if}" required>
+                                    value="{if isset($smarty.post.register)}{$email}{/if}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="reg_password" class="form-label">Password</label>
