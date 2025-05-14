@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/styles.min.css">
     <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
 
 <body id="page-{$view_name}">

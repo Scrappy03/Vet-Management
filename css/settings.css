@@ -19,6 +19,10 @@
     padding: 24px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid var(--border-color);
+    max-width: 100%;
+    /* Ensure cards don't overflow container */
+    overflow: hidden;
+    /* Prevent content from spilling out */
 }
 
 .card:hover {
@@ -196,6 +200,11 @@
 
     .card {
         padding: 16px;
+    }
+
+    /* Improve mobile layout */
+    .container {
+        padding: 15px !important;
     }
 }
 
