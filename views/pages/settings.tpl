@@ -1,4 +1,4 @@
-{extends file="layouts/dashboardTemp.tpl"}
+{extends file="layouts/setting.tpl"}
 {block name="body"}
 
     <div class="dashboard-sidebar">
