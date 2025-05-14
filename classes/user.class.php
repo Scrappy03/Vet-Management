@@ -171,4 +171,55 @@ class User {
             return false;
         }
     }
+    
+    /**
+     * Change user password
+     *
+     * @param string $user_id User ID
+     * @param string $current_pass Current password
+     * @param string $new_pass New password
+     * @return boolean True if successful, false otherwise
+     */
+    public function changeUserPassword($user_id, $current_pass, $new_pass) {
+        try {
+            // First get the current user data to verify password
+            $query = "SELECT * FROM staff WHERE staff_id = :staff_id";
+            $stmt = $this->Conn->prepare($query);
+            $stmt->execute(['staff_id' => $user_id]);
+            $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            // Verify current password
+            if(!$user_data || !password_verify($current_pass, $user_data['password'])) {
+                $this->lastError = ['message' => 'Current password is incorrect'];
+                return false;
+            }
+            
+            // Hash the new password
+            $new_secure_pass = password_hash($new_pass, PASSWORD_DEFAULT);
+            
+            // Update the password in the database
+            $update_query = "UPDATE staff SET password = :password WHERE staff_id = :staff_id";
+            $this->lastQuery = $update_query;
+            
+            $update_stmt = $this->Conn->prepare($update_query);
+            $result = $update_stmt->execute([
+                'password' => $new_secure_pass, 
+                'staff_id' => $user_id
+            ]);
+            
+            if ($result) {
+                return true;
+            } else {
+                $this->lastError = ['message' => 'Failed to update password'];
+                return false;
+            }
+        } catch (PDOException $e) {
+            $this->lastError = [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            error_log("PDO Exception in changeUserPassword: " . $e->getMessage());
+            return false;
+        }
+    }
 }

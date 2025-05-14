@@ -20,11 +20,11 @@
                 <i class="bi bi-clipboard2-pulse"></i>
                 Patients
             </a>
-            <a href="index.php?p=staff" class="dashboard-nav-link active">
+            <a href="index.php?p=staff" class="dashboard-nav-link">
                 <i class="bi bi-person"></i>
                 Staff
             </a>
-            <a href="index.php?p=settings" class="dashboard-nav-link">
+            <a href="index.php?p=settings" class="dashboard-nav-link active">
                 <i class="bi bi-gear"></i>
                 Settings
             </a>
@@ -103,11 +103,14 @@
             <h2>Account</h2>
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" value="user@example.com" class="form-control">
+                <input type="email" id="email" name="email"
+                    value="{if isset($user.email) && $user.email != ''}{$user.email}{else}user@example.com{/if}"
+                    class="form-control">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <button id="change-password" class="btn btn-secondary">Change Password</button>
+                <button type="button" id="change-password-btn" class="btn btn-secondary" data-bs-toggle="modal"
+                    data-bs-target="#changePasswordModal">Change Password</button>
             </div>
             <div class="form-group">
                 <label for="timezone">Timezone</label>
@@ -140,6 +143,51 @@
         <div class="btn-container">
             <button class="btn btn-secondary cancel">Cancel</button>
             <button class="btn btn-primary save">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {if $passwordMessage neq ''}
+                        <div class="alert alert-success">{$passwordMessage}</div>
+                    {/if}
+                    {if $passwordError neq ''}
+                        <div class="alert alert-danger">{$passwordError}</div>
+                    {/if}
+
+                    <form id="changePasswordForm" method="post" action="index.php?p=settings">
+                        <div class="mb-3">
+                            <label for="current_password" class="form-label">Current Password</label>
+                            <input type="password" class="form-control" id="current_password" name="current_password"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="new_password" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="new_password" name="new_password" minlength="6"
+                                required>
+                            <div class="form-text">Password must be at least 6 characters long</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                                required>
+                        </div>
+                        <input type="hidden" name="change_password" value="1">
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -176,6 +224,35 @@
                     alert('Account deletion request submitted');
                 }
             });
+
+            // Password change form validation
+            const changePasswordForm = document.getElementById('changePasswordForm');
+            if (changePasswordForm) {
+                changePasswordForm.addEventListener('submit', function(e) {
+                    const newPassword = document.getElementById('new_password').value;
+                    const confirmPassword = document.getElementById('confirm_password').value;
+
+                    if (newPassword !== confirmPassword) {
+                        e.preventDefault();
+                        alert('New passwords do not match!');
+                        return false;
+                    }
+
+                    if (newPassword.length < 6) {
+                        e.preventDefault();
+                        alert('Password must be at least 6 characters long!');
+                        return false;
+                    }
+
+                    // Form is valid, allow submission
+                    return true;
+                });
+            }
+
+            // Show password change modal if there was a submission error
+            {if $passwordError neq ''}
+                new bootstrap.Modal(document.getElementById('changePasswordModal')).show();
+            {/if}
         });
     </script>
 {/block}
