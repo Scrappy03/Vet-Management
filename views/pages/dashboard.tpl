@@ -28,11 +28,22 @@
                 Settings
             </a>
         </nav>
+
+        <div class="mt-auto text-center">
+            <a href="index.php?p=logout" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
     </div>
 
     <main class="dashboard-main">
         <div class="d-flex justify-content-between align-items-center mb-4 content-transition">
-            <h4 class="mb-0">Dashboard Overview</h4>
+            <div>
+                <h4 class="mb-0">Dashboard Overview</h4>
+                <p class="text-muted mb-0">Welcome,
+                    {if isset($user_name) && $user_name != ''}{$user_name}{elseif isset($user.email)}{$user.email}{else}User{/if}
+                </p>
+            </div>
             <div class="d-flex gap-2">
                 <button class="btn btn-outline-primary">
                     <i class="bi bi-plus-lg"></i> New Appointment

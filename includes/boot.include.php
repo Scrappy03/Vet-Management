@@ -1,4 +1,7 @@
 <?php
+// Start session management
+session_start();
+
 require_once(__DIR__.'/config.include.php');
 require_once(__DIR__.'/db.include.php');
 require_once(__DIR__ . '/../vendor/autoload.php');
