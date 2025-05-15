@@ -49,8 +49,8 @@ class User {
         
         // Generate secure password hash
         $sec_password = password_hash($user_data['password'], PASSWORD_DEFAULT);
-
-        // Use staff table instead of users table
+        
+        // Staff Table Database
         $query = "INSERT INTO staff (first_name, last_name, role, email, password, phone, specialties, education, bio, profile_image, start_date, status) 
                   VALUES (:first_name, :last_name, :role, :email, :password, :phone, :specialties, :education, :bio, :profile_image, :start_date, :status)";
         
@@ -172,14 +172,6 @@ class User {
         }
     }
     
-    /**
-     * Change user password
-     *
-     * @param string $user_id User ID
-     * @param string $current_pass Current password
-     * @param string $new_pass New password
-     * @return boolean True if successful, false otherwise
-     */
     public function changeUserPassword($user_id, $current_pass, $new_pass) {
         try {
             // First get the current user data to verify password

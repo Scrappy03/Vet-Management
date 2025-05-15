@@ -1,18 +1,21 @@
-@media (max-width: 991.98px) {
-    .dashboard-nav-link {
-        padding: 1rem;
-    }
+/**
+ * VetCare Dashboard Styles
+ * 
+ * Table of Contents:
+ * 1. Dashboard Layout
+ * 2. Navigation Elements
+ * 3. Cards & Containers
+ * 4. Status Indicators
+ * 5. User & Patient Elements
+ * 6. Form Elements
+ * 7. Table Styles
+ * 8. Utilities
+ * 9. Modal Styles
+ * 10. Print Styles
+ * 11. Responsive Adjustments
+ */
 
-    .dashboard-nav-link i {
-        font-size: 1.5rem;
-        margin-right: 1rem;
-    }
-
-    .stat-card {
-        margin-bottom: 1rem;
-    }
-}
-
+/* ===== 1. Dashboard Layout ===== */
 .dashboard-sidebar {
     width: 280px;
     height: 100vh;
@@ -22,9 +25,14 @@
     background-color: var(--bs-body-bg);
     border-right: 1px solid var(--bs-border-color);
     padding: 1.5rem;
+    z-index: 1030;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--bs-border-color) transparent;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
 }
 
 .dashboard-main {
@@ -32,6 +40,15 @@
     padding: 2rem;
 }
 
+.settings-container {
+    margin-left: 300px;
+    width: calc(100% - 300px);
+    max-width: none;
+    padding: 30px;
+    position: relative;
+}
+
+/* ===== 2. Navigation Elements ===== */
 .dashboard-nav-link {
     display: flex;
     align-items: center;
@@ -53,6 +70,8 @@
     font-size: 1.25rem;
 }
 
+/* ===== 3. Cards & Containers ===== */
+/* Stat Cards */
 .stat-card {
     background-color: var(--bs-body-bg);
     border: 1px solid var(--bs-border-color);
@@ -78,46 +97,51 @@
     margin-bottom: 1rem;
 }
 
-.appointments-table th,
-.appointments-table td {
+/* Settings Cards */
+.settings-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-bottom: 25px;
+    border: none;
+}
+
+.settings-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Patient Cards */
+.patient-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border: 1px solid var(--bs-border-color);
+}
+
+.patient-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Appointment Items */
+.appointment-item {
     padding: 1rem;
-    vertical-align: middle;
+    border-radius: 0.5rem;
+    background-color: var(--bs-tertiary-bg);
+    transition: transform 0.2s ease-in-out;
 }
 
-.status-badge {
-    padding: 0.35rem 0.75rem;
-    border-radius: 2rem;
-    font-size: 0.875rem;
-    font-weight: 500;
+.appointment-item:hover {
+    transform: translateY(-3px);
 }
 
-.status-upcoming {
-    background-color: #e7f5ff;
-    color: #1971c2;
+/* Medication Items */
+.medication-item {
+    transition: transform 0.2s ease-in-out;
 }
 
-.status-completed {
-    background-color: #e9ecef;
-    color: #495057;
+.medication-item:hover {
+    transform: translateY(-3px);
 }
 
-.status-cancelled {
-    background-color: var(--bs-danger-bg-subtle);
-    color: var(--bs-danger);
-}
-
-@media (max-width: 991.98px) {
-    .dashboard-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-
-    .dashboard-main {
-        margin-left: 0;
-    }
-}
-
+/* Reminder Items */
 .reminders-list {
     display: flex;
     flex-direction: column;
@@ -144,22 +168,80 @@
     margin-left: 1.8rem;
 }
 
-.form-check-input:checked+.form-check-label {
-    text-decoration: line-through;
-    opacity: 0.7;
+/* Date Box */
+.date-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    border: 2px solid #7DBBB9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
 }
 
-/* Patient Card Styles */
-.patient-card {
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    border: 1px solid var(--bs-border-color);
+.date-box .month {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #7DBBB9;
 }
 
-.patient-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+.date-box .day {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2C3E50;
 }
 
+/* ===== 4. Status Indicators ===== */
+/* Common Status Badge Styles */
+.status-badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Appointment Status Badges */
+.status-upcoming {
+    background-color: #e7f5ff;
+    color: #1971c2;
+}
+
+.status-completed {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.status-cancelled {
+    background-color: var(--bs-danger-bg-subtle);
+    color: var(--bs-danger);
+}
+
+/* Patient Status Badges */
+.status-active {
+    background-color: #e7f5ff;
+    color: #1971c2;
+}
+
+.status-treatment {
+    background-color: var(--bs-danger-bg-subtle);
+    color: var(--bs-danger);
+}
+
+.status-scheduled {
+    background-color: var(--bs-warning-bg-subtle);
+    color: var(--bs-warning-text-emphasis);
+}
+
+.status-recovery {
+    background-color: var(--bs-success-bg-subtle);
+    color: var(--bs-success-text-emphasis);
+}
+
+/* ===== 5. User & Patient Elements ===== */
+/* Patient Avatar Styles */
 .patient-avatar {
     width: 60px;
     height: 60px;
@@ -194,28 +276,95 @@
     text-align: center;
 }
 
-/* Status badges specific to patients */
-.status-active {
-    background-color: #e7f5ff;
-    color: #1971c2;
+/* Patient Profile Styles */
+.patient-profile-avatar {
+    width: 120px;
+    height: 120px;
 }
 
-.status-treatment {
-    background-color: var(--bs-danger-bg-subtle);
-    color: var(--bs-danger);
+.avatar-placeholder-large {
+    width: 120px;
+    height: 120px;
+    font-size: 3rem;
 }
 
-.status-scheduled {
-    background-color: var(--bs-warning-bg-subtle);
-    color: var(--bs-warning-text-emphasis);
+/* ===== 6. Form Elements ===== */
+.form-check-input:checked+.form-check-label {
+    text-decoration: line-through;
+    opacity: 0.7;
 }
 
-.status-recovery {
-    background-color: var(--bs-success-bg-subtle);
-    color: var(--bs-success-text-emphasis);
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(125, 187, 185, 0.25);
+    border-color: #7DBBB9;
 }
 
-/* Pagination customization */
+.btn {
+    transition: all 0.2s ease-in-out;
+    border-radius: 0.5rem;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Group Toggle */
+.btn-group .btn-outline-primary.active {
+    background-color: #7DBBB9;
+    border-color: #7DBBB9;
+    color: white;
+}
+
+/* Checkbox Styling */
+.checkbox-container:hover .checkmark {
+    box-shadow: 0 0 0 3px rgba(125, 187, 185, 0.1);
+}
+
+/* Password Input */
+.toggle-password {
+    cursor: pointer;
+}
+
+.toggle-password:hover {
+    background-color: #f8f9fa;
+}
+
+#password-feedback {
+    border-color: #e6e6e6;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+#password-feedback ul {
+    list-style: none;
+    padding-left: 0.5rem;
+}
+
+#password-feedback li {
+    margin-bottom: 5px;
+}
+
+.password-input-icon {
+    background-color: #f8f9fa;
+    border-right: none;
+}
+
+.password-input {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* ===== 7. Table Styles ===== */
+.appointments-table th,
+.appointments-table td {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+/* ===== 8. Utilities ===== */
+/* Pagination Styling */
 .pagination .page-link {
     color: #7DBBB9;
 }
@@ -230,72 +379,134 @@
     box-shadow: 0 0 0 0.25rem rgba(125, 187, 185, 0.25);
 }
 
-/* Toggle button customization */
-.btn-group .btn-outline-primary.active {
-    background-color: #7DBBB9;
-    border-color: #7DBBB9;
-    color: white;
+/* Toast Notifications */
+.toast {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive adjustments for the patient cards */
+/* Page Layout Fixes */
+html,
+body {
+    overflow-x: hidden;
+}
+
+/* ===== 9. Modal Styles ===== */
+.settings-modal-header {
+    background-color: #7DBBB9;
+    color: white;
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.settings-modal-header .modal-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-button-group {
+    margin-top: 1.5rem;
+}
+
+.modal-cancel-btn {
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    margin-right: 0.5rem;
+    border: 1px solid #dee2e6;
+}
+
+.modal-submit-btn {
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    background-color: #7DBBB9;
+    border-color: #7DBBB9;
+    font-weight: 500;
+    min-width: 180px;
+}
+
+/* ===== 10. Print Styles ===== */
+@media print {
+    .dashboard-sidebar {
+        display: none;
+    }
+
+    .settings-container {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 0;
+    }
+
+    .btn-container {
+        display: none;
+    }
+}
+
+/* ===== 11. Responsive Adjustments ===== */
+@media (max-width: 991.98px) {
+
+    /* Sidebar Adjustments */
+    .dashboard-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        margin-bottom: 20px;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    .dashboard-main {
+        margin-left: 0;
+    }
+
+    /* Settings Page Adjustments */
+    .settings-container {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 20px;
+    }
+
+    .settings-card {
+        margin-bottom: 20px;
+        padding: 20px !important;
+    }
+
+    /* Nav Links & Cards */
+    .dashboard-nav-link {
+        padding: 1rem;
+    }
+
+    .dashboard-nav-link i {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+    }
+
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+
+    /* Button Containers */
+    .btn-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-container button {
+        width: 100%;
+    }
+}
+
 @media (max-width: 767px) {
     .patient-card {
         margin-bottom: 1rem;
     }
-}
-
-/* Patient Profile Specific Styles */
-.patient-profile-avatar {
-    width: 120px;
-    height: 120px;
-}
-
-.avatar-placeholder-large {
-    width: 120px;
-    height: 120px;
-    font-size: 3rem;
-}
-
-.date-box {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    border: 2px solid #7DBBB9;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-}
-
-.date-box .month {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #7DBBB9;
-}
-
-.date-box .day {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #2C3E50;
-}
-
-.appointment-item {
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background-color: var(--bs-tertiary-bg);
-    transition: transform 0.2s ease-in-out;
-}
-
-.appointment-item:hover {
-    transform: translateY(-3px);
-}
-
-.medication-item {
-    transition: transform 0.2s ease-in-out;
-}
-
-.medication-item:hover {
-    transform: translateY(-3px);
 }

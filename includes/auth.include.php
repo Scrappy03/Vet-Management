@@ -26,7 +26,35 @@ if (!function_exists('get_current_user')) {
             session_start();
         }
         
-        return isset($_SESSION['user_data']) ? $_SESSION['user_data'] : null;
+        // Log what we're working with
+        error_log("get_current_user - Session contents: " . print_r($_SESSION, true));
+        
+        // First try to get from session
+        if (isset($_SESSION['user_data']) && is_array($_SESSION['user_data'])) {
+            return $_SESSION['user_data'];
+        }
+        
+        // If user_id exists but user_data doesn't, try to get from database
+        if (isset($_SESSION['user_id'])) {
+            global $Conn;
+            if ($Conn) {
+                try {
+                    $User = new User($Conn);
+                    $user_data = $User->getUserById($_SESSION['user_id']);
+                    
+                    if ($user_data) {
+                        // Update session with fresh data
+                        $_SESSION['user_data'] = $user_data;
+                        return $user_data;
+                    }
+                } catch (Exception $e) {
+                    error_log("Error retrieving user data: " . $e->getMessage());
+                }
+            }
+        }
+        
+        // Default return if nothing found
+        return array();
     }
 }
 
@@ -73,7 +101,6 @@ function logout_user($redirect = true) {
         );
     }
     
-    // End session
     session_destroy();
     
     // Remove persistence cookie if present

@@ -29,8 +29,8 @@
             </a>
         </nav>
 
-        <div class="mt-auto text-center">
-            <a href="index.php?p=logout" class="btn btn-sm btn-outline-danger">
+        <div class="mt-auto">
+            <a href="index.php?p=logout" class="btn btn-sm btn-outline-danger w-100">
                 <i class="bi bi-box-arrow-right"></i> Logout
             </a>
         </div>

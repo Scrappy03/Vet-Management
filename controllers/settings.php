@@ -42,7 +42,19 @@ $user_data = get_current_user();
 // Refresh user data from database to ensure current information
 $User = new User($Conn);
 $latest_user_data = $User->getUserById($_SESSION['user_id']);
+
+// Fix for array_merge issue - ensure both variables are arrays
 if ($latest_user_data) {
+    // Make sure $user_data is an array
+    if (!is_array($user_data)) {
+        $user_data = array();
+    }
+    
+    // Make sure $latest_user_data is an array
+    if (!is_array($latest_user_data)) {
+        $latest_user_data = array();
+    }
+    
     $user_data = array_merge($user_data, $latest_user_data);
     $_SESSION['user_data'] = $user_data; // Sync session with database
 }
