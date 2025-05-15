@@ -1,20 +1,3 @@
-/**
- * VetCare Dashboard Styles
- * 
- * Table of Contents:
- * 1. Dashboard Layout
- * 2. Navigation Elements
- * 3. Cards & Containers
- * 4. Status Indicators
- * 5. User & Patient Elements
- * 6. Form Elements
- * 7. Table Styles
- * 8. Utilities
- * 9. Modal Styles
- * 10. Print Styles
- * 11. Responsive Adjustments
- */
-
 /* ===== 1. Dashboard Layout ===== */
 .dashboard-sidebar {
     width: 280px;
