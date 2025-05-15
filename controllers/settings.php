@@ -1,13 +1,5 @@
 <?php
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Include auth helper functions
-require_once(__DIR__ . '/../includes/auth.include.php');
-
-// Process password change if submitted
+// Handle password change request processing
 $passwordMessage = '';
 $passwordError = '';
 
@@ -44,15 +36,15 @@ if (isset($_POST['change_password'])) {
     }
 }
 
-// Get user data for the view
-$user_data = $_SESSION['user_data'];
+// Retrieve authenticated user profile
+$user_data = get_current_user();
 
-// Load user info from database to ensure latest data
+// Refresh user data from database to ensure current information
 $User = new User($Conn);
 $latest_user_data = $User->getUserById($_SESSION['user_id']);
 if ($latest_user_data) {
     $user_data = array_merge($user_data, $latest_user_data);
-    $_SESSION['user_data'] = $user_data; // Update session data
+    $_SESSION['user_data'] = $user_data; // Sync session with database
 }
 
 $Smarty->assign('user', $user_data);

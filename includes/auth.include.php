@@ -1,27 +1,25 @@
 <?php
-/**
- * Authentication helper functions
- */
-
-/**
- * Check if current user is logged in
- * 
- * @return boolean True if user is logged in, false otherwise
- */
 function is_logged_in() {
     if (!isset($_SESSION)) {
         session_start();
     }
     
-    return isset($_SESSION['is_loggedin']) && $_SESSION['is_loggedin'] === true && 
-           isset($_SESSION['user_id']) && isset($_SESSION['user_data']);
+    // Validate required authentication markers
+    if (!isset($_SESSION['is_loggedin']) || $_SESSION['is_loggedin'] !== true || 
+        !isset($_SESSION['user_id']) || !isset($_SESSION['user_data'])) {
+        return false;
+    }
+    
+    // Security validation for session structure
+    if (!is_array($_SESSION['user_data']) || !isset($_SESSION['user_data']['email'])) {
+        // Record security anomaly
+        error_log("Warning: Malformed user_data in session - " . print_r($_SESSION['user_data'], true));
+        return false;
+    }
+    
+    return true;
 }
 
-/**
- * Get current user data
- * 
- * @return array|null User data array or null if not logged in
- */
 if (!function_exists('get_current_user')) {
     function get_current_user() {
         if (!isset($_SESSION)) {
@@ -32,11 +30,6 @@ if (!function_exists('get_current_user')) {
     }
 }
 
-/**
- * Check if session contains valid user data
- * 
- * @return boolean True if user data is valid, false otherwise
- */
 function validate_user_session() {
     if (!isset($_SESSION)) {
         session_start();
@@ -46,14 +39,8 @@ function validate_user_session() {
            isset($_SESSION['user_data']['email']) && isset($_SESSION['user_data']['staff_id']);
 }
 
-/**
- * Redirect to login page with a custom message
- * 
- * @param string $message Message code to display on login page
- * @return void
- */
 function redirect_to_login($message = 'session_expired') {
-    // Clear any existing session data
+    // Reset session state
     if (isset($_SESSION)) {
         $_SESSION = array();
     }
@@ -62,29 +49,23 @@ function redirect_to_login($message = 'session_expired') {
     exit;
 }
 
-/**
- * Log out the current user
- * 
- * @param boolean $redirect Whether to redirect after logout
- * @return void
- */
 function logout_user($redirect = true) {
     if (!isset($_SESSION)) {
         session_start();
     }
     
-    // Log the logout action
+    // Record logout event
     if(isset($_SESSION['user_email'])) {
         error_log("User logged out: " . $_SESSION['user_email']);
     }
     
-    // Get session cookie parameters
+    // Get session cookie configuration
     $params = session_get_cookie_params();
     
-    // Unset all session variables
+    // Clear session data
     $_SESSION = array();
     
-    // Delete the session cookie
+    // Remove session cookie
     if (isset($_COOKIE[session_name()])) {
         setcookie(session_name(), '', time() - 42000,
             $params["path"], $params["domain"],
@@ -92,16 +73,16 @@ function logout_user($redirect = true) {
         );
     }
     
-    // Destroy the session
+    // End session
     session_destroy();
     
-    // Clear remember me cookie if it exists
+    // Remove persistence cookie if present
     if (isset($_COOKIE['remember'])) {
         setcookie('remember', '', time() - 3600, '/');
     }
     
     if ($redirect) {
-        // Redirect to home page
+        // Return to application entry point
         header("Location: index.php?msg=logout_success");
         exit;
     }

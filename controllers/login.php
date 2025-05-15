@@ -5,11 +5,6 @@ require_once(__DIR__ . '/../includes/autoloader.include.php');
 require_once(__DIR__ . '/../includes/db.include.php');
 require_once(__DIR__ . '/../includes/auth.include.php');
 
-// Turn on error display for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // Debug database connection and ensure it's working properly
 try {
     $testQuery = $Conn->query("SELECT 1");
@@ -183,15 +178,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['user_email'] = $user_data['email'];
                     $_SESSION['user_name'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
                     
+                    // Log successful login
+                    error_log("Successful login: User ID {$user_data['staff_id']} - {$user_data['email']}");
+                    
                     // Redirect to dashboard
                     header("Location: index.php?p=dashboard");
                     exit;
                 } else {
-                    // Get PDO error info if available for debugging
+                    // Get PDO error info
                     if(method_exists($User, 'getErrorInfo')) {
                         $errorInfo = $User->getErrorInfo();
-                        // For debugging - can be enabled as needed
-                        // echo "<pre>Login error: " . print_r($errorInfo, true) . "</pre>";
                     }
                     $error = "Invalid email or password";
                 }
