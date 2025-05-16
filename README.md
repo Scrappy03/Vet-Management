@@ -85,12 +85,13 @@ This will watch for changes in SCSS files and rebuild CSS automatically.
 
 ## License
 
-This project is licensed under the MIT License - see below for details:
+This project is licensed under the MIT License
 
 ```
 
 Note: The BellotaText font is licensed under the SIL Open Font License.
 
+```
 ## Portfolio Information
 
 This project was created as part of my web development portfolio to showcase my skills in:
