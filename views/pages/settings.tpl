@@ -160,14 +160,16 @@
             style="border-radius: 12px; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); border-left: 5px solid #7DBBB9;">
             <h2 style="color: #2A6562; font-size: 1.5rem; font-weight: 600; margin-bottom: 1.25rem;">Advanced</h2>
             <div class="form-group">
-                <label class="checkbox-container" style="font-weight: 500; color: #495057;">Enable Experimental Features
+                <label class="checkbox-container">Enable Experimental Features
                     <input type="checkbox">
-                    <label class="checkbox-container">Enable Experimental Features
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>form-group">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-group">
                 <button id="clear-cache" class="btn btn-secondary">Clear Cache</button>
+            </div>
         </div>
+
         <div class="form-group">
             <button id="delete-account" class="btn btn-danger">Delete Account</button>
         </div>
@@ -178,99 +180,99 @@
         <button class="btn btn-secondary cancel">Cancel</button>
         <button class="btn btn-primary save">Save Changes</button>
     </div>
-</div>
+    </div>
 
-<!-- Change Password Modal with Enhanced UI -->
-<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header settings-modal-header">
-                <h5 class="modal-title" id="changePasswordModalLabel">
-                    <i class="bi bi-shield-lock-fill me-2"></i>Change Password
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {if $passwordMessage neq ''}
-                <div class="alert alert-success d-flex align-items-center" role="alert">
-                    <i class="bi bi-check-circle-fill me-2"></i>
-                    <div>{$passwordMessage}</div>
+    <!-- Change Password Modal with Enhanced UI -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header settings-modal-header">
+                    <h5 class="modal-title" id="changePasswordModalLabel">
+                        <i class="bi bi-shield-lock-fill me-2"></i>Change Password
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                {/if}
-                {if $passwordError neq ''}
-                <div class="alert alert-danger d-flex align-items-center" role="alert">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    <div>{$passwordError}</div>
-                </div>
-                {/if}
-
-                <form id="changePasswordForm" method="post" action="index.php?p=settings">
-                    <div class="mb-4">
-                        <label for="current_password" class="form-label">Current Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text password-input-icon">
-                                <i class="bi bi-key"></i>
-                            </span>
-                            <input type="password" class="form-control password-input" id="current_password"
-                                name="current_password" required>
+                <div class="modal-body">
+                    {if $passwordMessage neq ''}
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                            <i class="bi bi-check-circle-fill me-2"></i>
+                            <div>{$passwordMessage}</div>
                         </div>
-                    </div>
-                    <div class="mb-4">
-                        <label for="new_password" class="form-label">New Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text password-input-icon">
-                                <i class="bi bi-lock"></i>
-                            </span>
-                            <input type="password" class="form-control password-input" id="new_password"
-                                name="new_password" minlength="6" required>
-                            <button class="btn btn-outline-secondary toggle-password" type="button" tabindex="-1">
-                                <i class="bi bi-eye"></i>
+                    {/if}
+                    {if $passwordError neq ''}
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <div>{$passwordError}</div>
+                        </div>
+                    {/if}
+
+                    <form id="changePasswordForm" method="post" action="index.php?p=settings">
+                        <div class="mb-4">
+                            <label for="current_password" class="form-label">Current Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text password-input-icon">
+                                    <i class="bi bi-key"></i>
+                                </span>
+                                <input type="password" class="form-control password-input" id="current_password"
+                                    name="current_password" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="new_password" class="form-label">New Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text password-input-icon">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input type="password" class="form-control password-input" id="new_password"
+                                    name="new_password" minlength="6" required>
+                                <button class="btn btn-outline-secondary toggle-password" type="button" tabindex="-1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            <div class="form-text">Password must be at least 6 characters long</div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="confirm_password" class="form-label">Confirm New Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text password-input-icon">
+                                    <i class="bi bi-lock-fill"></i>
+                                </span>
+                                <input type="password" class="form-control password-input" id="confirm_password"
+                                    name="confirm_password" required>
+                                <button class="btn btn-outline-secondary toggle-password" type="button" tabindex="-1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="change_password" value="1">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end modal-button-group">
+                            <button type="button" class="btn btn-light modal-cancel-btn" data-bs-dismiss="modal">
+                                <i class="bi bi-x me-1"></i>Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary modal-submit-btn" id="changePasswordButton"
+                                disabled>
+                                <i class="bi bi-check2 me-1"></i>Change Password
                             </button>
                         </div>
-                        <div class="form-text">Password must be at least 6 characters long</div>
-                    </div>
-                    <div class="mb-4">
-                        <label for="confirm_password" class="form-label">Confirm New Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text password-input-icon">
-                                <i class="bi bi-lock-fill"></i>
-                            </span>
-                            <input type="password" class="form-control password-input" id="confirm_password"
-                                name="confirm_password" required>
-                            <button class="btn btn-outline-secondary toggle-password" type="button" tabindex="-1">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <input type="hidden" name="change_password" value="1">
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end modal-button-group">
-                        <button type="button" class="btn btn-light modal-cancel-btn" data-bs-dismiss="modal">
-                            <i class="bi bi-x me-1"></i>Cancel
-                        </button>
-                        <button type="submit" class="btn btn-primary modal-submit-btn" id="changePasswordButton"
-                            disabled>
-                            <i class="bi bi-check2 me-1"></i>Change Password
-                        </button>
-                    </div>
-                </form>
+                    </form>
 
-                <!-- Password strength indicator will be added here by JavaScript -->
+                    <!-- Password strength indicator will be added here by JavaScript -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    // Enhanced script to handle setting changes with improved UX
-    document.addEventListener('DOMContentLoaded', function() {
-        const saveButton = document.querySelector('.save');
-        const cancelButton = document.querySelector('.cancel');
+    <script>
+        // Enhanced script to handle setting changes with improved UX
+        document.addEventListener('DOMContentLoaded', function() {
+            const saveButton = document.querySelector('.save');
+            const cancelButton = document.querySelector('.cancel');
 
-        // Create toast notification function
-        function showToast(message, type = 'success') {
-            // Create toast container if it doesn't exist
+            // Create toast notification function
+            function showToast(message, type = 'success') {
+                // Create toast container if it doesn't exist
             let toastContainer = document.querySelector('.toast-container');
             if (!toastContainer) {
                 toastContainer = document.createElement('div');
@@ -314,32 +316,32 @@
             toast.show();
 
             // Remove toast after it's hidden
-            toastEl.addEventListener('hidden.bs.toast', function() {
-                toastEl.remove();
+                toastEl.addEventListener('hidden.bs.toast', function() {
+                    toastEl.remove();
+                });
+            }
+
+            // Save button handler with improved feedback
+            saveButton.addEventListener('click', function() {
+                // Simulate saving settings with a slight delay to show "working"
+                saveButton.disabled = true;
+                saveButton.innerHTML =
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+
+                setTimeout(() => {
+                    saveButton.disabled = false;
+                    saveButton.innerHTML = 'Save Changes';
+                    // Here you would typically save the settings to localStorage or send to a server
+                    showToast('Settings saved successfully!', 'success');
+                }, 800);
             });
-        }
 
-        // Save button handler with improved feedback
-        saveButton.addEventListener('click', function() {
-            // Simulate saving settings with a slight delay to show "working"
-            saveButton.disabled = true;
-            saveButton.innerHTML =
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+            // Cancel button with improved UX
+            cancelButton.addEventListener('click', function() {
+                // Reset form or navigate away
+                const modal = new bootstrap.Modal(document.createElement('div'));
 
-            setTimeout(() => {
-                saveButton.disabled = false;
-                saveButton.innerHTML = 'Save Changes';
-                // Here you would typically save the settings to localStorage or send to a server
-                showToast('Settings saved successfully!', 'success');
-            }, 800);
-        });
-
-        // Cancel button with improved UX
-        cancelButton.addEventListener('click', function() {
-            // Reset form or navigate away
-            const modal = new bootstrap.Modal(document.createElement('div'));
-
-            // Create a better confirmation dialog instead of using the browser's alert
+                // Create a better confirmation dialog instead of using the browser's alert
             const confirmDialog = document.createElement('div');
             confirmDialog.className = 'modal fade';
             confirmDialog.id = 'confirmDiscardModal';
@@ -428,143 +430,143 @@
                 '<ul>' +
                 '<li>Your profile information</li>' +
                 '<li>Patient records you\'ve created</li>' +
-                '<li>Appointment history</li>' +
-                '<li>Custom settings</li>' +
-                '</ul>' +
-                '<div class="form-check mt-3">' +
-                '<input class="form-check-input" type="checkbox" id="confirmDeleteCheck">' +
-                '<label class="form-check-label" for="confirmDeleteCheck">' +
-                'I understand that this action cannot be undone' +
-                '</label>' +
-                '</div>' +
-                '</div>' +
-                '<div class="modal-footer" style="border-top: none;">' +
-                '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>' +
-                '<button type="button" class="btn btn-danger" id="confirmDeleteAccount" disabled>Delete My Account</button>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
+                    '<li>Appointment history</li>' +
+                    '<li>Custom settings</li>' +
+                    '</ul>' +
+                    '<div class="form-check mt-3">' +
+                    '<input class="form-check-input" type="checkbox" id="confirmDeleteCheck">' +
+                    '<label class="form-check-label" for="confirmDeleteCheck">' +
+                    'I understand that this action cannot be undone' +
+                    '</label>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-footer" style="border-top: none;">' +
+                    '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>' +
+                    '<button type="button" class="btn btn-danger" id="confirmDeleteAccount" disabled>Delete My Account</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
 
-            document.body.appendChild(modal);
-            const deleteModal = new bootstrap.Modal(modal);
-            deleteModal.show();
+                document.body.appendChild(modal);
+                const deleteModal = new bootstrap.Modal(modal);
+                deleteModal.show();
 
-            // Add functionality to the checkbox
-            document.getElementById('confirmDeleteCheck').addEventListener('change', function() {
-                document.getElementById('confirmDeleteAccount').disabled = !this.checked;
+                // Add functionality to the checkbox
+                document.getElementById('confirmDeleteCheck').addEventListener('change', function() {
+                    document.getElementById('confirmDeleteAccount').disabled = !this.checked;
+                });
+
+                document.getElementById('confirmDeleteAccount').addEventListener('click', function() {
+                    deleteModal.hide();
+                    // Delete account logic would go here
+                    showToast('Account deletion request submitted', 'success');
+                });
+
+                modal.addEventListener('hidden.bs.modal', function() {
+                    modal.remove();
+                });
             });
 
-            document.getElementById('confirmDeleteAccount').addEventListener('click', function() {
-                deleteModal.hide();
-                // Delete account logic would go here
-                showToast('Account deletion request submitted', 'success');
-            });
+            // Enhanced password change form validation
+            const changePasswordForm = document.getElementById('changePasswordForm');
+            if (changePasswordForm) {
+                const newPasswordField = document.getElementById('new_password');
+                const confirmPasswordField = document.getElementById('confirm_password');
+                const currentPasswordField = document.getElementById('current_password');
 
-            modal.addEventListener('hidden.bs.modal', function() {
-                modal.remove();
-            });
-        });
+                // Real-time password validation
+                function validatePassword() {
+                    const newPassword = newPasswordField.value;
+                    const confirmPassword = confirmPasswordField.value;
+                    const currentPassword = currentPasswordField.value;
 
-        // Enhanced password change form validation
-        const changePasswordForm = document.getElementById('changePasswordForm');
-        if (changePasswordForm) {
-            const newPasswordField = document.getElementById('new_password');
-            const confirmPasswordField = document.getElementById('confirm_password');
-            const currentPasswordField = document.getElementById('current_password');
+                    let isValid = true;
 
-            // Real-time password validation
-            function validatePassword() {
-                const newPassword = newPasswordField.value;
-                const confirmPassword = confirmPasswordField.value;
-                const currentPassword = currentPasswordField.value;
+                    // Create or get password feedback element
+                    let feedbackElement = document.getElementById('password-feedback');
+                    if (!feedbackElement) {
+                        feedbackElement = document.createElement('div');
+                        feedbackElement.id = 'password-feedback';
+                        feedbackElement.className = 'mt-3 p-3 border rounded';
+                        confirmPasswordField.parentNode.appendChild(feedbackElement);
+                    }
 
-                let isValid = true;
+                    // Password strength and validation checks without template literals
+                    let feedback = '<h6>Password Requirements:</h6><ul class="mb-0">';
 
-                // Create or get password feedback element
-                let feedbackElement = document.getElementById('password-feedback');
-                if (!feedbackElement) {
-                    feedbackElement = document.createElement('div');
-                    feedbackElement.id = 'password-feedback';
-                    feedbackElement.className = 'mt-3 p-3 border rounded';
-                    confirmPasswordField.parentNode.appendChild(feedbackElement);
+                    // Check password length
+                    const lengthClass = newPassword.length >= 6 ? 'text-success' : 'text-danger';
+                    const lengthIcon = newPassword.length >= 6 ? 'bi-check-circle-fill' : 'bi-x-circle-fill';
+                    feedback += '<li class="' + lengthClass + '"><i class="bi ' + lengthIcon +
+                        '"></i> At least 6 characters long</li>';
+
+                    // Check passwords match
+                    const matchClass = confirmPassword === newPassword ? 'text-success' : 'text-danger';
+                    const matchIcon = confirmPassword === newPassword ? 'bi-check-circle-fill' : 'bi-x-circle-fill';
+                    feedback += '<li class="' + matchClass + '"><i class="bi ' + matchIcon +
+                        '"></i> Passwords match</li>';
+
+                    // Check current password provided
+                    const currentClass = currentPassword.length > 0 ? 'text-success' : 'text-danger';
+                    const currentIcon = currentPassword.length > 0 ? 'bi-check-circle-fill' : 'bi-x-circle-fill';
+                    feedback += '<li class="' + currentClass + '"><i class="bi ' + currentIcon +
+                        '"></i> Current password provided</li>';
+
+                    feedback += '</ul>';
+
+                    feedbackElement.innerHTML = feedback;
+
+                    // Validate form for submission
+                    if (newPassword.length < 6 || confirmPassword !== newPassword || currentPassword.length === 0) {
+                        isValid = false;
+                    }
+
+                    // Update submit button state
+                    const submitBtn = changePasswordForm.querySelector('button[type="submit"]');
+                    submitBtn.disabled = !isValid;
                 }
 
-                // Password strength and validation checks without template literals
-                let feedback = '<h6>Password Requirements:</h6><ul class="mb-0">';
+                // Add input event listeners
+                newPasswordField.addEventListener('input', validatePassword);
+                confirmPasswordField.addEventListener('input', validatePassword);
+                currentPasswordField.addEventListener('input', validatePassword);
 
-                // Check password length
-                const lengthClass = newPassword.length >= 6 ? 'text-success' : 'text-danger';
-                const lengthIcon = newPassword.length >= 6 ? 'bi-check-circle-fill' : 'bi-x-circle-fill';
-                feedback += '<li class="' + lengthClass + '"><i class="bi ' + lengthIcon +
-                    '"></i> At least 6 characters long</li>';
+                // Form submission with enhanced validation
+                changePasswordForm.addEventListener('submit', function(e) {
+                    const newPassword = newPasswordField.value;
+                    const confirmPassword = confirmPasswordField.value;
 
-                // Check passwords match
-                const matchClass = confirmPassword === newPassword ? 'text-success' : 'text-danger';
-                const matchIcon = confirmPassword === newPassword ? 'bi-check-circle-fill' : 'bi-x-circle-fill';
-                feedback += '<li class="' + matchClass + '"><i class="bi ' + matchIcon +
-                    '"></i> Passwords match</li>';
+                    if (newPassword !== confirmPassword) {
+                        e.preventDefault();
+                        showToast('New passwords do not match!', 'danger');
+                        return false;
+                    }
 
-                // Check current password provided
-                const currentClass = currentPassword.length > 0 ? 'text-success' : 'text-danger';
-                const currentIcon = currentPassword.length > 0 ? 'bi-check-circle-fill' : 'bi-x-circle-fill';
-                feedback += '<li class="' + currentClass + '"><i class="bi ' + currentIcon +
-                    '"></i> Current password provided</li>';
+                    if (newPassword.length < 6) {
+                        e.preventDefault();
+                        showToast('Password must be at least 6 characters long!', 'danger');
+                        return false;
+                    }
 
-                feedback += '</ul>';
+                    // Form is valid, allow submission
+                    return true;
+                });
 
-                feedbackElement.innerHTML = feedback;
-
-                // Validate form for submission
-                if (newPassword.length < 6 || confirmPassword !== newPassword || currentPassword.length === 0) {
-                    isValid = false;
-                }
-
-                // Update submit button state
-                const submitBtn = changePasswordForm.querySelector('button[type="submit"]');
-                submitBtn.disabled = !isValid;
+                // Initialize validation on page load
+                validatePassword();
             }
 
-            // Add input event listeners
-            newPasswordField.addEventListener('input', validatePassword);
-            confirmPasswordField.addEventListener('input', validatePassword);
-            currentPasswordField.addEventListener('input', validatePassword);
+            // Show password change modal if there was a submission error
+            {if $passwordError neq ''}
+                new bootstrap.Modal(document.getElementById('changePasswordModal')).show();
+            {/if}
 
-            // Form submission with enhanced validation
-            changePasswordForm.addEventListener('submit', function(e) {
-                const newPassword = newPasswordField.value;
-                const confirmPassword = confirmPasswordField.value;
-
-                if (newPassword !== confirmPassword) {
-                    e.preventDefault();
-                    showToast('New passwords do not match!', 'danger');
-                    return false;
-                }
-
-                if (newPassword.length < 6) {
-                    e.preventDefault();
-                    showToast('Password must be at least 6 characters long!', 'danger');
-                    return false;
-                }
-
-                // Form is valid, allow submission
-                return true;
-            });
-
-            // Initialize validation on page load
-            validatePassword();
-        }
-
-        // Show password change modal if there was a submission error
-        {if $passwordError neq ''}
-        new bootstrap.Modal(document.getElementById('changePasswordModal')).show();
-        {/if}
-
-        // Show toast for password change success
-        {if $passwordMessage neq ''}
-        setTimeout(() => {
-            showToast("{$passwordMessage}", 'success');
-            }, 500);
-        {/if}
-    });
-</script>
+            // Show toast for password change success
+            {if $passwordMessage neq ''}
+                setTimeout(() => {
+                    showToast("{$passwordMessage}", 'success');
+                }, 500);
+            {/if}
+        });
+    </script>
 {/block}
