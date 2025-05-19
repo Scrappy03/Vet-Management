@@ -15,9 +15,23 @@ $user_name = trim($first_name . ' ' . $last_name);
 $Patient = new Patient($Conn);
 $patients = $Patient->getPatients('', '', 'active');
 
+// Add error handling for patients data
+if ($patients === false) {
+    // If getPatients() fails, provide empty array instead of false
+    $patients = [];
+    // Log the error
+    error_log("Error fetching patients in calendar controller: " . print_r($Patient->getErrorInfo(), true));
+}
+
 // Get all active staff members for appointment assignments
 $User = new User($Conn);
 $staff = $User->getAllStaffByRole('veterinarian');
+
+// Add error handling for staff data
+if ($staff === false) {
+    $staff = [];
+    error_log("Error fetching staff in calendar controller: " . print_r($User->getErrorInfo(), true));
+}
 
 // Assign to Smarty
 $Smarty->assign('user', $user_data);

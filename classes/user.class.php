@@ -214,4 +214,23 @@ class User {
             return false;
         }
     }
+    
+    public function getAllStaffByRole($role = null) {
+        try {
+            if ($role) {
+                $query = "SELECT * FROM staff WHERE role = :role AND status = 'active' ORDER BY first_name, last_name";
+                $stmt = $this->Conn->prepare($query);
+                $stmt->bindParam(':role', $role);
+            } else {
+                $query = "SELECT * FROM staff WHERE status = 'active' ORDER BY first_name, last_name";
+                $stmt = $this->Conn->prepare($query);
+            }
+            
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error in getAllStaffByRole: " . $e->getMessage());
+            return [];
+        }
+    }
 }

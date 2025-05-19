@@ -11,151 +11,66 @@ document.addEventListener('DOMContentLoaded', function () {
         'default': '#0d6efd' // default blue
     };
 
-    // Function to create consistent event objects
-    function createEventObject(title, start, end, type, pet, status, notes, careStatus) {
-        const color = status === 'completed' ? '#6c757d' : eventColors[type] || eventColors['default'];
-
-        // Extract owner from pet string if available (format: "Pet Name (Type) - Owner Name")
-        let petName = pet;
-        let owner = "";
-
-        if (pet.includes(" - ")) {
-            const parts = pet.split(" - ");
-            petName = parts[0];
-            owner = parts[1];
-        }
-
-        return {
-            title: title,
-            start: start,
-            end: end,
-            backgroundColor: color,
-            borderColor: color,
-            textColor: '#ffffff',
-            classNames: [`event-${status}`, `event-type-${type.toLowerCase().replace(/\s+/g, '-')}`],
-            extendedProps: {
-                owner: owner,
-                type: type,
-                status: status,
-                pet: petName,
-                notes: notes || '',
-                careStatus: careStatus || ''
-            }
-        };
-    }
-
-    // Sample initial events with consistent formatting
-    const initialEvents = [
-        createEventObject(
-            'Vaccination - Max (Dog)',
-            '2025-03-10T09:00:00',
-            '2025-03-10T10:00:00',
-            'Vaccination',
-            'Max (Dog) - Jane Smith',
-            'upcoming',
-            '',
-            'aggressive'
-        ),
-        createEventObject(
-            'Regular Checkup - Luna (Cat)',
-            '2025-03-10T11:30:00',
-            '2025-03-10T12:30:00',
-            'Check-up',
-            'Luna (Cat) - Mike Johnson',
-            'completed',
-            '',
-            'anxious'
-        ),
-        createEventObject(
-            'Dental Cleaning - Rocky (Dog)',
-            '2025-03-10T14:00:00',
-            '2025-03-10T15:30:00',
-            'Dental Cleaning',
-            'Rocky (Dog) - Sarah Williams',
-            'upcoming',
-            'Needs specific dental tools'
-        ),
-        createEventObject(
-            'Surgery - Bella (Cat)',
-            '2025-03-04T10:00:00',
-            '2025-03-04T12:00:00',
-            'Surgery',
-            'Bella (Cat) - John Davis',
-            'completed',
-            'Post-op care instructions provided',
-            'special-needs'
-        )
-    ];
+    // Calendar element
+    const calendarEl = document.getElementById('calendar');
 
     // Initialize FullCalendar
-    const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        initialDate: '2025-03-10', // Set to a specific date to show the sample events
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        buttonText: {
-            today: 'Today',
-            month: 'Month',
-            week: 'Week',
-            day: 'Day'
-        },
-        events: initialEvents,
-        selectable: true,
-        editable: true,
-        dayMaxEvents: true, // allow "more" link when too many events
-        eventTimeFormat: {
-            hour: 'numeric',
-            minute: '2-digit',
-            meridiem: 'short'
-        },
-        nowIndicator: true, // show a marker for current time
-        slotMinTime: '08:00:00', // Start day view at 8 AM
-        slotMaxTime: '18:00:00', // End day view at 6 PM
-        expandRows: true, // expand rows to fill available height
-        height: 600, // fixed height
 
-        // Event appearance control for consistency across views
-        eventDidMount: function (info) {
-            // Add tooltips to events
-            const tooltip = new bootstrap.Tooltip(info.el, {
-                title: `${info.event.title}\n${info.event.extendedProps.owner}\n${info.event.start.toLocaleTimeString()} - ${info.event.end.toLocaleTimeString()}`,
-                placement: 'top',
-                trigger: 'hover',
-                container: 'body'
-            });
+        // Instead of initialEvents, use events function to fetch data from the API
+        events: function (info, successCallback, failureCallback) {
+            // Format dates as ISO strings for API
+            const startStr = info.startStr;
+            const endStr = info.endStr;
 
-            // Ensure consistent coloring across all views
-            const backgroundColor = info.event.backgroundColor;
-            const view = info.view.type;
+            // Make AJAX call to get events for the requested date range
+            fetch(`api/appointments.php?start=${startStr}&end=${endStr}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Process events and apply color formatting
+                    const formattedEvents = data.map(event => {
+                        const color = event.status === 'completed' ? '#6c757d' : eventColors[event.type] || eventColors['default'];
 
-            // Apply background color to the entire event element
-            info.el.style.backgroundColor = backgroundColor;
-            info.el.style.borderColor = backgroundColor;
-            info.el.style.color = '#ffffff';
+                        return {
+                            id: event.id,
+                            title: event.title,
+                            start: event.start,
+                            end: event.end,
+                            backgroundColor: color,
+                            borderColor: color,
+                            textColor: '#ffffff',
+                            classNames: [`event-${event.status}`, `event-type-${event.type.toLowerCase().replace(/\s+/g, '-')}`],
+                            extendedProps: {
+                                owner: event.owner_name,
+                                type: event.type,
+                                status: event.status,
+                                pet: event.pet_name,
+                                notes: event.notes || '',
+                                careStatus: event.care_status || ''
+                            }
+                        };
+                    });
 
-            // Specific handling for month view dots
-            if (view === 'dayGridMonth') {
-                const dotElements = info.el.querySelectorAll('.fc-daygrid-event-dot');
-                dotElements.forEach(dot => {
-                    dot.style.borderColor = backgroundColor;
+                    successCallback(formattedEvents);
+                })
+                .catch(error => {
+                    console.error('Error fetching events:', error);
+                    failureCallback(error);
                 });
-            }
         },
 
-        // Force month view to use the block style instead of dots for event rendering
-        eventDisplay: 'block',
-
-        // For month view specifically
-        views: {
-            dayGridMonth: {
-                eventMaxStack: 3
-            }
-        },
-
+        // Keep your existing event rendering, click handlers, etc.
         eventClick: function (info) {
             // Create a nicer modal for event details instead of alert
             const event = info.event;
@@ -375,9 +290,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Handle adding new appointments
+    // Handle adding new appointments - update to use AJAX
     document.getElementById('scheduleAppointmentBtn').addEventListener('click', function () {
-        const pet = document.getElementById('pet').value;
+        const patientId = document.getElementById('pet').value;
+        const staffId = document.getElementById('staff').value;
         const date = document.getElementById('appointmentDate').value;
         const time = document.getElementById('appointmentTime').value;
         const type = document.getElementById('appointmentType').value;
@@ -385,50 +301,66 @@ document.addEventListener('DOMContentLoaded', function () {
         const careStatus = document.getElementById('animalCareStatus').value;
 
         // Basic validation
-        if (!pet || !date || !time || !type) {
+        if (!patientId || !staffId || !date || !time || !type) {
             alert('Please fill in all required fields');
             return;
         }
 
-        // Create event
-        const startDateTime = new Date(`${date}T${time}`);
-        const endDateTime = new Date(startDateTime);
-        endDateTime.setMinutes(endDateTime.getMinutes() + 60); // Default 1-hour appointment
+        // Create appointment data object
+        const appointmentData = {
+            patient_id: patientId,
+            staff_id: staffId,
+            appointment_type: type,
+            start_time: `${date}T${time}`,
+            notes: notes,
+            care_status: careStatus,
+            status: 'upcoming'
+        };
 
-        // Extract pet name for title
-        const petName = pet.includes(" - ") ? pet.split(" - ")[0] : pet;
+        // Send POST request to API
+        fetch('api/appointments.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(appointmentData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Refresh events from the server
+                    calendar.refetchEvents();
 
-        // Create a consistent event object using our helper function
-        const eventObject = createEventObject(
-            `${type} - ${petName}`,
-            startDateTime,
-            endDateTime,
-            type,
-            pet,
-            'upcoming',
-            notes,
-            careStatus
-        );
+                    // Update schedule if the new event is for the currently displayed date
+                    const currentDate = calendar.getDate();
+                    const appointmentDate = new Date(date);
 
-        // Add to calendar
-        calendar.addEvent(eventObject);
+                    if (appointmentDate.getFullYear() === currentDate.getFullYear() &&
+                        appointmentDate.getMonth() === currentDate.getMonth() &&
+                        appointmentDate.getDate() === currentDate.getDate()) {
+                        updateScheduleForDate(currentDate);
+                    }
 
-        // Update schedule if the new event is for the currently displayed date
-        const currentDate = calendar.getDate();
-        if (startDateTime.getFullYear() === currentDate.getFullYear() &&
-            startDateTime.getMonth() === currentDate.getMonth() &&
-            startDateTime.getDate() === currentDate.getDate()) {
-            updateScheduleForDate(currentDate);
-        }
-
-        // Close modal and reset form
-        const modal = bootstrap.Modal.getInstance(document.getElementById('newAppointmentModal'));
-        modal.hide();
-        document.getElementById('appointmentForm').reset();
-    });
-
-    // Add event IDs to enable finding events when clicking schedule items
-    initialEvents.forEach((event, index) => {
-        event.id = 'initial-event-' + index;
+                    // Show success message
+                    alert('Appointment scheduled successfully!');
+                } else {
+                    alert('Failed to schedule appointment: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error scheduling appointment:', error);
+                alert('Error scheduling appointment. Please try again.');
+            })
+            .finally(() => {
+                // Close modal and reset form
+                const modal = bootstrap.Modal.getInstance(document.getElementById('newAppointmentModal'));
+                modal.hide();
+                document.getElementById('appointmentForm').reset();
+            });
     });
 });
