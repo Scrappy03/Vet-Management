@@ -108,10 +108,10 @@
                             <label class="form-label">Pet</label>
                             <select class="form-select" id="pet" required>
                                 <option selected disabled value="">Select pet</option>
-                                <option>Max (Dog) - Jane Smith</option>
-                                <option>Luna (Cat) - Mike Johnson</option>
-                                <option>Rocky (Dog) - Sarah Williams</option>
-                                <option>Bella (Cat) - John Davis</option>
+                                {foreach from=$patients item=patient}
+                                    <option value="{$patient.patient_id}">{$patient.name} ({$patient.species}) -
+                                        {$patient.owner_name}</option>
+                                {/foreach}
                             </select>
                         </div>
                         <div class="mb-3">
@@ -143,6 +143,15 @@
                         <div class="mb-3">
                             <label class="form-label">Notes</label>
                             <textarea class="form-control" rows="3" id="appointmentNotes"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Veterinarian</label>
+                            <select class="form-select" id="staff" required>
+                                <option selected disabled value="">Select veterinarian</option>
+                                {foreach from=$staff item=member}
+                                    <option value="{$member.staff_id}">{$member.first_name} {$member.last_name}</option>
+                                {/foreach}
+                            </select>
                         </div>
                     </form>
                 </div>
