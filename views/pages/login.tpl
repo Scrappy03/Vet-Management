@@ -9,7 +9,7 @@
                         <div class="card-body p-4">
                             <!-- Login Form -->
                             {if !isset($smarty.post.register)}
-                                <form method="post" id="loginForm" action="index.php?p=login">
+                                <form method="post" id="loginForm" action="login">
                                     <div class="text-center mb-4" id="login-header">
                                         <h3 class="fw-bold text-primary mb-2">Welcome Back</h3>
                                         <p class="text-muted">Please enter your credentials</p>
@@ -44,7 +44,7 @@
                                             system status</a>
                                     </p>
                                     <p class="text-center mb-0">
-                                        Don't have an account? <a href="index.php?p=login&show=register"
+                                        Don't have an account? <a href="login?show=register"
                                     class="text-primary text-decoration-none">Sign up</a>
                             </p>
                         </form>
@@ -52,7 +52,7 @@
 
                         <!-- Registration Form -->
                         {if isset($smarty.get.show) && $smarty.get.show == 'register' || isset($smarty.post.register)}
-                        <form method="post" action="index.php?p=login" id="registrationForm">
+                        <form method="post" action="login" id="registrationForm">
                             <div class="text-center mb-4" id="registration-header">
                                 <h3 class="fw-bold text-primary mb-2">Create Account</h3>
                                 <p class="text-muted">Register for a new account</p>
@@ -127,8 +127,8 @@
                             </button>
 
                             <p class="text-center mb-0">
-                                Already have an account? <a href="index.php?p=login"
-                                    class="text-primary text-decoration-none">Sign in</a>
+                                Already have an account? <a href="login" class="text-primary text-decoration-none">Sign
+                                    in</a>
                             </p>
                         </form>
                         {/if}

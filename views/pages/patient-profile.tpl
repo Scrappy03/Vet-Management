@@ -8,30 +8,30 @@
         </div>
 
         <nav class="mb-4">
-            <a href="index.php?p=dashboard" class="dashboard-nav-link">
+            <a href="dashboard" class="dashboard-nav-link">
                 <i class="bi bi-house-door"></i>
                 Dashboard
             </a>
-            <a href="index.php?p=calendar" class="dashboard-nav-link">
+            <a href="calendar" class="dashboard-nav-link">
                 <i class="bi bi-calendar"></i>
                 Appointments
             </a>
-            <a href="index.php?p=patients" class="dashboard-nav-link active">
+            <a href="patients" class="dashboard-nav-link active">
                 <i class="bi bi-clipboard2-pulse"></i>
                 Patients
             </a>
-            <a href="index.php?p=staff" class="dashboard-nav-link">
+            <a href="staff" class="dashboard-nav-link">
                 <i class="bi bi-person"></i>
                 Staff
             </a>
-            <a href="index.php?p=settings" class="dashboard-nav-link">
+            <a href="settings" class="dashboard-nav-link">
                 <i class="bi bi-gear"></i>
                 Settings
             </a>
         </nav>
 
         <div class="mt-auto">
-            <a href="index.php?p=logout" class="btn btn-sm btn-outline-danger w-100">
+            <a href="logout" class="btn btn-sm btn-outline-danger w-100">
                 <i class="bi bi-box-arrow-right"></i> Logout
             </a>
         </div>
@@ -41,7 +41,7 @@
         <!-- Back button and action buttons -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <a href="index.php?p=patients" class="btn btn-outline-primary">
+                <a href="patients" class="btn btn-outline-primary">
                     <i class="bi bi-arrow-left"></i> Back to Patients
                 </a>
             </div>

@@ -14,8 +14,7 @@
                         <a class="nav-link active" href="#"><i class="bi bi-house-door me-1"></i>Portal Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?p=dashboard"><i
-                                class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+                        <a class="nav-link" href="dashboard"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#support"><i class="bi bi-question-circle me-1"></i>Support</a>
@@ -25,7 +24,7 @@
                     </li>
                 </ul>
                 <div class="nav-item">
-                    <a href="index.php?p=login" class="btn btn-outline-primary">
+                    <a href="login" class="btn btn-outline-primary">
                         <i class="bi bi-box-arrow-in-right me-1"></i>Login
                     </a>
                 </div>
@@ -85,7 +84,7 @@
                 <p class="lead mb-4">Welcome to the VetCare staff management system. Please login to access your
                     dashboard.</p>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="index.php?p=dashboard" class="btn btn-primary btn-lg">
+                    <a href="dashboard" class="btn btn-primary btn-lg">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Access Dashboard
                     </a>
                     <a href="#support" class="btn btn-outline-primary btn-lg">
