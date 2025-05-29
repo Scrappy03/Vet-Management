@@ -146,6 +146,14 @@
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label class="form-label">Appointment Status</label>
+                        <select class="form-select" id="appointmentStatus">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Notes</label>
                         <textarea class="form-control" rows="3" id="appointmentNotes"></textarea>
                     </div>
@@ -169,7 +177,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="scheduleAppointmentBtn">Schedule
+                <button type="button" class="btn btn-primary" id="scheduleAppointmentBtn" data-mode="create">Schedule
                     Appointment</button>
             </div>
         </div>

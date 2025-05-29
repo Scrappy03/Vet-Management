@@ -30,7 +30,7 @@
         </nav>
 
         <div class="mt-auto">
-            <a href="logout" class="btn btn-sm btn-outline-danger w-100">
+            <a href="logout" class="btn btn-sm w-100">
                 <i class="bi bi-box-arrow-right"></i> Logout
             </a>
         </div>

@@ -2,6 +2,16 @@
 require_once(__DIR__ . '/../includes/boot.include.php');
 require_once(__DIR__ . '/../includes/auth.include.php');
 
+// Set appropriate CORS headers
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Handle preflight OPTIONS requests
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
+
 // Ensure user is logged in
 if (!is_logged_in()) {
     header('HTTP/1.1 401 Unauthorized');
@@ -14,6 +24,28 @@ $Appointment = new Appointment($Conn);
 
 // Handle GET requests (fetch appointments)
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Special case for single appointment
+    if (isset($_GET['id'])) {
+        $id = (int)$_GET['id']; // Ensure integer type
+        error_log("Fetching appointment with ID: " . $id);
+        $appointment = $Appointment->getAppointmentById($id);
+        
+        if ($appointment) {
+            header('Content-Type: application/json');
+            error_log("Appointment found: " . json_encode($appointment));
+            echo json_encode($appointment);
+        } else {
+            header('HTTP/1.1 404 Not Found');
+            error_log("Appointment not found. Error: " . json_encode($Appointment->getErrorInfo()));
+            echo json_encode([
+                'error' => 'Appointment not found',
+                'details' => $Appointment->getErrorInfo(),
+                'query' => $Appointment->getLastQuery()
+            ]);
+        }
+        exit;
+    }
+
     $start = isset($_GET['start']) ? $_GET['start'] : null;
     $end = isset($_GET['end']) ? $_GET['end'] : null;
     
@@ -35,8 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         
         // Format data for FullCalendar
         $events = array_map(function($appt) {
+            // Make sure the appointment_id is sent as an integer for client-side processing
+            $appointmentId = (int)$appt['appointment_id'];
+            error_log("Formatting appointment ID: " . $appointmentId);
+            
             return [
-                'id' => $appt['appointment_id'],
+                'id' => $appointmentId,
                 'title' => $appt['appointment_type'] . ' - ' . $appt['pet_name'],
                 'start' => $appt['start_time'],
                 'end' => $appt['end_time'],
@@ -96,6 +132,135 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             header('HTTP/1.1 500 Internal Server Error');
             echo json_encode(['error' => 'Failed to create appointment', 'details' => $Appointment->getErrorInfo()]);
+        }
+    } catch (Exception $e) {
+        header('HTTP/1.1 500 Internal Server Error');
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+// Handle PUT requests (update appointment)
+else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    
+    // Get data from request and log it for debugging
+    $jsonData = json_decode(file_get_contents('php://input'), true);
+    $data = $jsonData;
+    error_log("Processing update request with data: " . json_encode($data));
+    
+    // Basic validation with detailed logging
+    $requiredFields = [
+        'appointment_id',
+        'patient_id',
+        'staff_id',
+        'start_time',
+        'appointment_type'
+    ];
+    
+    $missingFields = [];
+    foreach ($requiredFields as $field) {
+        if (!isset($data[$field])) {
+            $missingFields[] = $field;
+        }
+    }
+    
+    if (!empty($missingFields)) {
+        header('HTTP/1.1 400 Bad Request');
+        $errorMsg = [
+            'error' => 'Missing required fields',
+            'missing' => $missingFields,
+            'received_data' => $data
+        ];
+        error_log("Validation failed: " . json_encode($errorMsg));
+        echo json_encode($errorMsg);
+        exit;
+    }
+    
+    // Ensure appointment_id is an integer
+    $data['appointment_id'] = (int)$data['appointment_id'];
+    error_log("Update operation for appointment ID: " . $data['appointment_id']);
+    
+    try {
+        // Calculate end time (default to 1 hour after start)
+        $start = new DateTime($data['start_time']);
+        $end = isset($data['end_time']) ? new DateTime($data['end_time']) : clone $start;
+        
+        if (!isset($data['end_time'])) {
+            $end->modify('+1 hour');
+        }
+        
+        error_log("About to call updateAppointment with appointment_id: " . $data['appointment_id']);
+        $result = $Appointment->updateAppointment(
+            $data['appointment_id'],
+            $data['patient_id'],
+            $data['staff_id'],
+            $data['appointment_type'],
+            $data['start_time'],
+            $end->format('Y-m-d H:i:s'),
+            $data['status'] ?? 'upcoming',
+            $data['notes'] ?? null,
+            $data['care_status'] ?? null
+        );
+        
+        if ($result) {
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => true,
+                'appointment_id' => $data['appointment_id']
+            ]);
+            error_log("Update successful for appointment ID: " . $data['appointment_id']);
+        } else {
+            header('HTTP/1.1 500 Internal Server Error');
+            error_log("Update failed: " . json_encode($Appointment->getErrorInfo()));
+            echo json_encode([
+                'error' => 'Failed to update appointment', 
+                'details' => $Appointment->getErrorInfo(),
+                'query' => $Appointment->getLastQuery()
+            ]);
+        }
+    } catch (Exception $e) {
+        header('HTTP/1.1 500 Internal Server Error');
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+// Handle DELETE requests (delete appointment)
+else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    // Get data from request
+    $jsonData = json_decode(file_get_contents('php://input'), true);
+    
+    // Check if we have an ID either in JSON body or query string
+    $appointmentId = null;
+    if (isset($jsonData['appointment_id'])) {
+        $appointmentId = (int)$jsonData['appointment_id'];
+    } else if (isset($_GET['id'])) {
+        $appointmentId = (int)$_GET['id'];
+    }
+    
+    // Validate we have an appointment ID
+    if (!$appointmentId) {
+        header('HTTP/1.1 400 Bad Request');
+        echo json_encode(['error' => 'Missing appointment ID']);
+        exit;
+    }
+    
+    error_log("Delete operation for appointment ID: " . $appointmentId);
+    
+    try {
+        $result = $Appointment->deleteAppointment($appointmentId);
+        
+        if ($result) {
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => true,
+                'message' => 'Appointment deleted successfully'
+            ]);
+            error_log("Delete successful for appointment ID: " . $appointmentId);
+        } else {
+            header('HTTP/1.1 500 Internal Server Error');
+            error_log("Delete failed: " . json_encode($Appointment->getErrorInfo()));
+            echo json_encode([
+                'error' => 'Failed to delete appointment', 
+                'details' => $Appointment->getErrorInfo(),
+                'query' => $Appointment->getLastQuery()
+            ]);
         }
     } catch (Exception $e) {
         header('HTTP/1.1 500 Internal Server Error');
