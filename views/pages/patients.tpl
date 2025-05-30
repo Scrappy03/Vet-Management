@@ -179,7 +179,8 @@
                                         <td>{$patient.last_visit_formatted}</td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
-                                                <a href="patient-profile?id={$patient.patient_id}" class="btn btn-outline-primary" title="View Details">
+                                                <a href="patient-profile?id={$patient.patient_id}" class="btn btn-outline-primary"
+                                                    title="View Details">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
                                                 <button class="btn btn-outline-primary" title="Edit Patient"

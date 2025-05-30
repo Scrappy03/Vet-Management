@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize variables
     let currentEditingPatientId = null;
-    
+
     // DOM elements
     const tableViewBtn = document.getElementById('tableViewBtn');
     const cardViewBtn = document.getElementById('cardViewBtn');
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (saveButton && form) {
         saveButton.addEventListener('click', function (event) {
             event.preventDefault();
-            
+
             if (!form.checkValidity()) {
                 event.stopPropagation();
                 form.classList.add('was-validated');
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Collect form data
             const formData = collectFormData();
-            
+
             if (currentEditingPatientId) {
                 // Update existing patient
                 formData.patient_id = currentEditingPatientId;
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 currentEditingPatientId = patientId;
                 modalTitle.textContent = 'Edit Patient';
                 saveButton.textContent = 'Update Patient';
-                
+
                 // Show the modal
                 const modal = new bootstrap.Modal(addPatientModal);
                 modal.show();
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('petGender').value = patient.gender || '';
         document.getElementById('petNeutered').value = patient.neutered !== null ? patient.neutered.toString() : '';
         document.getElementById('microchipID').value = patient.microchip_id || '';
-        
+
         // Reconstruct owner name from first_name and last_name or use owner_name if available
         let ownerName = '';
         if (patient.owner_name) {
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ownerName = (patient.first_name || '') + ' ' + (patient.last_name || '');
             ownerName = ownerName.trim();
         }
-        
+
         document.getElementById('ownerName').value = ownerName;
         document.getElementById('ownerEmail').value = patient.email || patient.owner_email || '';
         document.getElementById('ownerPhone').value = patient.phone || patient.owner_phone || '';
