@@ -120,6 +120,182 @@ try {
             ]);
         }
         
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Create new patient
+        $input = json_decode(file_get_contents('php://input'), true);
+        
+        if (!$input) {
+            echo json_encode([
+                'success' => false,
+                'error' => 'Invalid JSON data'
+            ]);
+            exit;
+        }
+        
+        // Validate required fields
+        $required_fields = ['name', 'species', 'breed', 'age', 'gender', 'owner_name', 'owner_email', 'owner_phone', 'status'];
+        foreach ($required_fields as $field) {
+            if (empty($input[$field])) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => "Missing required field: $field"
+                ]);
+                exit;
+            }
+        }
+        
+        // Calculate date of birth from age (assuming current year)
+        $current_year = date('Y');
+        $birth_year = $current_year - (int)$input['age'];
+        $date_of_birth = $birth_year . '-01-01'; // Default to January 1st
+        
+        // Split owner name into first and last name
+        $owner_name_parts = explode(' ', trim($input['owner_name']), 2);
+        $first_name = $owner_name_parts[0];
+        $last_name = isset($owner_name_parts[1]) ? $owner_name_parts[1] : '';
+        
+        // Create patient data array
+        $patient_data = [
+            'name' => trim($input['name']),
+            'species' => trim($input['species']),
+            'breed' => trim($input['breed']),
+            'gender' => trim($input['gender']),
+            'date_of_birth' => $date_of_birth,
+            'neutered' => isset($input['neutered']) ? $input['neutered'] : null,
+            'weight' => null, // We don't collect weight in the form yet
+            'microchip_id' => isset($input['microchip_id']) ? trim($input['microchip_id']) : null,
+            'allergies' => isset($input['allergies']) ? trim($input['allergies']) : null,
+            'status' => trim($input['status'])
+        ];
+        
+        // Create owner data array
+        $owner_data = [
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => trim($input['owner_email']),
+            'phone' => trim($input['owner_phone']),
+            'address' => isset($input['owner_address']) ? trim($input['owner_address']) : null
+        ];
+        
+        $result = $Patient->createPatient($patient_data, $owner_data);
+        
+        if ($result !== false) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Patient created successfully',
+                'patient_id' => $result
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'error' => 'Failed to create patient',
+                'debug' => $Patient->getErrorInfo()
+            ]);
+        }
+        
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+        // Update existing patient
+        $input = json_decode(file_get_contents('php://input'), true);
+        
+        if (!$input || !isset($input['patient_id'])) {
+            echo json_encode([
+                'success' => false,
+                'error' => 'Invalid data or missing patient ID'
+            ]);
+            exit;
+        }
+        
+        $patient_id = (int)$input['patient_id'];
+        
+        // Validate required fields
+        $required_fields = ['name', 'species', 'breed', 'age', 'gender', 'owner_name', 'owner_email', 'owner_phone', 'status'];
+        foreach ($required_fields as $field) {
+            if (empty($input[$field])) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => "Missing required field: $field"
+                ]);
+                exit;
+            }
+        }
+        
+        // Calculate date of birth from age (assuming current year)
+        $current_year = date('Y');
+        $birth_year = $current_year - (int)$input['age'];
+        $date_of_birth = $birth_year . '-01-01'; // Default to January 1st
+        
+        // Split owner name into first and last name
+        $owner_name_parts = explode(' ', trim($input['owner_name']), 2);
+        $first_name = $owner_name_parts[0];
+        $last_name = isset($owner_name_parts[1]) ? $owner_name_parts[1] : '';
+        
+        // Create patient data array
+        $patient_data = [
+            'name' => trim($input['name']),
+            'species' => trim($input['species']),
+            'breed' => trim($input['breed']),
+            'gender' => trim($input['gender']),
+            'date_of_birth' => $date_of_birth,
+            'neutered' => isset($input['neutered']) ? $input['neutered'] : null,
+            'weight' => null, // We don't collect weight in the form yet
+            'microchip_id' => isset($input['microchip_id']) ? trim($input['microchip_id']) : null,
+            'allergies' => isset($input['allergies']) ? trim($input['allergies']) : null,
+            'status' => trim($input['status'])
+        ];
+        
+        // Create owner data array
+        $owner_data = [
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => trim($input['owner_email']),
+            'phone' => trim($input['owner_phone']),
+            'address' => isset($input['owner_address']) ? trim($input['owner_address']) : null
+        ];
+        
+        $result = $Patient->updatePatient($patient_id, $patient_data, $owner_data);
+        
+        if ($result) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Patient updated successfully'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'error' => 'Failed to update patient',
+                'debug' => $Patient->getErrorInfo()
+            ]);
+        }
+        
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        // Delete patient
+        $input = json_decode(file_get_contents('php://input'), true);
+        
+        if (!$input || !isset($input['patient_id'])) {
+            echo json_encode([
+                'success' => false,
+                'error' => 'Missing patient ID'
+            ]);
+            exit;
+        }
+        
+        $patient_id = (int)$input['patient_id'];
+        
+        $result = $Patient->deletePatient($patient_id);
+        
+        if ($result) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Patient deleted successfully'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'error' => 'Failed to delete patient',
+                'debug' => $Patient->getErrorInfo()
+            ]);
+        }
+        
     } else {
         echo json_encode([
             'success' => false,

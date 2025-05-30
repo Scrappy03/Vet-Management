@@ -179,14 +179,18 @@
                                         <td>{$patient.last_visit_formatted}</td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
-                                                <a href="patient-profile?id={$patient.patient_id}" class="btn btn-outline-primary">
+                                                <a href="patient-profile?id={$patient.patient_id}" class="btn btn-outline-primary" title="View Details">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
-                                                <button class="btn btn-outline-primary"
+                                                <button class="btn btn-outline-primary" title="Edit Patient"
                                                     onclick="editPatient({$patient.patient_id})">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
-                                                <button class="btn btn-outline-primary"
+                                                <button class="btn btn-outline-danger" title="Delete Patient"
+                                                    onclick="deletePatient({$patient.patient_id})">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                                <button class="btn btn-outline-primary" title="Schedule Appointment"
                                                     onclick="scheduleAppointment({$patient.patient_id})">
                                                     <i class="bi bi-calendar-plus"></i>
                                                 </button>
@@ -261,10 +265,20 @@
                                             <a href="patient-profile?id={$patient.patient_id}" class="btn btn-sm btn-outline-primary">
                                                 <i class="bi bi-eye"></i> View Details
                                             </a>
-                                            <button class="btn btn-sm btn-outline-primary"
-                                                onclick="scheduleAppointment({$patient.patient_id})">
-                                                <i class="bi bi-calendar-plus"></i> Schedule
-                                            </button>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary" title="Edit Patient"
+                                                    onclick="editPatient({$patient.patient_id})">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger" title="Delete Patient"
+                                                    onclick="deletePatient({$patient.patient_id})">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                                <button class="btn btn-outline-primary" title="Schedule Appointment"
+                                                    onclick="scheduleAppointment({$patient.patient_id})">
+                                                    <i class="bi bi-calendar-plus"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -366,9 +380,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="microchipID" class="form-label">Microchip ID</label>
-                                <input type="text" class="form-control" id="microchipID">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="microchipID" class="form-label">Microchip ID</label>
+                                    <input type="text" class="form-control" id="microchipID">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="petNeutered" class="form-label">Neutered/Spayed</label>
+                                    <select class="form-select" id="petNeutered">
+                                        <option value="">Not specified</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -408,21 +432,17 @@
                                         <select class="form-select" id="patientStatus" required>
                                             <option value="">Select Status</option>
                                             <option value="active">Active</option>
-                                            <option value="treatment">Under Treatment</option>
-                                            <option value="scheduled">Scheduled</option>
+                                            <option value="under treatment">Under Treatment</option>
                                             <option value="recovery">Recovery</option>
+                                            <option value="inactive">Inactive</option>
                                         </select>
                                         <div class="invalid-feedback">
                                             Please select the patient's status.
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="medicalHistory" class="form-label">Medical History</label>
-                                        <textarea class="form-control" id="medicalHistory" rows="3"></textarea>
-                                    </div>
-                                    <div class="mb-3">
                                         <label for="allergies" class="form-label">Allergies/Special Notes</label>
-                                        <textarea class="form-control" id="allergies" rows="2"></textarea>
+                                        <textarea class="form-control" id="allergies" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
