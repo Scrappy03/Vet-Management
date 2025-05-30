@@ -285,15 +285,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Refresh patients list
     function refreshPatientsList() {
         // Reload the page to show updated patient list
-        // In a more sophisticated implementation, we would update the table/cards dynamically
         setTimeout(() => {
             window.location.reload();
         }, 1000);
-    }
-
-    // Schedule appointment function (placeholder)
-    function scheduleAppointment(patientId) {
-        showAlert('Appointment scheduling feature coming soon!', 'info');
     }
 
     // Make functions globally available

@@ -905,21 +905,18 @@ body {
 
 /* ===== Responsive Enhancements ===== */
 @media (max-width: 768px) {
-    .chart-container {
-        height: 150px;
+    .dashboard-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
     }
 
-    .quick-actions .btn {
-        font-size: 0.8rem;
-        padding: 0.5rem;
+    .dashboard-sidebar.show {
+        transform: translateX(0);
     }
 
-    .quick-actions .btn i {
-        font-size: 1rem;
-    }
-
-    .performance-metrics .h4 {
-        font-size: 1.2rem;
+    .dashboard-main {
+        margin-left: 0;
+        padding: 1rem;
     }
 }
 

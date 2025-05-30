@@ -876,8 +876,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // ===== Dashboard Auto-refresh =====
-
     // Auto-refresh various dashboard components
     setInterval(() => {
         refreshNotifications();
@@ -886,7 +884,5 @@ document.addEventListener('DOMContentLoaded', function () {
             refreshActivity();
         }
     }, 60000); // Check every minute
-
-    // ===== Performance Charts =====
 
 });

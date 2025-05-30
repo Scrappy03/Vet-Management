@@ -74,9 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         },
 
-        // Keep your existing event rendering, click handlers, etc.
         eventClick: function (info) {
-            // Create a nicer modal for event details instead of alert
             const event = info.event;
             console.log("Event clicked:", event, "ID:", event.id);
             const props = event.extendedProps;
@@ -305,7 +303,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Get the event and simulate a click 
                 const calEvent = calendar.getEventById(event.id);
                 if (calEvent) {
-                    // Instead of using eventClick directly, use the same approach as in the main calendar
                     const props = event.extendedProps;
 
                     // Format dates nicely
