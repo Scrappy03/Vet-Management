@@ -101,4 +101,30 @@ class Patient {
             return false;
         }
     }
+    
+    public function getPatientById($patientId) {
+        $query = "SELECT p.*, o.first_name, o.last_name, o.phone, o.email,
+                  CONCAT(o.first_name, ' ', o.last_name) as owner_name,
+                  TIMESTAMPDIFF(YEAR, p.date_of_birth, CURDATE()) as age
+                  FROM patients p 
+                  JOIN owners o ON p.owner_id = o.owner_id 
+                  WHERE p.patient_id = :patient_id";
+                  
+        $this->lastQuery = $query;
+        
+        try {
+            $stmt = $this->Conn->prepare($query);
+            $stmt->bindParam(':patient_id', $patientId, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $this->lastError = [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage()
+            ];
+            error_log("PDO Exception in getPatientById: " . $e->getMessage());
+            return false;
+        }
+    }
 }

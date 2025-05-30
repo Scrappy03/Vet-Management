@@ -97,7 +97,7 @@
                     <div class="stat-card-icon">
                         <i class="bi bi-clipboard2-pulse"></i>
                     </div>
-                    <h3 class="fs-4 mb-1">432</h3>
+                    <h3 class="fs-4 mb-1">{$total_patients}</h3>
                     <p class="text-muted mb-0">Total Patients</p>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                     <div class="stat-card-icon">
                         <i class="bi bi-heart-pulse"></i>
                     </div>
-                    <h3 class="fs-4 mb-1">28</h3>
+                    <h3 class="fs-4 mb-1">{$under_treatment}</h3>
                     <p class="text-muted mb-0">Under Treatment</p>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                     <div class="stat-card-icon">
                         <i class="bi bi-calendar-check"></i>
                     </div>
-                    <h3 class="fs-4 mb-1">17</h3>
+                    <h3 class="fs-4 mb-1">{$scheduled_today}</h3>
                     <p class="text-muted mb-0">Scheduled Today</p>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                     <div class="stat-card-icon">
                         <i class="bi bi-plus-circle"></i>
                     </div>
-                    <h3 class="fs-4 mb-1">12</h3>
+                    <h3 class="fs-4 mb-1">{$new_this_week}</h3>
                     <p class="text-muted mb-0">New This Week</p>
                 </div>
             </div>
@@ -161,114 +161,47 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>#P001</td>
-                                <td>Max</td>
-                                <td>Dog</td>
-                                <td>Golden Retriever</td>
-                                <td>3 years</td>
-                                <td>John Smith</td>
-                                <td><span class="status-badge status-upcoming">Active</span></td>
-                                <td>Mar 15, 2023</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile" class="btn btn-outline-primary"><i
-                                                class="bi bi-eye"></i></a>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#P002</td>
-                                <td>Luna</td>
-                                <td>Cat</td>
-                                <td>Maine Coon</td>
-                                <td>2 years</td>
-                                <td>Sarah Johnson</td>
-                                <td><span class="status-badge status-upcoming">Active</span></td>
-                                <td>Apr 2, 2023</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile" class="btn btn-outline-primary"><i
-                                                class="bi bi-eye"></i></a>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#P003</td>
-                                <td>Buddy</td>
-                                <td>Dog</td>
-                                <td>Beagle</td>
-                                <td>5 years</td>
-                                <td>Michael Brown</td>
-                                <td><span class="status-badge status-cancelled">Under Treatment</span></td>
-                                <td>Apr 18, 2023</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile" class="btn btn-outline-primary"><i
-                                                class="bi bi-eye"></i></a>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#P004</td>
-                                <td>Coco</td>
-                                <td>Rabbit</td>
-                                <td>Holland Lop</td>
-                                <td>1 year</td>
-                                <td>Emily Davis</td>
-                                <td><span class="status-badge status-completed">Scheduled</span></td>
-                                <td>May 5, 2023</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile" class="btn btn-outline-primary"><i
-                                                class="bi bi-eye"></i></a>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#P005</td>
-                                <td>Oliver</td>
-                                <td>Cat</td>
-                                <td>British Shorthair</td>
-                                <td>4 years</td>
-                                <td>Jessica Wilson</td>
-                                <td><span class="status-badge status-upcoming">Active</span></td>
-                                <td>May 12, 2023</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile" class="btn btn-outline-primary"><i
-                                                class="bi bi-eye"></i></a>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#P006</td>
-                                <td>Charlie</td>
-                                <td>Dog</td>
-                                <td>Labrador</td>
-                                <td>2 years</td>
-                                <td>David Martinez</td>
-                                <td><span class="status-badge status-upcoming">Active</span></td>
-                                <td>Jun 8, 2023</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="patient-profile" class="btn btn-outline-primary"><i
-                                                class="bi bi-eye"></i></a>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-calendar-plus"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
+                            {if $patients}
+                                {foreach $patients as $patient}
+                                    <tr>
+                                        <td>#{$patient.formatted_id}</td>
+                                        <td>{$patient.name}</td>
+                                        <td>{$patient.species_formatted}</td>
+                                        <td>{$patient.breed}</td>
+                                        <td>{if $patient.age}{$patient.age} year{if $patient.age != 1}s{/if}{else}N/A{/if}</td>
+                                        <td>{$patient.owner_name}</td>
+                                        <td>
+                                            <span
+                                                class="status-badge {if $patient.status == 'active'}status-upcoming{elseif $patient.status == 'under treatment'}status-cancelled{elseif $patient.status == 'scheduled'}status-completed{else}status-upcoming{/if}">
+                                                {$patient.status_formatted}
+                                            </span>
+                                        </td>
+                                        <td>{$patient.last_visit_formatted}</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="patient-profile?id={$patient.patient_id}" class="btn btn-outline-primary">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <button class="btn btn-outline-primary"
+                                                    onclick="editPatient({$patient.patient_id})">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-outline-primary"
+                                                    onclick="scheduleAppointment({$patient.patient_id})">
+                                                    <i class="bi bi-calendar-plus"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {/foreach}
+                            {else}
+                                <tr>
+                                    <td colspan="9" class="text-center py-4">
+                                        <i class="bi bi-inbox text-muted fs-1"></i>
+                                        <p class="text-muted mt-2">No patients found</p>
+                                    </td>
+                                </tr>
+                            {/if}
                         </tbody>
                     </table>
                 </div>
@@ -292,242 +225,96 @@
 
         <!-- Card view -->
         <div id="cardView" class="d-none">
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card patient-card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="patient-avatar me-3">
-                                    <div class="avatar-placeholder">
-                                        <span>M</span>
+            {if $patients}
+                <div class="row g-4">
+                    {foreach $patients as $patient}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card patient-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="patient-avatar me-3">
+                                            <div class="avatar-placeholder">
+                                                <span>{$patient.name_initial}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title mb-0">{$patient.name}</h5>
+                                            <p class="card-text text-muted mb-0">{$patient.breed}</p>
+                                        </div>
+                                    </div>
+                                    <div class="patient-details">
+                                        <p class="mb-1"><i class="bi bi-person me-2"></i> Owner: {$patient.owner_name}</p>
+                                        <p class="mb-1"><i class="bi bi-calendar3 me-2"></i> Age: {if $patient.age}{$patient.age}
+                                                year{if $patient.age != 1}s{/if}{else}N/A{/if}</p>
+                                            <p class="mb-1"><i class="bi bi-gender-ambiguous me-2"></i> {$patient.gender_formatted}</p>
+                                            <p class="mb-1"><i class="bi bi-calendar-check me-2"></i> Last Visit:
+                                                {$patient.last_visit_formatted}</p>
+                                            <p class="mb-1"><i class="bi bi-info-circle me-2"></i> Status:
+                                                <span
+                                                    class="status-badge {if $patient.status == 'active'}status-upcoming{elseif $patient.status == 'under treatment'}status-cancelled{elseif $patient.status == 'scheduled'}status-completed{else}status-upcoming{/if}">
+                                                    {$patient.status_formatted}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <hr>
+                                        <div class="d-flex justify-content-between">
+                                            <a href="patient-profile?id={$patient.patient_id}" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i> View Details
+                                            </a>
+                                            <button class="btn btn-sm btn-outline-primary"
+                                                onclick="scheduleAppointment({$patient.patient_id})">
+                                                <i class="bi bi-calendar-plus"></i> Schedule
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <h5 class="card-title mb-0">Max</h5>
-                                    <p class="card-text text-muted mb-0">Golden Retriever</p>
-                                </div>
                             </div>
-                            <div class="patient-details">
-                                <p class="mb-1"><i class="bi bi-person me-2"></i> Owner: John Smith</p>
-                                <p class="mb-1"><i class="bi bi-calendar3 me-2"></i> Age: 3 years</p>
-                                <p class="mb-1"><i class="bi bi-gender-ambiguous me-2"></i> Male</p>
-                                <p class="mb-1"><i class="bi bi-calendar-check me-2"></i> Last Visit: Mar 15, 2023</p>
-                                <p class="mb-1"><i class="bi bi-info-circle me-2"></i> Status: <span
-                                        class="status-badge status-upcoming">Active</span></p>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <a href="patient-profile" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i>
-                                    View Details</a>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
-                                    Schedule</button>
-                            </div>
-                        </div>
+                        {/foreach}
                     </div>
-                </div>
+                {else}
+                    <div class="text-center py-5">
+                        <i class="bi bi-inbox text-muted" style="font-size: 4rem;"></i>
+                        <h5 class="text-muted mt-3">No patients found</h5>
+                        <p class="text-muted">Try adjusting your search filters or add a new patient.</p>
+                    </div>
+                {/if}
 
-                <div class="col-md-6 col-lg-4">
-                    <div class="card patient-card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="patient-avatar me-3">
-                                    <div class="avatar-placeholder">
-                                        <span>L</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h5 class="card-title mb-0">Luna</h5>
-                                    <p class="card-text text-muted mb-0">Maine Coon</p>
-                                </div>
-                            </div>
-                            <div class="patient-details">
-                                <p class="mb-1"><i class="bi bi-person me-2"></i> Owner: Sarah Johnson</p>
-                                <p class="mb-1"><i class="bi bi-calendar3 me-2"></i> Age: 2 years</p>
-                                <p class="mb-1"><i class="bi bi-gender-ambiguous me-2"></i> Female</p>
-                                <p class="mb-1"><i class="bi bi-calendar-check me-2"></i> Last Visit: Apr 2, 2023</p>
-                                <p class="mb-1"><i class="bi bi-info-circle me-2"></i> Status: <span
-                                        class="status-badge status-upcoming">Active</span></p>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <a href="patient-profile" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i>
-                                    View Details</a>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
-                                    Schedule</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card patient-card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="patient-avatar me-3">
-                                    <div class="avatar-placeholder">
-                                        <span>B</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h5 class="card-title mb-0">Buddy</h5>
-                                    <p class="card-text text-muted mb-0">Beagle</p>
-                                </div>
-                            </div>
-                            <div class="patient-details">
-                                <p class="mb-1"><i class="bi bi-person me-2"></i> Owner: Michael Brown</p>
-                                <p class="mb-1"><i class="bi bi-calendar3 me-2"></i> Age: 5 years</p>
-                                <p class="mb-1"><i class="bi bi-gender-ambiguous me-2"></i> Male</p>
-                                <p class="mb-1"><i class="bi bi-calendar-check me-2"></i> Last Visit: Apr 18, 2023</p>
-                                <p class="mb-1"><i class="bi bi-info-circle me-2"></i> Status: <span
-                                        class="status-badge status-cancelled">Under Treatment</span></p>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <a href="patient-profile" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i>
-                                    View Details</a>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
-                                    Schedule</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card patient-card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="patient-avatar me-3">
-                                    <div class="avatar-placeholder">
-                                        <span>C</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h5 class="card-title mb-0">Coco</h5>
-                                    <p class="card-text text-muted mb-0">Holland Lop</p>
-                                </div>
-                            </div>
-                            <div class="patient-details">
-                                <p class="mb-1"><i class="bi bi-person me-2"></i> Owner: Emily Davis</p>
-                                <p class="mb-1"><i class="bi bi-calendar3 me-2"></i> Age: 1 year</p>
-                                <p class="mb-1"><i class="bi bi-gender-ambiguous me-2"></i> Female</p>
-                                <p class="mb-1"><i class="bi bi-calendar-check me-2"></i> Last Visit: May 5, 2023</p>
-                                <p class="mb-1"><i class="bi bi-info-circle me-2"></i> Status: <span
-                                        class="status-badge status-completed">Scheduled</span></p>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <a href="patient-profile" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i>
-                                    View Details</a>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
-                                    Schedule</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card patient-card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="patient-avatar me-3">
-                                    <div class="avatar-placeholder">
-                                        <span>O</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h5 class="card-title mb-0">Oliver</h5>
-                                    <p class="card-text text-muted mb-0">British Shorthair</p>
-                                </div>
-                            </div>
-                            <div class="patient-details">
-                                <p class="mb-1"><i class="bi bi-person me-2"></i> Owner: Jessica Wilson</p>
-                                <p class="mb-1"><i class="bi bi-calendar3 me-2"></i> Age: 4 years</p>
-                                <p class="mb-1"><i class="bi bi-gender-ambiguous me-2"></i> Male</p>
-                                <p class="mb-1"><i class="bi bi-calendar-check me-2"></i> Last Visit: May 12, 2023</p>
-                                <p class="mb-1"><i class="bi bi-info-circle me-2"></i> Status: <span
-                                        class="status-badge status-upcoming">Active</span></p>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <a href="patient-profile" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i>
-                                    View Details</a>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
-                                    Schedule</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card patient-card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="patient-avatar me-3">
-                                    <div class="avatar-placeholder">
-                                        <span>C</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h5 class="card-title mb-0">Charlie</h5>
-                                    <p class="card-text text-muted mb-0">Labrador</p>
-                                </div>
-                            </div>
-                            <div class="patient-details">
-                                <p class="mb-1"><i class="bi bi-person me-2"></i> Owner: David Martinez</p>
-                                <p class="mb-1"><i class="bi bi-calendar3 me-2"></i> Age: 2 years</p>
-                                <p class="mb-1"><i class="bi bi-gender-ambiguous me-2"></i> Male</p>
-                                <p class="mb-1"><i class="bi bi-calendar-check me-2"></i> Last Visit: Jun 8, 2023</p>
-                                <p class="mb-1"><i class="bi bi-info-circle me-2"></i> Status: <span
-                                        class="status-badge status-upcoming">Active</span></p>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <a href="patient-profile" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i>
-                                    View Details</a>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-calendar-plus"></i>
-                                    Schedule</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="d-flex justify-content-center mt-4">
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
+        </main>
 
-            <div class="d-flex justify-content-center mt-4">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </main>
-
-    <!-- Add New Patient Modal -->
-    <div class="modal fade" id="addPatientModal" tabindex="-1" aria-labelledby="addPatientModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addPatientModalLabel">Add New Patient</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="newPatientForm" class="needs-validation" novalidate>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <h6 class="mb-3">Pet Information</h6>
-                                <div class="mb-3">
-                                    <label for="petName" class="form-label">Pet Name *</label>
-                                    <input type="text" class="form-control" id="petName" required>
-                                    <div class="invalid-feedback">
-                                        Please provide the pet's name.
+        <!-- Add New Patient Modal -->
+        <div class="modal fade" id="addPatientModal" tabindex="-1" aria-labelledby="addPatientModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addPatientModalLabel">Add New Patient</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="newPatientForm" class="needs-validation" novalidate>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <h6 class="mb-3">Pet Information</h6>
+                                    <div class="mb-3">
+                                        <label for="petName" class="form-label">Pet Name *</label>
+                                        <input type="text" class="form-control" id="petName" required>
+                                        <div class="invalid-feedback">
+                                            Please provide the pet's name.
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -543,13 +330,13 @@
                                 </select>
                                 <div class="invalid-feedback">
                                     Please select the pet's species.
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="petBreed" class="form-label">Breed *</label>
-                                    <input type="text" class="form-control" id="petBreed" required>
-                                    <div class="invalid-feedback">
-                                        Please provide the pet's breed.
+                                    <div class="mb-3">
+                                        <label for="petBreed" class="form-label">Breed *</label>
+                                        <input type="text" class="form-control" id="petBreed" required>
+                                        <div class="invalid-feedback">
+                                            Please provide the pet's breed.
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -564,18 +351,18 @@
                                         </select>
                                         <div class="invalid-feedback">
                                             Please provide the pet's age.
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="petGender" class="form-label">Gender *</label>
-                                        <select class="form-select" id="petGender" required>
-                                            <option value="">Select Gender</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please select the pet's gender.
+                                        <div class="col-md-6">
+                                            <label for="petGender" class="form-label">Gender *</label>
+                                            <select class="form-select" id="petGender" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select the pet's gender.
                                     </div>
                                 </div>
                             </div>
@@ -591,66 +378,66 @@
                                 <input type="text" class="form-control" id="ownerName" required>
                                 <div class="invalid-feedback">
                                     Please provide the owner's name.
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ownerEmail" class="form-label">Email *</label>
-                                    <input type="email" class="form-control" id="ownerEmail" required>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid email address.
+                                    <div class="mb-3">
+                                        <label for="ownerEmail" class="form-label">Email *</label>
+                                        <input type="email" class="form-control" id="ownerEmail" required>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid email address.
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ownerPhone" class="form-label">Phone *</label>
-                                    <input type="tel" class="form-control" id="ownerPhone" required>
-                                    <div class="invalid-feedback">
-                                        Please provide a contact number.
+                                    <div class="mb-3">
+                                        <label for="ownerPhone" class="form-label">Phone *</label>
+                                        <input type="tel" class="form-control" id="ownerPhone" required>
+                                        <div class="invalid-feedback">
+                                            Please provide a contact number.
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ownerAddress" class="form-label">Address</label>
-                                    <textarea class="form-control" id="ownerAddress" rows="2"></textarea>
+                                    <div class="mb-3">
+                                        <label for="ownerAddress" class="form-label">Address</label>
+                                        <textarea class="form-control" id="ownerAddress" rows="2"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <h6 class="mb-3">Medical Information</h6>
-                                <div class="mb-3">
-                                    <label for="patientStatus" class="form-label">Status *</label>
-                                    <select class="form-select" id="patientStatus" required>
-                                        <option value="">Select Status</option>
-                                        <option value="active">Active</option>
-                                        <option value="treatment">Under Treatment</option>
-                                        <option value="scheduled">Scheduled</option>
-                                        <option value="recovery">Recovery</option>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        Please select the patient's status.
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6 class="mb-3">Medical Information</h6>
+                                    <div class="mb-3">
+                                        <label for="patientStatus" class="form-label">Status *</label>
+                                        <select class="form-select" id="patientStatus" required>
+                                            <option value="">Select Status</option>
+                                            <option value="active">Active</option>
+                                            <option value="treatment">Under Treatment</option>
+                                            <option value="scheduled">Scheduled</option>
+                                            <option value="recovery">Recovery</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select the patient's status.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="medicalHistory" class="form-label">Medical History</label>
+                                        <textarea class="form-control" id="medicalHistory" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="allergies" class="form-label">Allergies/Special Notes</label>
+                                        <textarea class="form-control" id="allergies" rows="2"></textarea>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="medicalHistory" class="form-label">Medical History</label>
-                                    <textarea class="form-control" id="medicalHistory" rows="3"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="allergies" class="form-label">Allergies/Special Notes</label>
-                                    <textarea class="form-control" id="allergies" rows="2"></textarea>
-                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="savePatientBtn">Save Patient</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="savePatientBtn">Save Patient</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="./js/scripts-vendor.min.js"></script>
-    <script src="./js/scripts.min.js"></script>
-    <script src="./js/patients.js"></script>
-    <script src="./js/page-transitions.js"></script>
-{/block}
+        <script src="./js/scripts-vendor.min.js"></script>
+        <script src="./js/scripts.min.js"></script>
+        <script src="./js/patients.js"></script>
+        <script src="./js/page-transitions.js"></script>
+    {/block}
