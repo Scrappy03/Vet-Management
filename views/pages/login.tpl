@@ -54,38 +54,119 @@
                         {if isset($smarty.get.show) && $smarty.get.show == 'register' || isset($smarty.post.register)}
                         <form method="post" action="login" id="registrationForm">
                             <div class="text-center mb-4" id="registration-header">
-                                <h3 class="fw-bold text-primary mb-2">Create Account</h3>
-                                <p class="text-muted">Register for a new account</p>
+                                <h3 class="fw-bold text-primary mb-2">Create Staff Account</h3>
+                                <p class="text-muted">Register a new staff member</p>
                             </div>
+
+                            <!-- Personal Information -->
+                            <h6 class="mb-3 text-primary">Personal Information</h6>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="first_name" class="form-label">First Name</label>
+                                    <label for="first_name" class="form-label">First Name *</label>
                                     <input type="text" class="form-control" id="first_name" name="first_name"
                                         value="{if isset($smarty.post.register)}{$smarty.post.first_name}{/if}"
                                         required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="last_name" class="form-label">Last Name</label>
+                                    <label for="last_name" class="form-label">Last Name *</label>
                                     <input type="text" class="form-control" id="last_name" name="last_name"
                                         value="{if isset($smarty.post.register)}{$smarty.post.last_name}{/if}" required>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="reg_email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="reg_email" name="email"
-                                    value="{if isset($smarty.post.register)}{$email}{/if}" required>
+
+                            <!-- Contact Information -->
+                            <h6 class="mb-3 text-primary">Contact Information</h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="reg_email" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control" id="reg_email" name="email"
+                                        value="{if isset($smarty.post.register)}{$email}{/if}" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Phone Number *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone"
+                                        value="{if isset($smarty.post.register)}{$smarty.post.phone}{/if}" required>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="phone" name="phone"
-                                    value="{if isset($smarty.post.register)}{$smarty.post.phone}{/if}">
+
+                            <!-- Employment Information -->
+                            <h6 class="mb-3 text-primary">Employment Information</h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="role" class="form-label">Role *</label>
+                                    <select class="form-select" id="role" name="role" required>
+                                        <option value="">Select a role</option>
+                                        <option value="veterinarian"
+                                            {if isset($smarty.post.register) && $smarty.post.role == 'veterinarian'}selected{/if}>
+                                            Veterinarian</option>
+                                        <option value="technician"
+                                            {if isset($smarty.post.register) && $smarty.post.role == 'technician'}selected{/if}>
+                                            Veterinary Technician</option>
+                                        <option value="assistant"
+                                            {if isset($smarty.post.register) && $smarty.post.role == 'assistant'}selected{/if}>
+                                            Veterinary Assistant</option>
+                                        <option value="receptionist"
+                                            {if isset($smarty.post.register) && $smarty.post.role == 'receptionist'}selected{/if}>
+                                            Receptionist</option>
+                                        <option value="manager"
+                                            {if isset($smarty.post.register) && $smarty.post.role == 'manager'}selected{/if}>
+                                            Practice Manager</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="start_date" class="form-label">Start Date *</label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date"
+                                        value="{if isset($smarty.post.register)}{$smarty.post.start_date}{/if}"
+                                        required>
+                                </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select class="form-select" id="status" name="status">
+                                        <option value="active"
+                                            {if !isset($smarty.post.register) || $smarty.post.status == 'active'}selected{/if}>
+                                            Active</option>
+                                        <option value="inactive"
+                                            {if isset($smarty.post.register) && $smarty.post.status == 'inactive'}selected{/if}>
+                                            Inactive</option>
+                                        <option value="on_leave"
+                                            {if isset($smarty.post.register) && $smarty.post.status == 'on_leave'}selected{/if}>
+                                            On Leave</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Professional Information -->
+                            <h6 class="mb-3 text-primary">Professional Information</h6>
                             <div class="mb-3">
-                                <label for="reg_password" class="form-label">Password</label>
+                                <label for="specialties" class="form-label">Specialties/Skills</label>
+                                <input type="text" class="form-control" id="specialties" name="specialties"
+                                    placeholder="e.g., Surgery, Dentistry, Emergency Care"
+                                    value="{if isset($smarty.post.register)}{$smarty.post.specialties}{/if}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="education" class="form-label">Education/Certifications</label>
+                                <textarea class="form-control" id="education" name="education"
+                                    rows="2">{if isset($smarty.post.register)}{$smarty.post.education}{/if}</textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="bio" class="form-label">Bio</label>
+                                <textarea class="form-control" id="bio" name="bio"
+                                    rows="3">{if isset($smarty.post.register)}{$smarty.post.bio}{/if}</textarea>
+                            </div>
+
+                            <!-- Account Security -->
+                            <h6 class="mb-3 text-primary">Account Security</h6>
+                            <div class="mb-3">
+                                <label for="reg_password" class="form-label">Password *</label>
                                 <input type="password" class="form-control" id="reg_password" name="password" required>
                             </div>
                             <div class="mb-4">
-                                <label for="password_confirm" class="form-label">Confirm Password</label>
+                                <label for="password_confirm" class="form-label">Confirm Password *</label>
                                 <input type="password" class="form-control" id="password_confirm"
                                     name="password_confirm" required>
                             </div>

@@ -62,22 +62,41 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = isset($_POST['email']) ? trim($_POST['email']) : '';
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
         $password_confirm = isset($_POST['password_confirm']) ? trim($_POST['password_confirm']) : '';
+        $first_name = isset($_POST['first_name']) ? trim($_POST['first_name']) : '';
+        $last_name = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
+        $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+        $role = isset($_POST['role']) ? trim($_POST['role']) : '';
+        $start_date = isset($_POST['start_date']) ? trim($_POST['start_date']) : '';
+        $status = isset($_POST['status']) ? trim($_POST['status']) : 'active';
+        $specialties = isset($_POST['specialties']) ? trim($_POST['specialties']) : '';
+        $education = isset($_POST['education']) ? trim($_POST['education']) : '';
+        $bio = isset($_POST['bio']) ? trim($_POST['bio']) : '';
         
         // Basic validation
-        if(empty($email)) {
+        if(empty($first_name)) {
+            $error = "First name is required";
+        } elseif(empty($last_name)) {
+            $error = "Last name is required";
+        } elseif(empty($email)) {
             $error = "Email is required";
         } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $error = "Please enter a valid email";
+        } elseif(empty($phone)) {
+            $error = "Phone number is required";
+        } elseif(empty($role)) {
+            $error = "Role is required";
+        } elseif(empty($start_date)) {
+            $error = "Start date is required";
         } elseif(empty($password)) {
             $error = "Password is required";
-        } elseif(strlen($password) < 6) { // Reducing password minimum length for testing
+        } elseif(strlen($password) < 6) {
             $error = "Password must be at least 6 characters";
         } elseif($password !== $password_confirm) {
             $error = "Passwords do not match";
         } else {
-            // All validation passed, attempt to register the user
+            // All validation passed, attempt to register the staff member
             
-            // Create user with the User class
+            // Use User class instead of Staff class since we know it works
             $User = new User($Conn);
             
             // Check if email already exists
@@ -85,39 +104,36 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = "Email already registered";
             } else {
                 // Log the registration attempt
-                error_log("Registration attempt with email: $email");
+                error_log("User registration attempt with email: $email");
                 
-                // Dump all POST data for debugging
-                error_log("POST data: " . print_r($_POST, true));
-                
-                // Prepare user data with all required fields
+                // Prepare user data with all fields
                 $userData = [
-                    'first_name' => isset($_POST['first_name']) ? trim($_POST['first_name']) : 'Guest',
-                    'last_name' => isset($_POST['last_name']) ? trim($_POST['last_name']) : 'User',
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
                     'email' => $email,
                     'password' => $password,
-                    'phone' => isset($_POST['phone']) ? trim($_POST['phone']) : '',
-                    // Add required fields with defaults
-                    'role' => 'User',
-                    'status' => 'Active',
-                    'specialties' => '',
-                    'education' => '',
-                    'bio' => '',
-                    'profile_image' => '',
-                    'start_date' => date('Y-m-d')
+                    'phone' => $phone,
+                    'role' => $role,
+                    'start_date' => $start_date,
+                    'status' => $status,
+                    'specialties' => $specialties,
+                    'education' => $education,
+                    'bio' => $bio,
+                    'profile_image' => ''
                 ];
                 
-                // Debug output to see what data we're working with
-                if(isset($_GET['debug']) || true) { // Force debug output temporarily
-                    echo "<!-- Registration data: " . print_r($userData, true) . " -->";
+                // Debug output
+                if(isset($_GET['debug'])) {
+                    echo "<!-- User registration data: " . print_r($userData, true) . " -->";
                 }
                 
                 // Add try-catch to capture any exceptions during user creation
                 try {
-                    $attempt = $User->createUser($userData);
-                    if($attempt) {
-                        $success = "Your account has been created. Please now login.";
-                        // For debugging purposes only
+                    $result = $User->createUser($userData);
+                    if($result !== false) {
+                        $success = "Staff account has been created successfully. Please login to continue.";
+                        // Clear form data on success
+                        $_POST = array();
                         if(isset($_GET['debug'])) {
                             $success .= " (User was successfully added to database)";
                         }
