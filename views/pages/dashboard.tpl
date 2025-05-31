@@ -325,6 +325,114 @@
         </div>
     </div>
 
+    <!-- Weather Widget -->
+    {if isset($weather)}
+    <div class="row g-4 mb-4">
+        <div class="col-lg-8">
+            <div class="card border-info">
+                <div class="card-header bg-info bg-opacity-10 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-info">
+                        <i class="bi bi-cloud-sun me-2"></i>Weather & Veterinary Alerts
+                        {if isset($weather.demo_mode) && $weather.demo_mode}
+                        <span class="badge bg-secondary ms-2">Demo Mode</span>
+                        {elseif isset($weather.api_error) && $weather.api_error}
+                        <span class="badge bg-danger ms-2">API Error</span>
+                        {/if}
+                    </h5>
+                    <small class="text-muted">
+                        {$weather.city} • Updated: {$weather.last_updated}
+                        {if isset($weather.demo_mode) && $weather.demo_mode}
+                        <br><em>Configure OpenWeatherMap API key for live data</em>
+                        {elseif isset($weather.api_error) && $weather.api_error}
+                        <br><em>Please check your API key configuration</em>
+                        {/if}
+                    </small>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <!-- Current Weather -->
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center">
+                                <div class="weather-icon me-3">
+                                    <img src="https://openweathermap.org/img/w/{$weather.icon}.png"
+                                        alt="{$weather.description}" class="img-fluid">
+                                </div>
+                                <div>
+                                    <h3 class="mb-0">{$weather.temperature}°C</h3>
+                                    <p class="text-muted mb-0">{$weather.description}</p>
+                                    <small class="text-muted">Feels like {$weather.feels_like}°C</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Weather Details -->
+                        <div class="col-md-4">
+                            <div class="weather-details">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted">Humidity:</span>
+                                    <span>{$weather.humidity}%</span>
+                                </div>
+                                <div class="weather-activity">
+                                    <small class="text-muted d-block">Activity Recommendation:</small>
+                                    <span class="badge bg-secondary">{$weather.activity_recommendation}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Weather Alerts -->
+                        <div class="col-md-4">
+                            {if $weather.alerts}
+                            <h6 class="text-warning mb-2">
+                                <i class="bi bi-exclamation-triangle"></i> Alerts
+                            </h6>
+                            {foreach from=$weather.alerts item=alert}
+                            <div
+                                class="alert alert-{if $alert.priority == 'high'}warning{elseif $alert.priority == 'medium'}info{else}light{/if} py-2 px-3 mb-2">
+                                <i class="bi bi-{$alert.icon} me-1"></i>
+                                <small>{$alert.message}</small>
+                            </div>
+                            {/foreach}
+                            {else}
+                            <div class="text-success">
+                                <i class="bi bi-check-circle me-1"></i>
+                                <small>No weather alerts</small>
+                            </div>
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seasonal Reminders -->
+        <div class="col-lg-4">
+            <div class="card border-success h-100">
+                <div class="card-header bg-success bg-opacity-10">
+                    <h6 class="mb-0 text-success">
+                        <i class="bi bi-calendar4-week me-2"></i>Seasonal Veterinary Reminders
+                    </h6>
+                </div>
+                <div class="card-body">
+                    {if $weather.seasonal_reminders}
+                    <ul class="list-unstyled mb-0">
+                        {foreach from=$weather.seasonal_reminders item=reminder}
+                        <li class="mb-2">
+                            <i class="bi bi-check2 text-success me-2"></i>
+                            <small>{$reminder}</small>
+                        </li>
+                        {/foreach}
+                    </ul>
+                    {else}
+                    <p class="text-muted mb-0">
+                        <small>No seasonal reminders at this time.</small>
+                    </p>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+    {/if}
+
     <!-- Today's Schedule Summary -->
         {if isset($schedule_summary)}
             <div class="row g-4 mb-4">

@@ -112,3 +112,222 @@ $Smarty->assign('urgent_notifications_count', $urgentCount);
 // Get mini calendar data for current month
 $calendarData = $Appointment->getMiniCalendarData();
 $Smarty->assign('calendar_data', $calendarData);
+
+// Weather API integration
+$weatherApiKey = '3bf053dcf9fe3fb7d4582c6061337713';
+$city = 'Ipswich';
+if ($weatherApiKey !== '3bf053dcf9fe3fb7d4582c6061337713') {
+    $weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$weatherApiKey}&units=metric";
+
+    try {
+        $context = stream_context_create([
+            'http' => [
+                'timeout' => 5, // 5 second timeout
+                'method' => 'GET',
+                'header' => 'User-Agent: VetCare Dashboard/1.0'
+            ]
+        ]);
+        
+        $weatherResponse = file_get_contents($weatherUrl, false, $context);
+        
+        if ($weatherResponse !== false) {
+            $weatherData = json_decode($weatherResponse, true);
+            
+            // Check for API errors
+            if ($weatherData && isset($weatherData['cod']) && $weatherData['cod'] !== 200) {
+                $errorMessage = isset($weatherData['message']) ? $weatherData['message'] : 'Unknown API error';
+                error_log("Weather API error: Code {$weatherData['cod']} - {$errorMessage}");
+                
+                // Generate seasonal reminders for error fallback
+                $currentMonth = date('n');
+                $seasonalReminders = [];
+                switch ($currentMonth) {
+                    case 12:
+                    case 1:
+                    case 2: // Winter
+                        $seasonalReminders[] = "Winter season: Check heating systems, arthritis flare-ups common";
+                        $seasonalReminders[] = "Salt and antifreeze toxicity awareness";
+                        break;
+                    case 3:
+                    case 4:
+                    case 5: // Spring
+                        $seasonalReminders[] = "Spring season: Flea and tick prevention time";
+                        $seasonalReminders[] = "Allergy season beginning - watch for skin irritation";
+                        $seasonalReminders[] = "Spring vaccinations due for many pets";
+                        break;
+                    case 6:
+                    case 7:
+                    case 8: // Summer
+                        $seasonalReminders[] = "Summer season: Peak flea/tick activity";
+                        $seasonalReminders[] = "Heartworm prevention critical";
+                        $seasonalReminders[] = "Swimming safety and ear infections";
+                        break;
+                    case 9:
+                    case 10:
+                    case 11: // Fall
+                        $seasonalReminders[] = "Fall season: Prepare for winter health checks";
+                        $seasonalReminders[] = "Senior pet wellness exams recommended";
+                        $seasonalReminders[] = "Back-to-school routine adjustments for pets";
+                        break;
+                }
+                
+                // Provide fallback weather info with error message
+                $weatherInfo = [
+                    'temperature' => '--',
+                    'feels_like' => '--',
+                    'humidity' => '--',
+                    'condition' => 'API Error',
+                    'description' => "API Error: {$errorMessage}",
+                    'icon' => '01d',
+                    'alerts' => [[
+                        'type' => 'api_error',
+                        'message' => "Weather API Error: {$errorMessage}. Please check your API key.",
+                        'priority' => 'high',
+                        'icon' => 'exclamation-triangle'
+                    ]],
+                    'seasonal_reminders' => $seasonalReminders,
+                    'activity_recommendation' => 'Check weather manually',
+                    'city' => $city,
+                    'last_updated' => date('H:i'),
+                    'api_error' => true
+                ];
+                
+                $Smarty->assign('weather', $weatherInfo);
+                return; // Exit early on API error
+            }
+            
+            if ($weatherData && isset($weatherData['main'])) {
+                $temperature = round($weatherData['main']['temp']);
+                $feelsLike = round($weatherData['main']['feels_like']);
+                $humidity = $weatherData['main']['humidity'];
+                $condition = $weatherData['weather'][0]['main'];
+                $description = ucfirst($weatherData['weather'][0]['description']);
+                $icon = $weatherData['weather'][0]['icon'];
+                
+                // Create weather-based veterinary alerts and recommendations
+                $weatherAlerts = [];
+                $seasonalReminders = [];
+                
+                // Temperature-based alerts
+                if ($temperature > 25) {
+                    $weatherAlerts[] = [
+                        'type' => 'heat_warning',
+                        'message' => "High temperature ({$temperature}°C) - Monitor pets for heat stress and dehydration",
+                        'priority' => 'high',
+                        'icon' => 'thermometer-high'
+                    ];
+                } elseif ($temperature < 5) {
+                    $weatherAlerts[] = [
+                        'type' => 'cold_warning',
+                        'message' => "Cold weather ({$temperature}°C) - Watch for hypothermia in small/elderly pets",
+                        'priority' => 'medium',
+                        'icon' => 'thermometer-snow'
+                    ];
+                }
+                
+                // Humidity-based alerts
+                if ($humidity > 80) {
+                    $weatherAlerts[] = [
+                        'type' => 'humidity_warning',
+                        'message' => "High humidity ({$humidity}%) - Increased risk of skin conditions",
+                        'priority' => 'low',
+                        'icon' => 'droplet'
+                    ];
+                }
+                
+                // Seasonal reminders based on current month
+                $currentMonth = date('n');
+                switch ($currentMonth) {
+                    case 12:
+                    case 1:
+                    case 2: // Winter
+                        $seasonalReminders[] = "Winter season: Check heating systems, arthritis flare-ups common";
+                        $seasonalReminders[] = "Salt and antifreeze toxicity awareness";
+                        break;
+                    case 3:
+                    case 4:
+                    case 5: // Spring
+                        $seasonalReminders[] = "Spring season: Flea and tick prevention time";
+                        $seasonalReminders[] = "Allergy season beginning - watch for skin irritation";
+                        $seasonalReminders[] = "Spring vaccinations due for many pets";
+                        break;
+                    case 6:
+                    case 7:
+                    case 8: // Summer
+                        $seasonalReminders[] = "Summer season: Peak flea/tick activity";
+                        $seasonalReminders[] = "Heartworm prevention critical";
+                        $seasonalReminders[] = "Swimming safety and ear infections";
+                        break;
+                    case 9:
+                    case 10:
+                    case 11: // Fall
+                        $seasonalReminders[] = "Fall season: Prepare for winter health checks";
+                        $seasonalReminders[] = "Senior pet wellness exams recommended";
+                        $seasonalReminders[] = "Back-to-school routine adjustments for pets";
+                        break;
+                }
+                
+                // Activity recommendations
+                $activityRecommendation = "Moderate exercise recommended";
+                if ($temperature > 30) {
+                    $activityRecommendation = "Limit outdoor activity - risk of overheating";
+                } elseif ($temperature < 0) {
+                    $activityRecommendation = "Short walks only - protect paws from ice/salt";
+                } elseif ($condition === 'Rain') {
+                    $activityRecommendation = "Indoor activities preferred";
+                } elseif ($temperature >= 15 && $temperature <= 25) {
+                    $activityRecommendation = "Perfect weather for walks and outdoor activities";
+                }
+                
+                $weatherInfo = [
+                    'temperature' => $temperature,
+                    'feels_like' => $feelsLike,
+                    'humidity' => $humidity,
+                    'condition' => $condition,
+                    'description' => $description,
+                    'icon' => $icon,
+                    'alerts' => $weatherAlerts,
+                    'seasonal_reminders' => $seasonalReminders,
+                    'activity_recommendation' => $activityRecommendation,
+                    'city' => $city,
+                    'last_updated' => date('H:i')
+                ];
+                
+                $Smarty->assign('weather', $weatherInfo);
+                
+                // Log weather data for debugging
+                error_log("Weather data retrieved successfully for {$city}: {$temperature}°C, {$condition}");
+            } else {
+                error_log("Weather API: Invalid response format");
+            }
+        } else {
+            error_log("Weather API: Failed to fetch data");
+        }
+    } catch (Exception $e) {
+        error_log("Weather API error: " . $e->getMessage());
+        // Don't let weather API failure break the dashboard
+    }
+} else {
+    // API key not configured - provide sample data for demonstration
+    $weatherInfo = [
+        'temperature' => 18,
+        'feels_like' => 16,
+        'humidity' => 65,
+        'condition' => 'Clear',
+        'description' => 'Clear sky',
+        'icon' => '01d',
+        'alerts' => [],
+        'seasonal_reminders' => [
+            'Spring season: Flea and tick prevention time',
+            'Allergy season beginning - watch for skin irritation',
+            'Spring vaccinations due for many pets'
+        ],
+        'activity_recommendation' => 'Perfect weather for walks and outdoor activities',
+        'city' => $city,
+        'last_updated' => date('H:i'),
+        'demo_mode' => true
+    ];
+    
+    $Smarty->assign('weather', $weatherInfo);
+    error_log("Weather widget: Using demo data - API not configured");
+}
