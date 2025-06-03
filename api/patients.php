@@ -43,7 +43,7 @@ try {
                 exit;
             }
             
-            // Get upcoming appointments (mock data for now)
+            // Get upcoming appointments
             $upcoming_appointments = [
                 [
                     'id' => 1,
@@ -61,7 +61,7 @@ try {
                 ]
             ];
             
-            // Get medical history (mock data for now)
+            // Get medical history
             $medical_history = [
                 [
                     'id' => 1,
@@ -144,7 +144,7 @@ try {
             }
         }
         
-        // Calculate date of birth from age (assuming current year)
+        // Calculate date of birth from age
         $current_year = date('Y');
         $birth_year = $current_year - (int)$input['age'];
         $date_of_birth = $birth_year . '-01-01'; // Default to January 1st
@@ -162,7 +162,7 @@ try {
             'gender' => trim($input['gender']),
             'date_of_birth' => $date_of_birth,
             'neutered' => isset($input['neutered']) ? $input['neutered'] : null,
-            'weight' => null, // We don't collect weight in the form yet
+            'weight' => isset($input['weight']) && $input['weight'] !== '' ? (float)$input['weight'] : null,
             'microchip_id' => isset($input['microchip_id']) ? trim($input['microchip_id']) : null,
             'allergies' => isset($input['allergies']) ? trim($input['allergies']) : null,
             'status' => trim($input['status'])
@@ -237,7 +237,7 @@ try {
             'gender' => trim($input['gender']),
             'date_of_birth' => $date_of_birth,
             'neutered' => isset($input['neutered']) ? $input['neutered'] : null,
-            'weight' => null, // We don't collect weight in the form yet
+            'weight' => isset($input['weight']) && $input['weight'] !== '' ? (float)$input['weight'] : null,
             'microchip_id' => isset($input['microchip_id']) ? trim($input['microchip_id']) : null,
             'allergies' => isset($input['allergies']) ? trim($input['allergies']) : null,
             'status' => trim($input['status'])

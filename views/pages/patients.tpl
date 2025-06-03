@@ -382,11 +382,16 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="microchipID" class="form-label">Microchip ID</label>
                                     <input type="text" class="form-control" id="microchipID">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <label for="petWeight" class="form-label">Weight (kg)</label>
+                                    <input type="number" class="form-control" id="petWeight" min="0" step="0.1"
+                                        placeholder="e.g. 25.5">
+                                </div>
+                                <div class="col-md-4">
                                     <label for="petNeutered" class="form-label">Neutered/Spayed</label>
                                     <select class="form-select" id="petNeutered">
                                         <option value="">Not specified</option>

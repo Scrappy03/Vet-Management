@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Collect form data function
     function collectFormData() {
         const neuteredValue = document.getElementById('petNeutered').value;
+        const weightValue = document.getElementById('petWeight').value;
         return {
             name: document.getElementById('petName').value.trim(),
             species: document.getElementById('petSpecies').value,
@@ -76,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
             age: parseInt(document.getElementById('petAge').value),
             gender: document.getElementById('petGender').value,
             neutered: neuteredValue === '' ? null : parseInt(neuteredValue),
+            weight: weightValue === '' ? null : parseFloat(weightValue),
             microchip_id: document.getElementById('microchipID').value.trim() || null,
             owner_name: document.getElementById('ownerName').value.trim(),
             owner_email: document.getElementById('ownerEmail').value.trim(),
@@ -203,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('petAge').value = patient.age || '';
         document.getElementById('petGender').value = patient.gender || '';
         document.getElementById('petNeutered').value = patient.neutered !== null ? patient.neutered.toString() : '';
+        document.getElementById('petWeight').value = patient.weight || '';
         document.getElementById('microchipID').value = patient.microchip_id || '';
 
         // Reconstruct owner name from first_name and last_name or use owner_name if available

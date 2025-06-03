@@ -278,19 +278,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function savePatientChanges(patientId) {
         // Gather form input values
+        const weightValue = document.getElementById('petWeight').value;
         const formData = {
             patient_id: patientId,
             name: document.getElementById('petName').value,
             status: document.getElementById('petStatus').value,
             species: document.getElementById('petSpecies').value,
             breed: document.getElementById('petBreed').value,
+            age: calculateAge(document.getElementById('petDob').value),
             gender: document.getElementById('petGender').value,
-            date_of_birth: document.getElementById('petDob').value,
-            weight: document.getElementById('petWeight').value,
+            neutered: document.getElementById('petNeutered').value,
+            weight: weightValue === '' ? null : parseFloat(weightValue),
             microchip_id: document.getElementById('petMicrochip').value,
             allergies: document.getElementById('petAllergies').value,
-            owner_first_name: document.getElementById('ownerName').value.split(' ')[0],
-            owner_last_name: document.getElementById('ownerName').value.split(' ').slice(1).join(' '),
+            owner_name: document.getElementById('ownerName').value,
             owner_phone: document.getElementById('ownerPhone').value,
             owner_email: document.getElementById('ownerEmail').value
         };
@@ -323,6 +324,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error saving patient changes:', error);
                 alert('Error saving changes. Please try again.');
             });
+    }
+
+    // Helper function to calculate age from date of birth
+    function calculateAge(dateOfBirth) {
+        if (!dateOfBirth) return 0;
+
+        const today = new Date();
+        const birthDate = new Date(dateOfBirth);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age;
     }
 });
 // Update page with new information
