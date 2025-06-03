@@ -219,7 +219,7 @@ try {
             }
         }
         
-        // Calculate date of birth from age (assuming current year)
+        // Calculate date of birth from age
         $current_year = date('Y');
         $birth_year = $current_year - (int)$input['age'];
         $date_of_birth = $birth_year . '-01-01'; // Default to January 1st

@@ -49,45 +49,28 @@
             </div>
         </div>
 
-        <!-- Search and filter form -->
+        <!-- Simple search -->
         <div class="card mb-4">
             <div class="card-body">
-                <form class="row g-3">
-                    <div class="col-md-3">
-                        <label for="searchQuery" class="form-label">Search</label>
-                        <input type="text" class="form-control" id="searchQuery" placeholder="Search by name, breed...">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="patientSearch"
+                            placeholder="Search patients by name, breed, or owner...">
                     </div>
-                    <div class="col-md-2">
-                        <label for="filterSpecies" class="form-label">Species</label>
-                        <select class="form-select" id="filterSpecies">
+                    <div class="col-md-3">
+                        <select class="form-select" id="speciesFilter">
                             <option value="">All Species</option>
                             <option value="dog">Dog</option>
                             <option value="cat">Cat</option>
                             <option value="rabbit">Rabbit</option>
                             <option value="bird">Bird</option>
-                            <option value="reptile">Reptile</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
-                    <div class="col-md-2">
-                        <label for="filterStatus" class="form-label">Status</label>
-                        <select class="form-select" id="filterStatus">
-                            <option value="">All Statuses</option>
-                            <option value="active">Active</option>
-                            <option value="treatment">Under Treatment</option>
-                            <option value="scheduled">Scheduled</option>
-                            <option value="recovery">Recovery</option>
-                        </select>
-                    </div>
                     <div class="col-md-3">
-                        <label for="filterOwner" class="form-label">Owner</label>
-                        <input type="text" class="form-control" id="filterOwner" placeholder="Owner name">
+                        <button type="button" class="btn btn-outline-secondary w-100" id="clearSearch">Clear</button>
                     </div>
-                    <div class="col-md-2">
-                        <label class="form-label d-none d-md-block">&nbsp;</label>
-                        <button type="submit" class="btn btn-primary w-100">Search</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -382,16 +365,11 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label for="microchipID" class="form-label">Microchip ID</label>
                                     <input type="text" class="form-control" id="microchipID">
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="petWeight" class="form-label">Weight (kg)</label>
-                                    <input type="number" class="form-control" id="petWeight" min="0" step="0.1"
-                                        placeholder="e.g. 25.5">
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label for="petNeutered" class="form-label">Neutered/Spayed</label>
                                     <select class="form-select" id="petNeutered">
                                         <option value="">Not specified</option>

@@ -32,10 +32,6 @@ $first_name = isset($user_data['first_name']) ? $user_data['first_name'] : '';
 $last_name = isset($user_data['last_name']) ? $user_data['last_name'] : '';
 $user_name = trim($first_name . ' ' . $last_name);
 
-// Log what we found for debugging
-error_log("Dashboard user data: " . print_r($user_data, true));
-error_log("First name: '$first_name', Last name: '$last_name', Display name: '$user_name'");
-
 // Template data binding
 $Smarty->assign('user', $user_data);
 $Smarty->assign('user_name', $user_name);
@@ -305,7 +301,6 @@ if ($weatherApiKey == '3bf053dcf9fe3fb7d4582c6061337713') {
         }
     } catch (Exception $e) {
         error_log("Weather API error: " . $e->getMessage());
-        // Don't let weather API failure break the dashboard
     }
 } else {
     // API key not configured - provide sample data for demonstration

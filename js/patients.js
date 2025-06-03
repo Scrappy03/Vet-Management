@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Collect form data function
     function collectFormData() {
         const neuteredValue = document.getElementById('petNeutered').value;
-        const weightValue = document.getElementById('petWeight').value;
         return {
             name: document.getElementById('petName').value.trim(),
             species: document.getElementById('petSpecies').value,
@@ -77,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
             age: parseInt(document.getElementById('petAge').value),
             gender: document.getElementById('petGender').value,
             neutered: neuteredValue === '' ? null : parseInt(neuteredValue),
-            weight: weightValue === '' ? null : parseFloat(weightValue),
             microchip_id: document.getElementById('microchipID').value.trim() || null,
             owner_name: document.getElementById('ownerName').value.trim(),
             owner_email: document.getElementById('ownerEmail').value.trim(),
@@ -205,7 +203,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('petAge').value = patient.age || '';
         document.getElementById('petGender').value = patient.gender || '';
         document.getElementById('petNeutered').value = patient.neutered !== null ? patient.neutered.toString() : '';
-        document.getElementById('petWeight').value = patient.weight || '';
         document.getElementById('microchipID').value = patient.microchip_id || '';
 
         // Reconstruct owner name from first_name and last_name or use owner_name if available
@@ -292,6 +289,106 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.reload();
         }, 1000);
     }
+
+    // Simple search functionality
+    function initializeSearch() {
+        const searchInput = document.getElementById('patientSearch');
+        const speciesFilter = document.getElementById('speciesFilter');
+        const clearButton = document.getElementById('clearSearch');
+
+        if (!searchInput || !speciesFilter || !clearButton) return;
+
+        // Get all patient rows and cards
+        function getPatientElements() {
+            return {
+                tableRows: document.querySelectorAll('#tableView tbody tr'),
+                cards: document.querySelectorAll('#cardView .col-md-6, #cardView .col-lg-4')
+            };
+        }
+
+        // Filter patients based on search criteria
+        function filterPatients() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedSpecies = speciesFilter.value.toLowerCase();
+            const { tableRows, cards } = getPatientElements();
+
+            // Filter table rows
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length === 0) return; // Skip if no cells (header row)
+
+                const petName = cells[1]?.textContent.toLowerCase() || '';
+                const species = cells[2]?.textContent.toLowerCase() || '';
+                const breed = cells[3]?.textContent.toLowerCase() || '';
+                const owner = cells[5]?.textContent.toLowerCase() || '';
+
+                const matchesSearch = !searchTerm ||
+                    petName.includes(searchTerm) ||
+                    breed.includes(searchTerm) ||
+                    owner.includes(searchTerm) ||
+                    species.includes(searchTerm);
+
+                const matchesSpecies = !selectedSpecies || species.includes(selectedSpecies);
+
+                row.style.display = (matchesSearch && matchesSpecies) ? '' : 'none';
+            });
+
+            // Filter cards
+            cards.forEach(card => {
+                const cardTitle = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
+                const cardText = card.querySelector('.card-text')?.textContent.toLowerCase() || '';
+                const patientDetails = card.querySelector('.patient-details')?.textContent.toLowerCase() || '';
+                const cardContent = cardTitle + ' ' + cardText + ' ' + patientDetails;
+
+                const matchesSearch = !searchTerm || cardContent.includes(searchTerm);
+                const matchesSpecies = !selectedSpecies || cardContent.includes(selectedSpecies);
+
+                card.style.display = (matchesSearch && matchesSpecies) ? '' : 'none';
+            });
+
+            // Update result count
+            updateResultCount();
+        }
+
+        // Update result count display
+        function updateResultCount() {
+            const { tableRows, cards } = getPatientElements();
+            const isTableView = !document.getElementById('tableView').classList.contains('d-none');
+
+            let visibleCount = 0;
+            if (isTableView) {
+                visibleCount = Array.from(tableRows).filter(row =>
+                    row.style.display !== 'none' && row.querySelectorAll('td').length > 0
+                ).length;
+            } else {
+                visibleCount = Array.from(cards).filter(card =>
+                    card.style.display !== 'none'
+                ).length;
+            }
+
+            // Update search input placeholder with count
+            if (searchInput.value.trim() || speciesFilter.value) {
+                searchInput.placeholder = `${visibleCount} patient(s) found`;
+            } else {
+                searchInput.placeholder = 'Search patients by name, breed, or owner...';
+            }
+        }
+
+        // Clear search
+        function clearSearch() {
+            searchInput.value = '';
+            speciesFilter.value = '';
+            filterPatients();
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', filterPatients);
+        speciesFilter.addEventListener('change', filterPatients);
+        clearButton.addEventListener('click', clearSearch);
+    }
+
+    // Initialize search after DOM is loaded
+    initializeSearch();
 
     // Make functions globally available
     window.editPatient = editPatient;
