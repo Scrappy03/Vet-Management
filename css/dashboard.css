@@ -185,6 +185,9 @@
     font-size: 0.875rem;
     font-weight: 500;
     text-transform: capitalize;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 /* Appointment Status Badges */
@@ -1038,14 +1041,37 @@ body {
     border-bottom: none;
 }
 
-@media (max-width: 768px) {
-    .weather-icon img {
-        width: 40px;
-        height: 40px;
-    }
+/* Enhanced Search Functionality */
+.appointment-table .status-badge {
+    display: inline-block;
+    padding: 0.25em 0.5em;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    text-transform: capitalize;
+    font-weight: 500;
+}
 
-    .weather-activity .badge {
-        font-size: 0.7rem;
-        padding: 0.4rem;
-    }
+/* Search input styling */
+#appointmentSearch:focus::placeholder {
+    color: #6c757d;
+    opacity: 0.5;
+}
+
+/* Highlight matched rows */
+.appointment-table tr.highlight {
+    background-color: rgba(13, 110, 253, 0.05);
+    transition: background-color 0.3s;
+}
+
+/* No results message */
+.no-results-message {
+    display: none;
+    padding: 1.5rem;
+    text-align: center;
+    color: #6c757d;
+}
+
+/* Better display for hidden elements */
+tr[style*="display: none"] {
+    display: none !important;
 }

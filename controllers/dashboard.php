@@ -110,9 +110,9 @@ $calendarData = $Appointment->getMiniCalendarData();
 $Smarty->assign('calendar_data', $calendarData);
 
 // Weather API integration
-$weatherApiKey = '3bf053dcf9fe3fb7d4582c6061337713';
-$city = 'Ipswich';
-if ($weatherApiKey == '3bf053dcf9fe3fb7d4582c6061337713') {
+$weatherApiKey = defined('WEATHER_API_KEY') ? WEATHER_API_KEY : '';
+$city = defined('WEATHER_DEFAULT_CITY') ? WEATHER_DEFAULT_CITY : 'Ipswich';
+if (!empty($weatherApiKey)) {
     $weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$weatherApiKey}&units=metric";
 
     try {
