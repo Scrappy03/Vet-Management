@@ -140,8 +140,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // Handle dismiss notification
-    window.dismissNotification = function (button) {
+    // Handle dismiss notification using event delegation
+    function dismissNotification(button) {
         const notificationItem = button.closest('.notification-item');
         if (notificationItem) {
             notificationItem.style.height = notificationItem.offsetHeight + 'px';
@@ -161,7 +161,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 300);
             }, 0);
         }
-    };
+    }
+
+    // Event delegation for dismiss notification buttons
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('[data-action="dismiss-notification"]')) {
+            e.preventDefault();
+            dismissNotification(e.target.closest('[data-action="dismiss-notification"]'));
+        }
+    });
 
     // Handle dismiss all notifications
     const dismissAllBtn = document.getElementById('dismissAllNotifications');
@@ -308,84 +316,145 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Check for appointment table body
     const appointmentTableBody = document.querySelector('.appointment-table tbody');
-});
 
-// Make appointment details function globally available
+    // Refresh activity function
+    function refreshActivity() {
+        const activityFeed = document.getElementById('activityFeed');
+        const refreshBtn = document.querySelector('[data-action="refresh-activity"]');
 
-window.viewAppointmentDetails = function (appointmentId) {
-    // Show loading indicator
-    const modalContent = document.getElementById('appointmentDetailsContent');
-    modalContent.innerHTML = '<div class="text-center"><div class="spinner-border text-primary" role="status"></div><p class="mt-2">Loading appointment details...</p></div>';
+        if (!activityFeed) return;
 
-    // Show the modal
-    const appointmentModal = new bootstrap.Modal(document.getElementById('appointmentDetailsModal'));
-    appointmentModal.show();
+        // Show loading state
+        if (refreshBtn) {
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> <span class="spinner-border spinner-border-sm ms-1"></span>';
+        }
 
-    // For real appointments, fetch data from API
-    fetch(`api/appointments.php?id=${appointmentId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+        // Fetch updated activity data
+        fetch('api/appointments.php?recent_activity=1')
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Received data:', data);
+                if (data.success && data.activity) {
+                    console.log('Activity array:', data.activity);
+                    // Update the activity feed with new data
+                    updateActivityFeed(data.activity);
+                    showToast('Activity refreshed successfully!', 'success');
+                } else {
+                    console.error('API returned error:', data.error || 'Unknown error');
+                    showToast('Error refreshing activity: ' + (data.error || 'Unknown error'), 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error refreshing activity:', error);
+                showToast('Network error while refreshing activity', 'error');
+            })
+            .finally(() => {
+                // Reset button state
+                if (refreshBtn) {
+                    refreshBtn.disabled = false;
+                    refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i>';
+                }
+            });
+    }
+
+    // Update activity feed with new data
+    function updateActivityFeed(activities) {
+        const activityFeed = document.getElementById('activityFeed');
+        if (!activityFeed) return;
+
+        if (!activities || activities.length === 0) {
+            activityFeed.innerHTML = `
+                <div class="p-3 text-center text-muted">
+                    <i class="bi bi-calendar-x fs-1 mb-2"></i>
+                    <p class="mb-0">No recent activity</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Generate HTML for activities
+        let html = '';
+        activities.forEach(activity => {
+            // Handle different status values and provide fallbacks
+            const status = activity.status || 'unknown';
+            const statusIcon = status === 'completed' ? 'check-circle-fill text-success' :
+                status === 'cancelled' ? 'x-circle-fill text-danger' :
+                    status === 'in_progress' ? 'play-circle-fill text-warning' :
+                        'clock-fill text-info';
+
+            // Use field names that match the template exactly
+            const petName = activity.pet_name || 'Unknown Pet';
+            const ownerName = activity.owner_name || 'Unknown Owner';
+            const appointmentType = activity.appointment_type || 'Appointment';
+            const staffName = activity.staff_name || '';
+
+            // Use the formatted times from the API (now provided by server)
+            let timeDisplay = '';
+            if (status === 'completed' && activity.end_time_formatted) {
+                timeDisplay = `Completed ${activity.end_time_formatted}`;
+            } else if (status === 'cancelled') {
+                timeDisplay = 'Cancelled';
+            } else if (activity.start_time_formatted) {
+                timeDisplay = activity.start_time_formatted;
+            } else {
+                timeDisplay = 'No time available';
             }
-            return response.json();
-        })
-        .then(data => {
-            // Format date and time
-            const startTime = new Date(data.start_time);
-            const endTime = new Date(data.end_time);
 
-            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const timeOptions = { hour: '2-digit', minute: '2-digit' };
-
-            // Build HTML content
-            let html = `
-                <div class="appointment-details">
-                    <div class="mb-3">
-                        <h6>Pet Information</h6>
-                        <p class="mb-1"><strong>Name:</strong> ${data.pet_name}</p>
-                        <p class="mb-1"><strong>Owner:</strong> ${data.owner_name}</p>
-                    </div>
-                    <div class="mb-3">
-                        <h6>Appointment Information</h6>
-                        <p class="mb-1"><strong>Type:</strong> ${data.appointment_type}</p>
-                        <p class="mb-1"><strong>Date:</strong> ${startTime.toLocaleDateString(undefined, dateOptions)}</p>
-                        <p class="mb-1"><strong>Time:</strong> ${startTime.toLocaleTimeString(undefined, timeOptions)} - ${endTime.toLocaleTimeString(undefined, timeOptions)}</p>
-                        <p class="mb-1"><strong>Status:</strong> <span class="badge bg-${data.status === 'completed' ? 'success' : 'primary'}">${data.status}</span></p>
-                    </div>`;
-
-            if (data.notes) {
-                html += `
-                    <div class="mb-3">
-                        <h6>Notes</h6>
-                        <p>${data.notes}</p>
-                    </div>`;
-            }
+            // Use the appointment ID
+            const appointmentId = activity.appointment_id;
 
             html += `
-                <div class="d-flex justify-content-end mt-3">
-                    <a href="calendar?appointment=${data.id}" class="btn btn-outline-primary me-2">
-                        <i class="bi bi-pencil"></i> Edit
-                    </a>
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                        <i class="bi bi-x"></i> Close
-                    </button>
-                </div>
-            </div>`;
-
-            modalContent.innerHTML = html;
-        })
-        .catch(error => {
-            console.error('Error fetching appointment details:', error);
-            modalContent.innerHTML = `
-                <div class="alert alert-danger">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    Error loading appointment details. Please try again.
-                </div>
-                <div class="d-flex justify-content-end mt-3">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                        <i class="bi bi-x"></i> Close
-                    </button>
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="bi bi-${statusIcon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">${petName} - <span style="text-transform: capitalize;">${appointmentType}</span></div>
+                        <div class="activity-subtitle text-muted small">
+                            ${ownerName}${staffName ? ' • ' + staffName : ''}
+                        </div>
+                        <div class="activity-time">
+                            <small class="text-muted">${timeDisplay}</small>
+                        </div>
+                    </div>
+                    <div class="activity-actions">
+                        ${appointmentId ? `
+                            <button class="btn btn-sm btn-outline-primary"
+                                data-action="view-appointment" data-appointment-id="${appointmentId}">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        ` : ''}
+                    </div>
                 </div>
             `;
         });
-};
+
+        activityFeed.innerHTML = html;
+    }
+
+    // Add event delegation for refresh activity button
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('[data-action="refresh-activity"]')) {
+            e.preventDefault();
+            refreshActivity();
+        }
+
+        // Handle appointment details viewing using event delegation  
+        if (e.target.closest('[data-action="view-appointment"]')) {
+            e.preventDefault();
+            const button = e.target.closest('[data-action="view-appointment"]');
+            const appointmentId = button.dataset.appointmentId;
+            if (appointmentId) {
+                viewAppointmentDetails(parseInt(appointmentId));
+            }
+        }
+    });
+
+});

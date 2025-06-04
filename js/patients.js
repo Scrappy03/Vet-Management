@@ -366,8 +366,44 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize search after DOM is loaded
     initializeSearch();
 
-    // Make functions globally available
-    window.editPatient = editPatient;
-    window.deletePatient = deletePatient;
-    window.scheduleAppointment = scheduleAppointment;
+    // Schedule appointment function
+    function scheduleAppointment(patientId) {
+        // Navigate to calendar page with patient pre-selected
+        window.location.href = `calendar?patient=${patientId}`;
+    }
+
+    // Event delegation for patient actions
+    document.addEventListener('click', function (e) {
+        // Handle edit patient buttons
+        if (e.target.closest('[data-action="edit-patient"]')) {
+            e.preventDefault();
+            const button = e.target.closest('[data-action="edit-patient"]');
+            const patientId = button.dataset.patientId;
+            if (patientId) {
+                editPatient(parseInt(patientId));
+            }
+        }
+
+        // Handle delete patient buttons
+        if (e.target.closest('[data-action="delete-patient"]')) {
+            e.preventDefault();
+            const button = e.target.closest('[data-action="delete-patient"]');
+            const patientId = button.dataset.patientId;
+            if (patientId) {
+                deletePatient(parseInt(patientId));
+            }
+        }
+
+        // Handle schedule appointment buttons
+        if (e.target.closest('[data-action="schedule-appointment"]')) {
+            e.preventDefault();
+            const button = e.target.closest('[data-action="schedule-appointment"]');
+            const patientId = button.dataset.patientId;
+            if (patientId) {
+                scheduleAppointment(parseInt(patientId));
+            }
+        }
+    });
+
+    // Functions are now contained within the module scope (not global)
 });

@@ -17,10 +17,10 @@
                         <a class="nav-link" href="dashboard"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#support"><i class="bi bi-question-circle me-1"></i>Support</a>
+                        <a class="nav-link" href="support"><i class="bi bi-question-circle me-1"></i>Support</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#announcements"><i class="bi bi-megaphone me-1"></i>Announcements</a>
+                        <a class="nav-link" href="announcements"><i class="bi bi-megaphone me-1"></i>Announcements</a>
                     </li>
                 </ul>
                 <div class="nav-item">
@@ -87,7 +87,7 @@
                     <a href="dashboard" class="btn btn-primary btn-lg">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Access Dashboard
                     </a>
-                    <a href="#support" class="btn btn-outline-primary btn-lg">
+                    <a href="support" class="btn btn-outline-primary btn-lg">
                         <i class="bi bi-headset me-2"></i>Get Help
                     </a>
                 </div>
@@ -102,7 +102,7 @@
                         <i class="bi bi-calendar-check display-4 mb-3 text-primary"></i>
                         <h3>Today's Schedule</h3>
                     <p>Quick access to today's appointments and schedules.</p>
-                        <a href="/schedule" class="btn btn-outline-primary mt-3">View Schedule</a>
+                        <a href="calendar" class="btn btn-outline-primary mt-3">View Schedule</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                         <i class="bi bi-person-badge display-4 mb-3 text-primary"></i>
                         <h3>Staff Resources</h3>
                         <p>Access training materials, policies, and procedures.</p>
-                        <a href="/resources" class="btn btn-outline-primary mt-3">View Resources</a>
+                        <a href="support" class="btn btn-outline-primary mt-3">View Resources</a>
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                         <i class="bi bi-bell display-4 mb-3 text-primary"></i>
                         <h3>Recent Updates</h3>
                         <p>View the latest system updates and announcements.</p>
-                        <a href="/updates" class="btn btn-outline-primary mt-3">View Updates</a>
+                        <a href="announcements" class="btn btn-outline-primary mt-3">View Updates</a>
                     </div>
                 </div>
             </div>

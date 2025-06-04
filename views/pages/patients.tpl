@@ -167,15 +167,15 @@
                                                     <i class="bi bi-eye"></i>
                                                 </a>
                                                 <button class="btn btn-outline-primary" title="Edit Patient"
-                                                    onclick="editPatient({$patient.patient_id})">
+                                                    data-action="edit-patient" data-patient-id="{$patient.patient_id}">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <button class="btn btn-outline-danger" title="Delete Patient"
-                                                    onclick="deletePatient({$patient.patient_id})">
+                                                    data-action="delete-patient" data-patient-id="{$patient.patient_id}">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                                 <button class="btn btn-outline-primary" title="Schedule Appointment"
-                                                    onclick="scheduleAppointment({$patient.patient_id})">
+                                                    data-action="schedule-appointment" data-patient-id="{$patient.patient_id}">
                                                     <i class="bi bi-calendar-plus"></i>
                                                 </button>
                                             </div>
@@ -250,16 +250,16 @@
                                                 <i class="bi bi-eye"></i> View Details
                                             </a>
                                             <div class="btn-group btn-group-sm">
-                                                <button class="btn btn-outline-primary" title="Edit Patient"
-                                                    onclick="editPatient({$patient.patient_id})">
+                                                <button class="btn btn-outline-primary" title="Edit Patient" data-action="edit-patient"
+                                                    data-patient-id="{$patient.patient_id}">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <button class="btn btn-outline-danger" title="Delete Patient"
-                                                    onclick="deletePatient({$patient.patient_id})">
+                                                    data-action="delete-patient" data-patient-id="{$patient.patient_id}">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                                 <button class="btn btn-outline-primary" title="Schedule Appointment"
-                                                    onclick="scheduleAppointment({$patient.patient_id})">
+                                                    data-action="schedule-appointment" data-patient-id="{$patient.patient_id}">
                                                     <i class="bi bi-calendar-plus"></i>
                                                 </button>
                                             </div>

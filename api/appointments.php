@@ -64,6 +64,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
         try {
             $activity = $Appointment->getRecentActivity($limit);
+            
+            // Format activity times (same as dashboard controller)
+            foreach ($activity as &$activityItem) {
+                if (isset($activityItem['start_time'])) {
+                    $activityItem['start_time_formatted'] = date('H:i', strtotime($activityItem['start_time']));
+                }
+                if (isset($activityItem['end_time'])) {
+                    $activityItem['end_time_formatted'] = date('H:i', strtotime($activityItem['end_time']));
+                }
+            }
+            unset($activityItem);
+            
             header('Content-Type: application/json');
             echo json_encode([
                 'success' => true,
