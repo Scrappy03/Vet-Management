@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function hideLoadingState() {
-        // Hide loading indicators - data population will handle this
+        // Hide loading indicators
     }
 
     function showError(message) {
@@ -313,19 +313,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     editProfileModal.hide();
 
                     // Show success message
-                    const successToast = new bootstrap.Toast(document.getElementById('saveSuccessToast'));
-                    successToast.show();
+                    showToast('Changes saved successfully!', 'success');
                 } else {
-                    alert('Error saving changes: ' + (data.error || 'Unknown error'));
+                    showToast('Error saving changes: ' + (data.error || 'Unknown error'), 'error');
                 }
             })
             .catch(error => {
                 console.error('Error saving patient changes:', error);
-                alert('Error saving changes. Please try again.');
+                showToast('Error saving changes. Please try again.', 'error');
             });
     }
 });
-// Update page with new information
 // Update pet name and status badge
 const profileName = document.getElementById('profileName');
 profileName.innerHTML = `${petName} <span class="badge ${petStatus === 'active' ? 'bg-success' : 'bg-secondary'} fs-6 align-middle">${petStatus === 'active' ? 'Active' : 'Inactive'}</span>`;

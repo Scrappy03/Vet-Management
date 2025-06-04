@@ -100,15 +100,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const result = await response.json();
 
             if (result.success) {
-                showAlert('Patient created successfully!', 'success');
+                showToast('Patient created successfully!', 'success');
                 closeModal();
                 refreshPatientsList();
             } else {
-                showAlert('Error creating patient: ' + result.error, 'danger');
+                showToast('Error creating patient: ' + result.error, 'error');
             }
         } catch (error) {
             console.error('Error creating patient:', error);
-            showAlert('Network error. Please try again.', 'danger');
+            showToast('Network error. Please try again.', 'error');
         } finally {
             resetSaveButton();
         }
@@ -128,15 +128,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const result = await response.json();
 
             if (result.success) {
-                showAlert('Patient updated successfully!', 'success');
+                showToast('Patient updated successfully!', 'success');
                 closeModal();
                 refreshPatientsList();
             } else {
-                showAlert('Error updating patient: ' + result.error, 'danger');
+                showToast('Error updating patient: ' + result.error, 'error');
             }
         } catch (error) {
             console.error('Error updating patient:', error);
-            showAlert('Network error. Please try again.', 'danger');
+            showToast('Network error. Please try again.', 'error');
         } finally {
             resetSaveButton();
         }
@@ -144,10 +144,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Delete patient function
     async function deletePatient(patientId) {
-        if (!confirm('Are you sure you want to delete this patient? This action cannot be undone.')) {
-            return;
-        }
+        showConfirmDialog(
+            'Are you sure you want to delete this patient? This action cannot be undone.',
+            function () {
+                performPatientDeletion(patientId);
+            }
+        );
+    }
 
+    // Separate function to perform the actual deletion
+    async function performPatientDeletion(patientId) {
         try {
             const response = await fetch('./api/patients.php', {
                 method: 'DELETE',
@@ -160,14 +166,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const result = await response.json();
 
             if (result.success) {
-                showAlert('Patient deleted successfully!', 'success');
+                showToast('Patient deleted successfully!', 'success');
                 refreshPatientsList();
             } else {
-                showAlert('Error deleting patient: ' + result.error, 'danger');
+                showToast('Error deleting patient: ' + result.error, 'error');
             }
         } catch (error) {
             console.error('Error deleting patient:', error);
-            showAlert('Network error. Please try again.', 'danger');
+            showToast('Network error. Please try again.', 'error');
         }
     }
 
@@ -187,11 +193,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const modal = new bootstrap.Modal(addPatientModal);
                 modal.show();
             } else {
-                showAlert('Error loading patient data: ' + (result.error || 'Unknown error'), 'danger');
+                showToast('Error loading patient data: ' + (result.error || 'Unknown error'), 'error');
             }
         } catch (error) {
             console.error('Error loading patient:', error);
-            showAlert('Network error. Please try again.', 'danger');
+            showToast('Network error. Please try again.', 'error');
         }
     }
 
@@ -250,36 +256,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 modal.hide();
             }
         }
-    }
-
-    // Show alert function
-    function showAlert(message, type) {
-        // Remove any existing alerts
-        const existingAlert = document.querySelector('.alert-dismissible');
-        if (existingAlert) {
-            existingAlert.remove();
-        }
-
-        // Create new alert
-        const alertDiv = document.createElement('div');
-        alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
-        alertDiv.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        `;
-
-        // Insert alert at the top of the main content
-        const mainContent = document.querySelector('.dashboard-main');
-        if (mainContent) {
-            mainContent.insertBefore(alertDiv, mainContent.firstChild);
-        }
-
-        // Auto-dismiss after 5 seconds
-        setTimeout(() => {
-            if (alertDiv.parentNode) {
-                alertDiv.remove();
-            }
-        }, 5000);
     }
 
     // Refresh patients list

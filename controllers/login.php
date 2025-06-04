@@ -29,11 +29,6 @@ try {
     exit("Please check database settings and try again.");
 }
 
-// Start session for login management
-if (!isset($_SESSION)) {
-    session_start();
-}
-
 // Initialize variables
 $error = "";
 $success = "";

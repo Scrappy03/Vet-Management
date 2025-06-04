@@ -18,6 +18,7 @@
     {block name="body"}{/block}
     <script src="./js/scripts-vendor.min.js"></script>
     <script src="./js/scripts.min.js"></script>
+    <script src="./js/toast-utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
     <script src="./js/calendar.js"></script>
 <script src="./js/page-transitions.js"></script>

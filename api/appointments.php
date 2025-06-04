@@ -494,25 +494,3 @@ else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         echo json_encode(['error' => $e->getMessage()]);
     }
 }
-// Handle search requests (fetch appointments matching search criteria)
-else if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['search'])) {
-    $searchTerm = isset($_GET['q']) ? $_GET['q'] : '';
-    $date = isset($_GET['date']) ? $_GET['date'] : null;
-    $type = isset($_GET['type']) ? $_GET['type'] : 'all';
-    
-    try {
-        $searchResults = $Appointment->searchAppointments($searchTerm, $date, $type);
-        
-        if ($searchResults === false) {
-            header('HTTP/1.1 500 Internal Server Error');
-            echo json_encode(['error' => 'Failed to search appointments', 'details' => $Appointment->getErrorInfo()]);
-            exit;
-        }
-        
-        header('Content-Type: application/json');
-        echo json_encode($searchResults);
-    } catch (Exception $e) {
-        header('HTTP/1.1 500 Internal Server Error');
-        echo json_encode(['error' => $e->getMessage()]);
-    }
-}

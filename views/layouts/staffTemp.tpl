@@ -15,10 +15,8 @@
     {block name="body"}{/block}
     <script src="./js/scripts-vendor.min.js"></script>
     <script src="./js/scripts.min.js"></script>
+    <script src="./js/toast-utils.js"></script>
     <!-- Conditionally load dashboard.js only for dashboard page -->
-    {if $view_name == 'dashboard'}
-        <script src="./js/dashboard.js"></script>
-    {/if}
 </body>
 
 </html>

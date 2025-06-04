@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Error loading appointment:', error);
-                alert('Failed to load appointment details. Please try again.');
+                showToast('Failed to load appointment details. Please try again.', 'error');
             });
     }
 
@@ -510,7 +510,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Basic validation
         if (!patientId || !staffId || !date || !time || !type) {
-            alert('Please fill in all required fields');
+            showToast('Please fill in all required fields', 'warning');
             return;
         }
 
@@ -589,14 +589,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Show success message
                     const action = mode === 'create' ? 'scheduled' : 'updated';
-                    alert(`Appointment ${action} successfully!`);
+                    showToast(`Appointment ${action} successfully!`, 'success');
                 } else {
-                    alert('Failed to ' + (mode === 'create' ? 'schedule' : 'update') + ' appointment: ' + (data.error || 'Unknown error'));
+                    showToast('Failed to ' + (mode === 'create' ? 'schedule' : 'update') + ' appointment: ' + (data.error || 'Unknown error'), 'error');
                 }
             })
             .catch(error => {
                 console.error('Error ' + (mode === 'create' ? 'scheduling' : 'updating') + ' appointment:', error);
-                alert('Error ' + (mode === 'create' ? 'scheduling' : 'updating') + ' appointment. Please try again.');
+                showToast('Error ' + (mode === 'create' ? 'scheduling' : 'updating') + ' appointment. Please try again.', 'error');
             })
             .finally(() => {
                 // Close modal and reset form
@@ -608,16 +608,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to delete an appointment
     function deleteAppointment(appointmentId) {
-        if (!confirm('Are you sure you want to delete this appointment? This action cannot be undone.')) {
-            return;
-        }
+        showConfirmDialog(
+            'Are you sure you want to delete this appointment? This action cannot be undone.',
+            function () {
+                console.log("Deleting appointment with ID:", appointmentId);
 
-        console.log("Deleting appointment with ID:", appointmentId);
+                // Make sure appointmentId is a number if possible
+                if (!isNaN(appointmentId)) {
+                    appointmentId = parseInt(appointmentId, 10);
+                }
 
-        // Make sure appointmentId is a number if possible
-        if (!isNaN(appointmentId)) {
-            appointmentId = parseInt(appointmentId, 10);
-        }
+                // Continue with deletion logic
+                performAppointmentDeletion(appointmentId);
+            }
+        );
+    }
+
+    // Separate function to perform the actual deletion
+    function performAppointmentDeletion(appointmentId) {
 
         fetch(`api/appointments.php?id=${appointmentId}`, {
             method: 'DELETE',
@@ -663,14 +671,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     updateScheduleForDate(calendar.getDate());
 
                     // Show success message
-                    alert('Appointment deleted successfully!');
+                    showToast('Appointment deleted successfully!', 'success');
                 } else {
-                    alert('Failed to delete appointment: ' + (data.error || 'Unknown error'));
+                    showToast('Failed to delete appointment: ' + (data.error || 'Unknown error'), 'error');
                 }
             })
             .catch(error => {
                 console.error('Error deleting appointment:', error);
-                alert('Error deleting appointment. Please try again.');
+                showToast('Error deleting appointment. Please try again.', 'error');
             });
     }
 });

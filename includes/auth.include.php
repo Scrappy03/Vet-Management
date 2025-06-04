@@ -1,9 +1,5 @@
 <?php
 function is_logged_in() {
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-    
     // Validate required authentication markers
     if (!isset($_SESSION['is_loggedin']) || $_SESSION['is_loggedin'] !== true || 
         !isset($_SESSION['user_id']) || !isset($_SESSION['user_data'])) {
@@ -22,10 +18,6 @@ function is_logged_in() {
 
 if (!function_exists('get_current_user')) {
     function get_current_user() {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        
         // Log what we're working with
         error_log("get_current_user - Session contents: " . print_r($_SESSION, true));
         
@@ -59,10 +51,6 @@ if (!function_exists('get_current_user')) {
 }
 
 function validate_user_session() {
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-    
     return isset($_SESSION['user_data']) && is_array($_SESSION['user_data']) && 
            isset($_SESSION['user_data']['email']) && isset($_SESSION['user_data']['staff_id']);
 }
@@ -78,10 +66,6 @@ function redirect_to_login($message = 'session_expired') {
 }
 
 function logout_user($redirect = true) {
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-    
     // Record logout event
     if(isset($_SESSION['user_email'])) {
         error_log("User logged out: " . $_SESSION['user_email']);

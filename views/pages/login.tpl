@@ -270,7 +270,7 @@
 
                     if (password !== confirmPassword) {
                         e.preventDefault();
-                        alert('Passwords do not match!');
+                        showToast('Passwords do not match!', 'error');
                                 return false;
                             }
                         });

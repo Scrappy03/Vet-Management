@@ -15,4 +15,5 @@
     {block name="body"}{/block}
     <script src="./js/scripts-vendor.min.js"></script>
     <script src="./js/scripts.min.js"></script>
+    <script src="./js/toast-utils.js"></script>
 <script src="./js/dashboard.js"></script>
