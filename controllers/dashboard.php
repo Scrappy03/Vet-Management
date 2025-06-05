@@ -1,9 +1,4 @@
 <?php
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // Development diagnostics
 if (defined('ENVIRONMENT') && ENVIRONMENT === 'development') {
     error_log("Dashboard: Session state: " . print_r($_SESSION, true));

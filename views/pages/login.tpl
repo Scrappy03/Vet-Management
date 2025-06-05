@@ -38,11 +38,6 @@
                                         Sign In
                                     </button>
 
-                                    {* Help text for users experiencing login issues *}
-                                    <p class="text-center small text-muted mt-2">
-                                        Having trouble logging in? <a href="login_debug.php" class="text-decoration-none">Check
-                                            system status</a>
-                                    </p>
                                     <p class="text-center mb-0">
                                         Don't have an account? <a href="login?show=register"
                                     class="text-primary text-decoration-none">Sign up</a>
