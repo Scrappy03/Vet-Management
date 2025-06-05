@@ -31,6 +31,9 @@
                                         </div>
                                         <a href="#" class="text-primary text-decoration-none">Forgot password?</a>
                                     </div>
+                                    {if $success && !isset($smarty.post.register)}
+                                        <div class="alert alert-success mb-3">{$success}</div>
+                                    {/if}
                                     {if $error && !isset($smarty.post.register)}
                                         <div class="alert alert-danger mb-3">{$error}</div>
                                     {/if}

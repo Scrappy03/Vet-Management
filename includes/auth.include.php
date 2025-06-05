@@ -93,8 +93,8 @@ function logout_user($redirect = true) {
     }
     
     if ($redirect) {
-        // Return to application entry point
-        header("Location: index.php?msg=logout_success");
+        // Redirect to login page with success message
+        header("Location: index.php?p=login&msg=logout_success");
         exit;
     }
 }

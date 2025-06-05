@@ -37,12 +37,6 @@ $email = "";
 // Check for messages in the URL
 if (isset($_GET['msg'])) {
     switch ($_GET['msg']) {
-        case 'session_expired':
-            $error = "Your session has expired. Please login again.";
-            break;
-        case 'session_error':
-            $error = "There was an error with your session. Please login again.";
-            break;
         case 'logout_success':
             $success = "You have been successfully logged out.";
             break;
@@ -89,9 +83,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif($password !== $password_confirm) {
             $error = "Passwords do not match";
         } else {
-            // All validation passed, attempt to register the staff member
             
-            // Use User class instead of Staff class since we know it works
             $User = new User($Conn);
             
             // Check if email already exists
