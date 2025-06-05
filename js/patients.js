@@ -107,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 showToast('Error creating patient: ' + result.error, 'error');
             }
         } catch (error) {
-            console.error('Error creating patient:', error);
             showToast('Network error. Please try again.', 'error');
         } finally {
             resetSaveButton();
@@ -135,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 showToast('Error updating patient: ' + result.error, 'error');
             }
         } catch (error) {
-            console.error('Error updating patient:', error);
             showToast('Network error. Please try again.', 'error');
         } finally {
             resetSaveButton();
@@ -172,7 +170,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 showToast('Error deleting patient: ' + result.error, 'error');
             }
         } catch (error) {
-            console.error('Error deleting patient:', error);
             showToast('Network error. Please try again.', 'error');
         }
     }
@@ -196,7 +193,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 showToast('Error loading patient data: ' + (result.error || 'Unknown error'), 'error');
             }
         } catch (error) {
-            console.error('Error loading patient:', error);
             showToast('Network error. Please try again.', 'error');
         }
     }

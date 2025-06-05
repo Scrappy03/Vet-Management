@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                console.error('Error loading patient data:', error);
                 showError('Error loading patient information');
             });
     }
@@ -319,7 +318,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                console.error('Error saving patient changes:', error);
                 showToast('Error saving changes. Please try again.', 'error');
             });
     }

@@ -33,9 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch(`api/appointments.php?start=${startStr}&end=${endStr}`)
                 .then(response => {
                     if (!response.ok) {
-                        console.error('Error fetching events, status:', response.status);
                         return response.json().then(errData => {
-                            console.error('Error details:', errData);
                             throw new Error('Network response was not ok');
                         });
                     }
@@ -69,14 +67,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     successCallback(formattedEvents);
                 })
                 .catch(error => {
-                    console.error('Error fetching events:', error);
                     failureCallback(error);
                 });
         },
 
         eventClick: function (info) {
             const event = info.event;
-            console.log("Event clicked:", event, "ID:", event.id);
             const props = event.extendedProps;
 
             // Format dates nicely
@@ -169,14 +165,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // Add edit button handler
             document.getElementById('editAppointmentBtn').addEventListener('click', function () {
                 const appointmentId = this.getAttribute('data-id');
-                console.log("Edit button clicked with ID:", appointmentId);
                 loadAppointmentForEdit(appointmentId);
             });
 
             // Add delete button handler
             document.getElementById('deleteAppointmentBtn').addEventListener('click', function () {
                 const appointmentId = this.getAttribute('data-id');
-                console.log("Delete button clicked with ID:", appointmentId);
                 deleteAppointment(appointmentId);
             });
 
@@ -394,7 +388,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Add edit button handler
                     document.getElementById('editAppointmentBtn').addEventListener('click', function () {
                         const appointmentId = this.getAttribute('data-id');
-                        console.log("Edit button clicked with ID:", appointmentId);
                         loadAppointmentForEdit(appointmentId);
                     });
 
@@ -416,8 +409,6 @@ document.addEventListener('DOMContentLoaded', function () {
             detailsModal.hide();
         }
 
-        console.log("Loading appointment for edit:", appointmentId);
-
         // Make sure appointmentId is a number if possible
         if (!isNaN(appointmentId)) {
             appointmentId = parseInt(appointmentId, 10);
@@ -427,13 +418,11 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch(`api/appointments.php?id=${appointmentId}`)
             .then(response => {
                 if (!response.ok) {
-                    console.error("API error response:", response.status, response.statusText);
                     throw new Error('Failed to fetch appointment details');
                 }
                 return response.json();
             })
             .then(appointment => {
-                console.log("Received appointment data:", appointment);
                 // Populate the form with the appointment data
                 const form = document.getElementById('appointmentForm');
                 if (form) {
@@ -470,7 +459,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                console.error('Error loading appointment:', error);
                 showToast('Failed to load appointment details. Please try again.', 'error');
             });
     }
@@ -534,8 +522,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Use appropriate HTTP method based on operation
         const apiMethod = mode === 'edit' ? 'PUT' : 'POST';
 
-        console.log(`Sending appointment data via ${apiMethod}:`, appointmentData);
-
         fetch('api/appointments.php', {
             method: apiMethod,
             headers: {
@@ -545,8 +531,6 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify(appointmentData)
         })
             .then(response => {
-                console.log(`API response status: ${response.status} ${response.statusText}`);
-
                 // Try to parse JSON even if response is not OK
                 return response.text().then(text => {
                     try {
@@ -569,7 +553,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Remove the existing event first to prevent duplicates
                         const existingEvent = calendar.getEventById(appointmentId);
                         if (existingEvent) {
-                            console.log("Removing existing event before update:", appointmentId);
                             existingEvent.remove();
                         }
                     }
@@ -595,7 +578,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                console.error('Error ' + (mode === 'create' ? 'scheduling' : 'updating') + ' appointment:', error);
                 showToast('Error ' + (mode === 'create' ? 'scheduling' : 'updating') + ' appointment. Please try again.', 'error');
             })
             .finally(() => {
@@ -611,8 +593,6 @@ document.addEventListener('DOMContentLoaded', function () {
         showConfirmDialog(
             'Are you sure you want to delete this appointment? This action cannot be undone.',
             function () {
-                console.log("Deleting appointment with ID:", appointmentId);
-
                 // Make sure appointmentId is a number if possible
                 if (!isNaN(appointmentId)) {
                     appointmentId = parseInt(appointmentId, 10);
@@ -635,19 +615,15 @@ document.addEventListener('DOMContentLoaded', function () {
             credentials: 'same-origin'
         })
             .then(response => {
-                console.log(`API response status for delete: ${response.status} ${response.statusText}`);
-
                 // Try to parse JSON even if response is not OK
                 return response.text().then(text => {
                     try {
                         const json = JSON.parse(text);
                         if (!response.ok) {
-                            console.error('Server error response:', json);
                             throw new Error(`API error: ${response.status} ${response.statusText}`);
                         }
                         return json;
                     } catch (error) {
-                        console.error('Failed to parse response as JSON:', text);
                         throw new Error('Invalid JSON response from server');
                     }
                 });
@@ -663,7 +639,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Remove the appointment from the calendar
                     const existingEvent = calendar.getEventById(appointmentId);
                     if (existingEvent) {
-                        console.log("Removing event from calendar:", appointmentId);
                         existingEvent.remove();
                     }
 
@@ -677,7 +652,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                console.error('Error deleting appointment:', error);
                 showToast('Error deleting appointment. Please try again.', 'error');
             });
     }

@@ -1,10 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Debug for page load
-    console.log('Dashboard.js loaded');
-
     // Check if the appointment table exists
     const appointmentTable = document.querySelector('.appointment-table');
-    console.log('Appointment table exists:', !!appointmentTable);
 
     // Initialize reminder elements
     const remindersList = document.querySelector('.reminders-list');
@@ -125,7 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 modalContent.innerHTML = html;
             })
             .catch(error => {
-                console.error('Error fetching appointment details:', error);
                 modalContent.innerHTML = `
                     <div class="alert alert-danger">
                         <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -191,13 +186,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const statusFilter = document.getElementById('statusFilter');
         const clearButton = document.getElementById('clearAppointmentSearch');
 
-        // Debug - check if elements exist
-        console.log('Search input exists:', !!searchInput);
-        console.log('Status filter exists:', !!statusFilter);
-        console.log('Clear button exists:', !!clearButton);
-
         if (!searchInput || !statusFilter || !clearButton) {
-            console.error('One or more search elements not found!');
             return;
         }
 
@@ -221,11 +210,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let visibleCount = 0;
 
-            // Debug
-            console.log('Search term:', searchTerm);
-            console.log('Selected status:', selectedStatus);
-            console.log('Total rows:', rows.length);
-
             // Only process rows that are not message rows
             const dataRows = Array.from(rows).filter(row => !row.classList.contains('no-results-row'));
 
@@ -236,17 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const statusBadge = row.querySelector('.status-badge');
                 const status = statusBadge ? statusBadge.textContent.trim().toLowerCase() : '';
                 const statusClass = statusBadge ? statusBadge.className : '';
-
-                // Debug for first row
-                if (row === dataRows[0]) {
-                    console.log('First row data:', {
-                        petName,
-                        ownerName,
-                        appointmentType,
-                        status,
-                        statusClass
-                    });
-                }
 
                 const matchesSearch = !searchTerm ||
                     petName.includes(searchTerm) ||
@@ -333,26 +306,21 @@ document.addEventListener('DOMContentLoaded', function () {
         // Fetch updated activity data
         fetch('api/appointments.php?recent_activity=1')
             .then(response => {
-                console.log('Response status:', response.status);
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
                 return response.json();
             })
             .then(data => {
-                console.log('Received data:', data);
                 if (data.success && data.activity) {
-                    console.log('Activity array:', data.activity);
                     // Update the activity feed with new data
                     updateActivityFeed(data.activity);
                     showToast('Activity refreshed successfully!', 'success');
                 } else {
-                    console.error('API returned error:', data.error || 'Unknown error');
                     showToast('Error refreshing activity: ' + (data.error || 'Unknown error'), 'error');
                 }
             })
             .catch(error => {
-                console.error('Error refreshing activity:', error);
                 showToast('Network error while refreshing activity', 'error');
             })
             .finally(() => {

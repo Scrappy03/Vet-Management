@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.5.0, created on 2025-05-29 15:17:07
+/* Smarty version 5.5.0, created on 2025-06-05 13:34:38
   from 'file:layouts/main.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.5.0',
-  'unifunc' => 'content_68387a738b1556_21789449',
+  'unifunc' => 'content_68419ceed40641_33475294',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '66a5cc0769c5637147b816d0a554e9fa897fa1d2' => 
     array (
       0 => 'layouts/main.tpl',
-      1 => 1747087452,
+      1 => 1749081755,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_68387a738b1556_21789449 (\Smarty\Template $_smarty_tpl) {
+function content_68419ceed40641_33475294 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = '/Users/callum/Documents/University/AWD/VetCare/views/layouts';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
@@ -49,7 +49,7 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
     </header>
 
     <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_73656552668387a738b0dd8_90434036', "body");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_149860518868419ceed3f552_91700521', "body");
 ?>
 
     <?php echo '<script'; ?>
@@ -59,13 +59,16 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_7365655266838
  src="./js/scripts.min.js"><?php echo '</script'; ?>
 >
     <?php echo '<script'; ?>
+ src="./js/toast-utils.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
  src="./js/page-transitions.js"><?php echo '</script'; ?>
 >
 </body>
 
 </html><?php }
 /* {block "body"} */
-class Block_73656552668387a738b0dd8_90434036 extends \Smarty\Runtime\Block
+class Block_149860518868419ceed3f552_91700521 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = '/Users/callum/Documents/University/AWD/VetCare/views/layouts';
