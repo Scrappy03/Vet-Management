@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Refresh Activity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2>Refresh Activity Test</h2>
+
+        <!-- Activity Feed Test -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Activity</h5>
+                <button class="btn btn-sm btn-outline-primary" data-action="refresh-activity">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <div id="activityFeed">
+                    <div class="p-3 text-center text-muted">
+                        <i class="bi bi-calendar-x fs-1 mb-2"></i>
+                        <p class="mb-0">Click refresh to load activity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/toast-utils.js"></script>
+    <script>
+        // Simplified version of the refresh activity functionality for testing
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Refresh activity function
+            function refreshActivity() {
+                const activityFeed = document.getElementById('activityFeed');
+                const refreshBtn = document.querySelector('[data-action="refresh-activity"]');
+
+                if (!activityFeed) return;
+
+                // Show loading state
+                if (refreshBtn) {
+                    refreshBtn.disabled = true;
+                    refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> <span class="spinner-border spinner-border-sm ms-1"></span>';
+                }
+
+                // Fetch updated activity data
+                fetch('api/appointments.php?recent_activity=1')
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        console.log('Response headers:', response.headers);
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Received data:', data);
+                        if (data.success && data.activity) {
+                            updateActivityFeed(data.activity);
+                            showToast('Activity refreshed successfully!', 'success');
+                        } else {
+                            showToast('Error refreshing activity: ' + (data.error || 'Unknown error'), 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error refreshing activity:', error);
+                        showToast('Network error while refreshing activity: ' + error.message, 'error');
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        if (refreshBtn) {
+                            refreshBtn.disabled = false;
+                            refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i>';
+                        }
+                    });
+            }
+
+            // Update activity feed with new data
+            function updateActivityFeed(activities) {
+                const activityFeed = document.getElementById('activityFeed');
+                if (!activityFeed) return;
+
+                if (activities.length === 0) {
+                    activityFeed.innerHTML = `
+                        <div class="p-3 text-center text-muted">
+                            <i class="bi bi-calendar-x fs-1 mb-2"></i>
+                            <p class="mb-0">No recent activity</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Generate HTML for activities
+                let html = '';
+                activities.forEach(activity => {
+                    const statusIcon = activity.status === 'completed' ? 'check-circle-fill text-success' :
+                        activity.status === 'cancelled' ? 'x-circle-fill text-danger' :
+                            'clock-fill text-warning';
+
+                    html += `
+                        <div class="activity-item p-3 border-bottom">
+                            <div class="d-flex align-items-center">
+                                <div class="activity-icon me-3">
+                                    <i class="bi bi-${statusIcon}"></i>
+                                </div>
+                                <div class="activity-content flex-grow-1">
+                                    <div class="activity-title fw-semibold">${activity.title || activity.pet_name || 'Unknown'}</div>
+                                    <div class="activity-meta">
+                                        <small class="text-muted">${activity.formatted_time || activity.start_time_formatted || 'No time available'}</small>
+                                    </div>
+                                </div>
+                                <div class="activity-actions">
+                                    <button class="btn btn-sm btn-outline-primary"
+                                        data-action="view-appointment" data-appointment-id="${activity.appointment_id || activity.id}">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                activityFeed.innerHTML = html;
+            }
+
+            // Event delegation for refresh activity button
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('[data-action="refresh-activity"]')) {
+                    e.preventDefault();
+                    refreshActivity();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
