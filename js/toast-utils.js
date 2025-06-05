@@ -1,13 +1,3 @@
-/**
- * Toast Utility Functions
- * Provides standardized toast notifications across the application
- */
-
-/**
- * Show a toast notification
- * @param {string} message - The message to display
- * @param {string} type - The type of toast (success, error, warning, info)
- */
 function showToast(message, type = 'success') {
     // Create toast container if it doesn't exist
     let toastContainer = document.querySelector('.toast-container');
@@ -79,12 +69,6 @@ function showToast(message, type = 'success') {
     });
 }
 
-/**
- * Show a confirmation dialog with custom styling
- * @param {string} message - The confirmation message
- * @param {function} onConfirm - Callback function when confirmed
- * @param {function} onCancel - Callback function when cancelled (optional)
- */
 function showConfirmDialog(message, onConfirm, onCancel = null) {
     // Create modal backdrop
     const backdrop = document.createElement('div');

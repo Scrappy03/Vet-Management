@@ -16,7 +16,6 @@
     <script src="./js/scripts-vendor.min.js"></script>
     <script src="./js/scripts.min.js"></script>
     <script src="./js/toast-utils.js"></script>
-    <!-- Conditionally load dashboard.js only for dashboard page -->
 </body>
 
 </html>

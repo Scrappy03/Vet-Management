@@ -18,15 +18,13 @@ function is_logged_in() {
 
 if (!function_exists('get_current_user')) {
     function get_current_user() {
-        // Log what we're working with
-        error_log("get_current_user - Session contents: " . print_r($_SESSION, true));
         
         // First try to get from session
         if (isset($_SESSION['user_data']) && is_array($_SESSION['user_data'])) {
             return $_SESSION['user_data'];
         }
         
-        // If user_id exists but user_data doesn't, try to get from database
+        // Databse lookup
         if (isset($_SESSION['user_id'])) {
             global $Conn;
             if ($Conn) {

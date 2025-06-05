@@ -163,10 +163,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = "Please enter a valid email";
         } elseif(empty($password)) {
             $error = "Password is required";
-        } else {
-            // All validation passed, attempt to log in
             
-            // Attempt login with User class
+            // Attempt login
             $User = new User($Conn);
             
             try {

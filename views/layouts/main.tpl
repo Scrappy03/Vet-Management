@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <!-- The head contains metadata and linked resources for the page. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="VetCare - Professional veterinary management system for staff and administrators">
@@ -14,7 +13,6 @@
 </head>
 
 <body id="page-{$view_name}">
-    <!-- Header section with logo and branding. -->
     <header class="bg-custom-primary text-white py-4">
         <div class="container">
             <img src="./images/Logo White.webp" alt="VetCare Logo" class="img-fluid" style="max-height: 80px;">
@@ -25,7 +23,6 @@
     <script src="./js/scripts-vendor.min.js"></script>
     <script src="./js/scripts.min.js"></script>
     <script src="./js/toast-utils.js"></script>
-    <script src="./js/page-transitions.js"></script>
 </body>
 
 </html>

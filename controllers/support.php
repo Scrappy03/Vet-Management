@@ -65,6 +65,4 @@ $Smarty->assign('page_keywords', $page_keywords);
 $Smarty->assign('support_categories', $support_categories);
 $Smarty->assign('faq_items', $faq_items);
 $Smarty->assign('view_name', 'support');
-
-// Template will be displayed by index.php
 ?>
