@@ -34,13 +34,13 @@
 
     <div class="container-fluid py-4">
         <!-- Header Section -->
-        <div class="row mb-4">
+        <div class="row mb-5">
             <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h1 class="h2 mb-0"><i class="bi bi-question-circle me-2"></i>Support Center</h1>
-                        <p class="text-muted">Get help with VetCare systems and procedures</p>
-                    </div>
+                <div class="text-center mb-4">
+                    <h1 class="display-4">
+                        <i class="bi bi-question-circle me-3 text-primary"></i>Support Center
+                    </h1>
+                    <p class="lead text-muted">Get help with VetCare systems and procedures</p>
                 </div>
             </div>
         </div>
